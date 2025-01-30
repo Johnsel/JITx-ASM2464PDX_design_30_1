@@ -1,0 +1,356 @@
+#use-added-syntax(jitx)
+defpackage ASM001/components/TE_1-2199230-6 :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/utils/box-symbol
+  import jsl/bundles/general
+
+  import jsl/design/settings
+  import jsl/ensure
+  import jsl/geometry/basics
+  import jsl/landpatterns
+
+  import jsl/symbols
+  import jsl/bundles
+  import jsl/protocols
+  import jsl/si/helpers
+
+  import jsl/pin-assignment
+  import jsl/protocols/pcie
+
+pcb-pad oval-th-pad-1 :
+  type = TH
+  shape = Capsule(1.75, 1.75, loc(0.0, 0.0))
+  ocdb/utils/landpatterns/apply-soldermask(0.0)
+  layer(Cutout()) = Circle(0.575)
+
+pcb-pad oval-th-pad-2 :
+  type = TH
+  shape = Capsule(2.45, 2.45, loc(0.0, 0.0))
+  ocdb/utils/landpatterns/apply-soldermask(0.0)
+  layer(Cutout()) = Circle(0.825)
+
+pcb-pad rect-smd-pad-1 :
+  type = SMD
+  shape = Rectangle(1.550, 0.300)
+  ocdb/utils/landpatterns/apply-soldermask(0.1016)
+  layer(Paste(Top)) = Rectangle(1.550, 0.300)
+
+pcb-pad rect-smd-pad-2 :
+  type = SMD
+  shape = Rectangle(2.750, 1.200)
+  ocdb/utils/landpatterns/apply-soldermask(0.1016)
+  layer(Paste(Top)) = Rectangle(2.750, 1.200)
+
+public pcb-landpattern lp_1-2199230-6 :
+  pad MH1 : oval-th-pad-1 at loc(-10.000, -1.500) on Top
+  pad MH2 : oval-th-pad-2 at loc(10.000, -1.500) on Top
+  pad MP1 : rect-smd-pad-2 at loc(-10.350, 3.000, 90.000) on Top
+  pad MP2 : rect-smd-pad-2 at loc(10.350, 3.000, 90.000) on Top
+  pad p[1] : rect-smd-pad-1 at loc(-9.250, 3.775, 90.000) on Top
+  pad p[2] : rect-smd-pad-1 at loc(-9.000, -3.775, 90.000) on Top
+  pad p[3] : rect-smd-pad-1 at loc(-8.750, 3.775, 90.000) on Top
+  pad p[4] : rect-smd-pad-1 at loc(-8.500, -3.775, 90.000) on Top
+  pad p[5] : rect-smd-pad-1 at loc(-8.250, 3.775, 90.000) on Top
+  pad p[6] : rect-smd-pad-1 at loc(-8.000, -3.775, 90.000) on Top
+  pad p[7] : rect-smd-pad-1 at loc(-7.750, 3.775, 90.000) on Top
+  pad p[8] : rect-smd-pad-1 at loc(-7.500, -3.775, 90.000) on Top
+  pad p[9] : rect-smd-pad-1 at loc(-7.250, 3.775, 90.000) on Top
+  pad p[10] : rect-smd-pad-1 at loc(-7.000, -3.775, 90.000) on Top
+  pad p[11] : rect-smd-pad-1 at loc(-6.750, 3.775, 90.000) on Top
+  pad p[12] : rect-smd-pad-1 at loc(-6.500, -3.775, 90.000) on Top
+  pad p[13] : rect-smd-pad-1 at loc(-6.250, 3.775, 90.000) on Top
+  pad p[14] : rect-smd-pad-1 at loc(-6.000, -3.775, 90.000) on Top
+  pad p[15] : rect-smd-pad-1 at loc(-5.750, 3.775, 90.000) on Top
+  pad p[16] : rect-smd-pad-1 at loc(-5.500, -3.775, 90.000) on Top
+  pad p[17] : rect-smd-pad-1 at loc(-5.250, 3.775, 90.000) on Top
+  pad p[18] : rect-smd-pad-1 at loc(-5.000, -3.775, 90.000) on Top
+  pad p[19] : rect-smd-pad-1 at loc(-4.750, 3.775, 90.000) on Top
+  pad p[20] : rect-smd-pad-1 at loc(-4.500, -3.775, 90.000) on Top
+  pad p[21] : rect-smd-pad-1 at loc(-4.250, 3.775, 90.000) on Top
+  pad p[22] : rect-smd-pad-1 at loc(-4.000, -3.775, 90.000) on Top
+  pad p[23] : rect-smd-pad-1 at loc(-3.750, 3.775, 90.000) on Top
+  pad p[24] : rect-smd-pad-1 at loc(-3.500, -3.775, 90.000) on Top
+  pad p[25] : rect-smd-pad-1 at loc(-3.250, 3.775, 90.000) on Top
+  pad p[26] : rect-smd-pad-1 at loc(-3.000, -3.775, 90.000) on Top
+  pad p[27] : rect-smd-pad-1 at loc(-2.750, 3.775, 90.000) on Top
+  pad p[28] : rect-smd-pad-1 at loc(-2.500, -3.775, 90.000) on Top
+  pad p[29] : rect-smd-pad-1 at loc(-2.250, 3.775, 90.000) on Top
+  pad p[30] : rect-smd-pad-1 at loc(-2.000, -3.775, 90.000) on Top
+  pad p[31] : rect-smd-pad-1 at loc(-1.750, 3.775, 90.000) on Top
+  pad p[32] : rect-smd-pad-1 at loc(-1.500, -3.775, 90.000) on Top
+  pad p[33] : rect-smd-pad-1 at loc(-1.250, 3.775, 90.000) on Top
+  pad p[34] : rect-smd-pad-1 at loc(-1.000, -3.775, 90.000) on Top
+  pad p[35] : rect-smd-pad-1 at loc(-0.750, 3.775, 90.000) on Top
+  pad p[36] : rect-smd-pad-1 at loc(-0.500, -3.775, 90.000) on Top
+  pad p[37] : rect-smd-pad-1 at loc(-0.250, 3.775, 90.000) on Top
+  pad p[38] : rect-smd-pad-1 at loc(0.0, -3.775, 90.000) on Top
+  pad p[39] : rect-smd-pad-1 at loc(0.250, 3.775, 90.000) on Top
+  pad p[40] : rect-smd-pad-1 at loc(0.500, -3.775, 90.000) on Top
+  pad p[41] : rect-smd-pad-1 at loc(0.750, 3.775, 90.000) on Top
+  pad p[42] : rect-smd-pad-1 at loc(1.000, -3.775, 90.000) on Top
+  pad p[43] : rect-smd-pad-1 at loc(1.270, 3.556, 90.000) on Top
+  pad p[44] : rect-smd-pad-1 at loc(1.500, -3.775, 90.000) on Top
+  pad p[45] : rect-smd-pad-1 at loc(1.750, 3.775, 90.000) on Top
+  pad p[46] : rect-smd-pad-1 at loc(2.000, -3.775, 90.000) on Top
+  pad p[47] : rect-smd-pad-1 at loc(2.250, 3.775, 90.000) on Top
+  pad p[48] : rect-smd-pad-1 at loc(2.500, -3.775, 90.000) on Top
+  pad p[49] : rect-smd-pad-1 at loc(2.750, 3.775, 90.000) on Top
+  pad p[50] : rect-smd-pad-1 at loc(3.000, -3.775, 90.000) on Top
+  pad p[51] : rect-smd-pad-1 at loc(3.250, 3.775, 90.000) on Top
+  pad p[52] : rect-smd-pad-1 at loc(3.500, -3.775, 90.000) on Top
+  pad p[53] : rect-smd-pad-1 at loc(3.750, 3.775, 90.000) on Top
+  pad p[54] : rect-smd-pad-1 at loc(4.000, -3.775, 90.000) on Top
+  pad p[55] : rect-smd-pad-1 at loc(4.250, 3.775, 90.000) on Top
+  pad p[56] : rect-smd-pad-1 at loc(4.500, -3.775, 90.000) on Top
+  pad p[57] : rect-smd-pad-1 at loc(4.750, 3.775, 90.000) on Top
+  pad p[58] : rect-smd-pad-1 at loc(5.000, -3.775, 90.000) on Top
+  pad p[67] : rect-smd-pad-1 at loc(7.250, 3.775, 90.000) on Top
+  pad p[68] : rect-smd-pad-1 at loc(7.500, -3.775, 90.000) on Top
+  pad p[69] : rect-smd-pad-1 at loc(7.750, 3.775, 90.000) on Top
+  pad p[70] : rect-smd-pad-1 at loc(8.000, -3.775, 90.000) on Top
+  pad p[71] : rect-smd-pad-1 at loc(8.250, 3.775, 90.000) on Top
+  pad p[72] : rect-smd-pad-1 at loc(8.500, -3.775, 90.000) on Top
+  pad p[73] : rect-smd-pad-1 at loc(8.750, 3.775, 90.000) on Top
+  pad p[74] : rect-smd-pad-1 at loc(9.000, -3.775, 90.000) on Top
+  pad p[75] : rect-smd-pad-1 at loc(9.250, 3.775, 90.000) on Top
+
+  layer(CustomLayer("Mechanical 15", Top)) = Line(0.254, [Point(-10.950, -3.875), Point(-10.950, 3.875)])
+  layer(CustomLayer("Mechanical 15", Top)) = Line(0.254, [Point(-10.950, -3.875), Point(10.950, -3.875)])
+  layer(CustomLayer("Mechanical 15", Top)) = Line(0.254, [Point(-10.950, 3.875), Point(10.950, 3.875)])
+  layer(CustomLayer("Mechanical 15", Top)) = Line(0.254, [Point(10.950, -3.875), Point(10.950, 3.875)])
+  layer(CustomLayer("Mechanical 20", Top)) = Line(0.100, [Point(-11.950, -5.550), Point(-11.950, 6.104)])
+  layer(CustomLayer("Mechanical 20", Top)) = Line(0.100, [Point(-11.950, -5.550), Point(12.225, -5.550)])
+  layer(CustomLayer("Mechanical 20", Top)) = Line(0.100, [Point(-11.950, 6.104), Point(12.225, 6.104)])
+  layer(CustomLayer("Mechanical 20", Top)) = Line(0.100, [Point(12.225, -5.550), Point(12.225, 6.104)])
+  layer(Silkscreen("F-SilkS", Top)) = Polyline(0.072, [
+    Arc(-9.234, 5.068, 0.036, 180.000, 180.000)])
+  layer(Silkscreen("F-SilkS", Top)) = Polyline(0.072, [
+    Arc(-9.234, 5.068, 0.036, 0.0, 180.000)])
+  layer(Silkscreen("F-SilkS", Top)) = Text(">REF", 2.286, SW, loc(13.043, 5.906, 270.000), "Arial", StrokeFont, false, false)
+
+  model3d = Model3D("../../3d-models/c-1-2199230-6-b3-3d_g9E220D11.STEP",
+    Vec3D(-0.028, -4.159, 2.540),
+    Vec3D(1.000, 1.000, 1.000),
+    Vec3D(270.000, 0.0, 0.0),
+    ["ModelSource" => "0" "ModelType" => "1" "BodyLayerId" => "58" "BodyColor3D" => "8421504" "BodyProjection" => "0" "BodyOverallHeight" => "4.425" "BodyStandoffHeight" => "-0.275" "BodyOpacity3D" => "1.0" "IsEmbed" => "true" "OverrideColor" => "false" "BodyIdentifier" => "c-1-2199230-6-b3-3d"],
+    )
+
+
+public pcb-component component :
+  port REFCLK : diff-pair
+  port LANE : lane-pair[4]
+
+  mpn = "1-2199230-6"
+  reference-prefix = "J"
+  pin-properties :
+    [pin:Ref | pads:Ref ... | side:Dir]
+    [CONFIG_3 | p[1] | Left]
+    [GND[0] | p[3] | Right]
+    [LANE[3].RX.N | p[5] | Left]
+    [LANE[3].RX.P | p[7] | Left]
+    [GND[1] | p[9] | Right]
+    [LANE[3].TX.N | p[11] | Left]
+    [LANE[3].TX.P | p[13] | Left]
+    [GND[2] | p[15] | Right]
+    [LANE[2].RX.N | p[17] | Left]
+    [LANE[2].RX.P | p[19] | Left]
+    [CONFIG_0 | p[21] | Right]
+    [LANE[2].TX.N | p[23] | Left]
+    [LANE[2].TX.P | p[25] | Left]
+    [LANE[1].RX.N | p[29] | Left]
+    [LANE[1].RX.P | p[31] | Left]
+    [GND[3] | p[33] | Right]
+    [LANE[1].TX.N | p[35] | Left]
+    [LANE[1].TX.P | p[37] | Left]
+    [GND[4] | p[39] | Right]
+    [LANE[0].RX.N | p[41] | Left]
+    [LANE[0].RX.P | p[43] | Left]
+    [GND[5] | p[45] | Right]
+    [LANE[0].TX.N | p[47] | Left]
+    [LANE[0].TX.P | p[49] | Left]
+    [GND[6] | p[51] | Right]
+    [REFCLK.N | p[53] | Left]
+    [REFCLK.P | p[55] | Left]
+    [GND[7] | p[57] | Right]
+    [NC[0] | p[67] | Right]
+    [CONFIG_1 | p[69] | Left]
+    [GND[8] | p[71] | Right]
+    [GND[9] | p[73] | Right]
+    [CONFIG_2 | p[75] | Left]
+    [V_3V3[0] | p[2] | Left]
+    [V_3V3[1] | p[4] | Left]
+    [NC[1] | p[6] | Right]
+    [NC[2] | p[8] | Right]
+    [DAS_DSS | p[10] | Left]
+    [V_3V3[2] | p[12] | Left]
+    [V_3V3[3] | p[14] | Left]
+    [V_3V3[4] | p[16] | Left]
+    [V_3V3[5] | p[18] | Left]
+    [NC[3] | p[20] | Right]
+    [NC[4] | p[22] | Right]
+    [NC[5] | p[24] | Right]
+    [NC[6] | p[26] | Right]
+    [NC[7] | p[28] | Right]
+    [NC[8] | p[30] | Right]
+    [NC[9] | p[32] | Right]
+    [NC[10] | p[34] | Right]
+    [NC[11] | p[36] | Right]
+    [DEVSLP | p[38] | Right]
+    [NC[12] | p[40] | Right]
+    [NC[13] | p[42] | Right]
+    [NC[14] | p[44] | Right]
+    [NC[15] | p[46] | Right]
+    [NC[16] | p[48] | Right]
+    [PERST# | p[50] | Left]
+    [CLKREQ# | p[52] | Left]
+    [PEWAKE# | p[54] | Left]
+    [MFG1 | p[56] | Left]
+    [MFG2 | p[58] | Left]
+    [SUSCLK | p[68] | Left]
+    [V_3V3[6] | p[70] | Left]
+    [V_3V3[7] | p[72] | Left]
+    [V_3V3[8] | p[74] | Left]
+    [SHIELD[0] | MP1 | Right]
+    [SHIELD[1] | MP2 | Right]
+
+  
+
+  val box = BoxSymbol(self)
+
+  assign-symbol $ create-symbol(box)
+
+  assign-landpattern(lp_1-2199230-6)
+  ; assign-symbol(_1-2199230-6)
+
+  property(self.Digi-Key_Part_Number) = "A118046TR-ND"
+  property(self.manufacturer) = "TE Connectivity"
+
+  
+  for i in 0 to 4 do :
+    diff-pin-model(self.LANE[i].TX.P, LANE[i].TX.N,       delay = typ(10.0e-15) loss = typ(0.1))
+    diff-pin-model(self.LANE[i].RX.P, LANE[i].RX.N,       delay = typ(10.0e-15) loss = typ(0.1))
+
+  diff-pin-model(self.REFCLK.P, self.REFCLK.N, delay = typ(10.0e-15) loss = typ(0.1))
+
+; doc: \<DOC>
+; HelLANEr function for creating the necessary PCIe Supports Statements
+
+; The user must pass a bundle type, such as `pcie-std(<N>)` and
+; this will construct a supports statement that will connect
+; the bundle ports to the predefined `self.sw` instance of the 
+; `compponent` connector.
+; <DOC>
+; defn connect_lanes (b:Bundle):
+;   inside pcb-module:
+;     supports b:
+;       for i in indices(b.data.lane) do :
+;         b.data.lane[i].RX.P => self.sw.LANE[i].RX.P
+;         b.data.lane[i].RX.N => self.sw.LANE[i].RX.N
+;         b.data.lane[i].TX.P => self.sw.LANE[i].TX.P
+;         b.data.lane[i].TX.N => self.sw.LANE[i].TX.N
+;       b.data.refclk.P => self.sw.REFCLK.P
+;       b.data.refclk.N => self.sw.REFCLK.N
+
+;       b.control.PEWAKE# => self.sw.PEWAKE#
+;       b.control.PERST#  => self.sw.PERST#
+;       b.control.CLKREQ# => self.sw.CLKREQ#
+
+;       if has-PRSNT#(b):
+;         b.control.PRSNT#  => self.sw.PRSNT#
+
+
+doc: \<DOC>
+PCIe Connector Module with Exposed Pin-Assigned PCIe ports
+
+User must use:
+
+```
+inst dut : jsl/examples/protocols/pcie/pcie-conn/module
+require pcie-1x:pcie-std(1) from dut
+```
+
+To access one of the PCIe interface.
+<DOC>
+public pcb-module module :
+
+  public inst sw : component
+
+  ; val bundle-types = [
+  ;   pcie-std(4),
+  ;   pcie-std(2),
+  ;   pcie-std(1),
+  ;   ; pcie-with-hotplug(4),
+  ;   ; pcie-with-hotplug(2),
+  ;   ; pcie-with-hotplug(1),
+  ; ]
+
+  ; for btype in bundle-types do:
+  ;   connect_lanes(btype)
+
+; public pcb-module module :
+  port vdd_3v3
+  port gnd
+  port shield
+
+  net V_3V3 (vdd_3v3)
+  net GND (gnd)
+  net SHIELD (shield)
+
+  ; public inst sw : component
+
+  for g in pins(sw.V_3V3) do :
+    net (V_3V3 g)
+
+  for g in pins(sw.GND) do :
+    net (GND g)
+
+  for g in pins(sw.SHIELD) do :
+    net (SHIELD g)
+
+  
+  val bd-4x = pcie(4)
+  supports bd-4x :
+    for i in 0 to 4 do :
+      bd-4x.data.lane[i].RX.P => sw.LANE[i].RX.P
+      bd-4x.data.lane[i].RX.N => sw.LANE[i].RX.N
+      bd-4x.data.lane[i].TX.P => sw.LANE[i].TX.P
+      bd-4x.data.lane[i].TX.N => sw.LANE[i].TX.N
+    bd-4x.data.refclk.P => sw.REFCLK.P
+    bd-4x.data.refclk.N => sw.REFCLK.N
+
+    bd-4x.control.CLKREQ# => sw.CLKREQ#
+    bd-4x.control.PEWAKE# => sw.PEWAKE#
+    bd-4x.control.PERST#  => sw.PERST#
+
+  val bd-2x = pcie(2)
+  supports bd-2x :
+    for i in 0 to 2 do :
+      bd-2x.data.lane[i].RX.P => sw.LANE[i].RX.P
+      bd-2x.data.lane[i].RX.N => sw.LANE[i].RX.N
+      bd-2x.data.lane[i].TX.P => sw.LANE[i].TX.P
+      bd-2x.data.lane[i].TX.N => sw.LANE[i].TX.N
+
+    bd-2x.data.refclk.P => sw.REFCLK.P
+    bd-2x.data.refclk.N => sw.REFCLK.N
+
+    bd-2x.control.CLKREQ# => sw.CLKREQ#
+    bd-2x.control.PEWAKE# => sw.PEWAKE#
+    bd-2x.control.PERST#  => sw.PERST#
+
+
+  val bd-1x = pcie(1)
+  supports bd-1x :
+    bd-1x.data.lane[0].RX.P => sw.LANE[0].RX.P
+    bd-1x.data.lane[0].RX.N => sw.LANE[0].RX.N
+    bd-1x.data.lane[0].TX.P => sw.LANE[0].TX.P
+    bd-1x.data.lane[0].TX.N => sw.LANE[0].TX.N
+      
+    bd-1x.data.refclk.P => sw.REFCLK.P
+    bd-1x.data.refclk.N => sw.REFCLK.N
+
+    bd-1x.control.CLKREQ# => sw.CLKREQ#
+    bd-1x.control.PEWAKE# => sw.PEWAKE#
+    bd-1x.control.PERST#  => sw.PERST#

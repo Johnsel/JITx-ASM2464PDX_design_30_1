@@ -1,0 +1,1054 @@
+#use-added-syntax(jitx)
+defpackage ASM001/components/TE_2388749-1 :
+  import core
+  import jitx
+  import jitx/commands
+  import jitx/parts
+
+  import jsl
+  
+  import collections
+  import ocdb/utils/box-symbol
+  import jsl/bundles
+  import jsl/protocols
+  import jsl/si/helpers
+
+  import jsl/pin-assignment
+  import jsl/protocols/pcie
+
+
+pcb-pad oval-th-pad-1 :
+  type = TH
+  shape = Capsule(2.116, 1.058, loc(0.0, 0.0))
+  ocdb/utils/landpatterns/apply-soldermask(0.0)
+  layer(Cutout()) = Capsule(1.65, 0.55, loc(0.0, 0.0))
+
+pcb-pad oval-th-pad-2 :
+  type = TH
+  shape = Capsule(2.316, 1.158, loc(0.0, 0.0))
+  ocdb/utils/landpatterns/apply-soldermask(0.0)
+  layer(Cutout()) = Capsule(1.65, 0.65, loc(0.0, 0.0))
+
+pcb-pad rect-smd-pad :
+  type = SMD
+  shape = Rectangle(0.254, 0.900)
+  ocdb/utils/landpatterns/apply-soldermask(0.1016)
+  layer(Paste(Top)) = Rectangle(0.254, 0.900)
+
+public pcb-landpattern TE_2388749-1 :
+  pad A[1] : rect-smd-pad at loc(-2.625, 1.800) on Top
+  pad A[10] : rect-smd-pad at loc(1.875, 1.800) on Top
+  pad A[11] : rect-smd-pad at loc(2.375, 1.800) on Top
+  pad A[12] : rect-smd-pad at loc(2.875, 1.800) on Top
+  pad A[2] : rect-smd-pad at loc(-2.125, 1.800) on Top
+  pad A[3] : rect-smd-pad at loc(-1.625, 1.800) on Top
+  pad A[4] : rect-smd-pad at loc(-1.125, 1.800) on Top
+  pad A[5] : rect-smd-pad at loc(-0.625, 1.800) on Top
+  pad A[6] : rect-smd-pad at loc(-0.125, 1.800) on Top
+  pad A[7] : rect-smd-pad at loc(0.375, 1.800) on Top
+  pad A[8] : rect-smd-pad at loc(0.875, 1.800) on Top
+  pad A[9] : rect-smd-pad at loc(1.375, 1.800) on Top
+  pad B[1] : rect-smd-pad at loc(2.625, -0.100) on Top
+  pad B[10] : rect-smd-pad at loc(-1.875, -0.100) on Top
+  pad B[11] : rect-smd-pad at loc(-2.375, -0.100) on Top
+  pad B[12] : rect-smd-pad at loc(-2.875, -0.100) on Top
+  pad B[2] : rect-smd-pad at loc(2.125, -0.100) on Top
+  pad B[3] : rect-smd-pad at loc(1.625, -0.100) on Top
+  pad B[4] : rect-smd-pad at loc(1.125, -0.100) on Top
+  pad B[5] : rect-smd-pad at loc(0.625, -0.100) on Top
+  pad B[6] : rect-smd-pad at loc(0.125, -0.100) on Top
+  pad B[7] : rect-smd-pad at loc(-0.375, -0.100) on Top
+  pad B[8] : rect-smd-pad at loc(-0.875, -0.100) on Top
+  pad B[9] : rect-smd-pad at loc(-1.375, -0.100) on Top
+  pad S[1] : oval-th-pad-1 at loc(-5.100, -0.380, 90.000) on Top
+  pad S[2] : oval-th-pad-1 at loc(5.100, -0.380, 90.000) on Top
+  pad S[3] : oval-th-pad-2 at loc(-5.800, -5.050, 90.000) on Top
+  pad S[4] : oval-th-pad-2 at loc(5.800, -5.050, 90.000) on Top
+
+  layer(Courtyard(Top)) = Rectangle(0.840, 0.840, loc(-3.600, 0.0))
+  layer(Courtyard(Top)) = Rectangle(0.780, 0.780, loc(3.600, 0.0))
+  layer(Cutout()) = Circle(-3.600, 0.0, 0.420)
+  layer(SolderMask(Top)) = Circle(-3.600, 0.0, 0.420)
+  layer(SolderMask(Bottom)) = Circle(-3.600, 0.0, 0.420)
+  layer(Cutout()) = Circle(3.600, 0.0, 0.390)
+  layer(SolderMask(Top)) = Circle(3.600, 0.0, 0.390)
+  layer(SolderMask(Bottom)) = Circle(3.600, 0.0, 0.390)
+  layer(SolderMask(Top)) = Polygon([
+    Point(-5.722, -3.779)
+    Point(-5.644, -3.791)
+    Point(-5.568, -3.812)
+    Point(-5.495, -3.840)
+    Point(-5.425, -3.875)
+    Point(-5.359, -3.918)
+    Point(-5.298, -3.968)
+    Point(-5.243, -4.023)
+    Point(-5.193, -4.084)
+    Point(-5.150, -4.150)
+    Point(-5.115, -4.220)
+    Point(-5.087, -4.293)
+    Point(-5.066, -4.369)
+    Point(-5.054, -4.447)
+    Point(-5.050, -4.525)
+    Point(-5.050, -5.575)
+    Point(-5.054, -5.653)
+    Point(-5.066, -5.731)
+    Point(-5.087, -5.807)
+    Point(-5.115, -5.880)
+    Point(-5.150, -5.950)
+    Point(-5.193, -6.016)
+    Point(-5.243, -6.077)
+    Point(-5.298, -6.132)
+    Point(-5.359, -6.182)
+    Point(-5.425, -6.225)
+    Point(-5.495, -6.260)
+    Point(-5.568, -6.288)
+    Point(-5.644, -6.309)
+    Point(-5.722, -6.321)
+    Point(-5.800, -6.325)
+    Point(-5.878, -6.321)
+    Point(-5.956, -6.309)
+    Point(-6.032, -6.288)
+    Point(-6.105, -6.260)
+    Point(-6.175, -6.225)
+    Point(-6.241, -6.182)
+    Point(-6.302, -6.132)
+    Point(-6.357, -6.077)
+    Point(-6.407, -6.016)
+    Point(-6.450, -5.950)
+    Point(-6.485, -5.880)
+    Point(-6.513, -5.807)
+    Point(-6.534, -5.731)
+    Point(-6.546, -5.653)
+    Point(-6.550, -5.575)
+    Point(-6.550, -4.525)
+    Point(-6.546, -4.447)
+    Point(-6.534, -4.369)
+    Point(-6.513, -4.293)
+    Point(-6.485, -4.220)
+    Point(-6.450, -4.150)
+    Point(-6.407, -4.084)
+    Point(-6.357, -4.023)
+    Point(-6.302, -3.968)
+    Point(-6.241, -3.918)
+    Point(-6.175, -3.875)
+    Point(-6.105, -3.840)
+    Point(-6.032, -3.812)
+    Point(-5.956, -3.791)
+    Point(-5.878, -3.779)
+    Point(-5.800, -3.775)])
+  layer(SolderMask(Top)) = Polygon([
+    Point(-5.022, 0.891)
+    Point(-4.944, 0.879)
+    Point(-4.868, 0.858)
+    Point(-4.795, 0.830)
+    Point(-4.725, 0.795)
+    Point(-4.659, 0.752)
+    Point(-4.598, 0.702)
+    Point(-4.543, 0.647)
+    Point(-4.493, 0.586)
+    Point(-4.450, 0.520)
+    Point(-4.415, 0.450)
+    Point(-4.387, 0.377)
+    Point(-4.366, 0.301)
+    Point(-4.354, 0.223)
+    Point(-4.350, 0.145)
+    Point(-4.350, -0.905)
+    Point(-4.354, -0.983)
+    Point(-4.366, -1.061)
+    Point(-4.387, -1.137)
+    Point(-4.415, -1.210)
+    Point(-4.450, -1.280)
+    Point(-4.493, -1.346)
+    Point(-4.543, -1.407)
+    Point(-4.598, -1.462)
+    Point(-4.659, -1.512)
+    Point(-4.725, -1.555)
+    Point(-4.795, -1.590)
+    Point(-4.868, -1.618)
+    Point(-4.944, -1.639)
+    Point(-5.022, -1.651)
+    Point(-5.100, -1.655)
+    Point(-5.178, -1.651)
+    Point(-5.256, -1.639)
+    Point(-5.332, -1.618)
+    Point(-5.405, -1.590)
+    Point(-5.475, -1.555)
+    Point(-5.541, -1.512)
+    Point(-5.602, -1.462)
+    Point(-5.657, -1.407)
+    Point(-5.707, -1.346)
+    Point(-5.750, -1.280)
+    Point(-5.785, -1.210)
+    Point(-5.813, -1.137)
+    Point(-5.834, -1.061)
+    Point(-5.846, -0.983)
+    Point(-5.850, -0.905)
+    Point(-5.850, 0.145)
+    Point(-5.846, 0.223)
+    Point(-5.834, 0.301)
+    Point(-5.813, 0.377)
+    Point(-5.785, 0.450)
+    Point(-5.750, 0.520)
+    Point(-5.707, 0.586)
+    Point(-5.657, 0.647)
+    Point(-5.602, 0.702)
+    Point(-5.541, 0.752)
+    Point(-5.475, 0.795)
+    Point(-5.405, 0.830)
+    Point(-5.332, 0.858)
+    Point(-5.256, 0.879)
+    Point(-5.178, 0.891)
+    Point(-5.100, 0.895)])
+  layer(SolderMask(Top)) = Polygon([
+    Point(5.178, 0.891)
+    Point(5.256, 0.879)
+    Point(5.332, 0.858)
+    Point(5.405, 0.830)
+    Point(5.475, 0.795)
+    Point(5.541, 0.752)
+    Point(5.602, 0.702)
+    Point(5.657, 0.647)
+    Point(5.707, 0.586)
+    Point(5.750, 0.520)
+    Point(5.785, 0.450)
+    Point(5.813, 0.377)
+    Point(5.834, 0.301)
+    Point(5.846, 0.223)
+    Point(5.850, 0.145)
+    Point(5.850, -0.905)
+    Point(5.846, -0.983)
+    Point(5.834, -1.061)
+    Point(5.813, -1.137)
+    Point(5.785, -1.210)
+    Point(5.750, -1.280)
+    Point(5.707, -1.346)
+    Point(5.657, -1.407)
+    Point(5.602, -1.462)
+    Point(5.541, -1.512)
+    Point(5.475, -1.555)
+    Point(5.405, -1.590)
+    Point(5.332, -1.618)
+    Point(5.256, -1.639)
+    Point(5.178, -1.651)
+    Point(5.100, -1.655)
+    Point(5.022, -1.651)
+    Point(4.944, -1.639)
+    Point(4.868, -1.618)
+    Point(4.795, -1.590)
+    Point(4.725, -1.555)
+    Point(4.659, -1.512)
+    Point(4.598, -1.462)
+    Point(4.543, -1.407)
+    Point(4.493, -1.346)
+    Point(4.450, -1.280)
+    Point(4.415, -1.210)
+    Point(4.387, -1.137)
+    Point(4.366, -1.061)
+    Point(4.354, -0.983)
+    Point(4.350, -0.905)
+    Point(4.350, 0.145)
+    Point(4.354, 0.223)
+    Point(4.366, 0.301)
+    Point(4.387, 0.377)
+    Point(4.415, 0.450)
+    Point(4.450, 0.520)
+    Point(4.493, 0.586)
+    Point(4.543, 0.647)
+    Point(4.598, 0.702)
+    Point(4.659, 0.752)
+    Point(4.725, 0.795)
+    Point(4.795, 0.830)
+    Point(4.868, 0.858)
+    Point(4.944, 0.879)
+    Point(5.022, 0.891)
+    Point(5.100, 0.895)])
+  layer(SolderMask(Top)) = Polygon([
+    Point(5.878, -3.779)
+    Point(5.956, -3.791)
+    Point(6.032, -3.812)
+    Point(6.105, -3.840)
+    Point(6.175, -3.875)
+    Point(6.241, -3.918)
+    Point(6.302, -3.968)
+    Point(6.357, -4.023)
+    Point(6.407, -4.084)
+    Point(6.450, -4.150)
+    Point(6.485, -4.220)
+    Point(6.513, -4.293)
+    Point(6.534, -4.369)
+    Point(6.546, -4.447)
+    Point(6.550, -4.525)
+    Point(6.550, -5.575)
+    Point(6.546, -5.653)
+    Point(6.534, -5.731)
+    Point(6.513, -5.807)
+    Point(6.485, -5.880)
+    Point(6.450, -5.950)
+    Point(6.407, -6.016)
+    Point(6.357, -6.077)
+    Point(6.302, -6.132)
+    Point(6.241, -6.182)
+    Point(6.175, -6.225)
+    Point(6.105, -6.260)
+    Point(6.032, -6.288)
+    Point(5.956, -6.309)
+    Point(5.878, -6.321)
+    Point(5.800, -6.325)
+    Point(5.722, -6.321)
+    Point(5.644, -6.309)
+    Point(5.568, -6.288)
+    Point(5.495, -6.260)
+    Point(5.425, -6.225)
+    Point(5.359, -6.182)
+    Point(5.298, -6.132)
+    Point(5.243, -6.077)
+    Point(5.193, -6.016)
+    Point(5.150, -5.950)
+    Point(5.115, -5.880)
+    Point(5.087, -5.807)
+    Point(5.066, -5.731)
+    Point(5.054, -5.653)
+    Point(5.050, -5.575)
+    Point(5.050, -4.525)
+    Point(5.054, -4.447)
+    Point(5.066, -4.369)
+    Point(5.087, -4.293)
+    Point(5.115, -4.220)
+    Point(5.150, -4.150)
+    Point(5.193, -4.084)
+    Point(5.243, -4.023)
+    Point(5.298, -3.968)
+    Point(5.359, -3.918)
+    Point(5.425, -3.875)
+    Point(5.495, -3.840)
+    Point(5.568, -3.812)
+    Point(5.644, -3.791)
+    Point(5.722, -3.779)
+    Point(5.800, -3.775)])
+  layer(SolderMask(Bottom)) = Polygon([
+    Point(-5.722, -3.779)
+    Point(-5.644, -3.791)
+    Point(-5.568, -3.812)
+    Point(-5.495, -3.840)
+    Point(-5.425, -3.875)
+    Point(-5.359, -3.918)
+    Point(-5.298, -3.968)
+    Point(-5.243, -4.023)
+    Point(-5.193, -4.084)
+    Point(-5.150, -4.150)
+    Point(-5.115, -4.220)
+    Point(-5.087, -4.293)
+    Point(-5.066, -4.369)
+    Point(-5.054, -4.447)
+    Point(-5.050, -4.525)
+    Point(-5.050, -5.575)
+    Point(-5.054, -5.653)
+    Point(-5.066, -5.731)
+    Point(-5.087, -5.807)
+    Point(-5.115, -5.880)
+    Point(-5.150, -5.950)
+    Point(-5.193, -6.016)
+    Point(-5.243, -6.077)
+    Point(-5.298, -6.132)
+    Point(-5.359, -6.182)
+    Point(-5.425, -6.225)
+    Point(-5.495, -6.260)
+    Point(-5.568, -6.288)
+    Point(-5.644, -6.309)
+    Point(-5.722, -6.321)
+    Point(-5.800, -6.325)
+    Point(-5.878, -6.321)
+    Point(-5.956, -6.309)
+    Point(-6.032, -6.288)
+    Point(-6.105, -6.260)
+    Point(-6.175, -6.225)
+    Point(-6.241, -6.182)
+    Point(-6.302, -6.132)
+    Point(-6.357, -6.077)
+    Point(-6.407, -6.016)
+    Point(-6.450, -5.950)
+    Point(-6.485, -5.880)
+    Point(-6.513, -5.807)
+    Point(-6.534, -5.731)
+    Point(-6.546, -5.653)
+    Point(-6.550, -5.575)
+    Point(-6.550, -4.525)
+    Point(-6.546, -4.447)
+    Point(-6.534, -4.369)
+    Point(-6.513, -4.293)
+    Point(-6.485, -4.220)
+    Point(-6.450, -4.150)
+    Point(-6.407, -4.084)
+    Point(-6.357, -4.023)
+    Point(-6.302, -3.968)
+    Point(-6.241, -3.918)
+    Point(-6.175, -3.875)
+    Point(-6.105, -3.840)
+    Point(-6.032, -3.812)
+    Point(-5.956, -3.791)
+    Point(-5.878, -3.779)
+    Point(-5.800, -3.775)])
+  layer(SolderMask(Bottom)) = Polygon([
+    Point(-5.022, 0.891)
+    Point(-4.944, 0.879)
+    Point(-4.868, 0.858)
+    Point(-4.795, 0.830)
+    Point(-4.725, 0.795)
+    Point(-4.659, 0.752)
+    Point(-4.598, 0.702)
+    Point(-4.543, 0.647)
+    Point(-4.493, 0.586)
+    Point(-4.450, 0.520)
+    Point(-4.415, 0.450)
+    Point(-4.387, 0.377)
+    Point(-4.366, 0.301)
+    Point(-4.354, 0.223)
+    Point(-4.350, 0.145)
+    Point(-4.350, -0.905)
+    Point(-4.354, -0.983)
+    Point(-4.366, -1.061)
+    Point(-4.387, -1.137)
+    Point(-4.415, -1.210)
+    Point(-4.450, -1.280)
+    Point(-4.493, -1.346)
+    Point(-4.543, -1.407)
+    Point(-4.598, -1.462)
+    Point(-4.659, -1.512)
+    Point(-4.725, -1.555)
+    Point(-4.795, -1.590)
+    Point(-4.868, -1.618)
+    Point(-4.944, -1.639)
+    Point(-5.022, -1.651)
+    Point(-5.100, -1.655)
+    Point(-5.178, -1.651)
+    Point(-5.256, -1.639)
+    Point(-5.332, -1.618)
+    Point(-5.405, -1.590)
+    Point(-5.475, -1.555)
+    Point(-5.541, -1.512)
+    Point(-5.602, -1.462)
+    Point(-5.657, -1.407)
+    Point(-5.707, -1.346)
+    Point(-5.750, -1.280)
+    Point(-5.785, -1.210)
+    Point(-5.813, -1.137)
+    Point(-5.834, -1.061)
+    Point(-5.846, -0.983)
+    Point(-5.850, -0.905)
+    Point(-5.850, 0.145)
+    Point(-5.846, 0.223)
+    Point(-5.834, 0.301)
+    Point(-5.813, 0.377)
+    Point(-5.785, 0.450)
+    Point(-5.750, 0.520)
+    Point(-5.707, 0.586)
+    Point(-5.657, 0.647)
+    Point(-5.602, 0.702)
+    Point(-5.541, 0.752)
+    Point(-5.475, 0.795)
+    Point(-5.405, 0.830)
+    Point(-5.332, 0.858)
+    Point(-5.256, 0.879)
+    Point(-5.178, 0.891)
+    Point(-5.100, 0.895)])
+  layer(SolderMask(Bottom)) = Polygon([
+    Point(5.178, 0.891)
+    Point(5.256, 0.879)
+    Point(5.332, 0.858)
+    Point(5.405, 0.830)
+    Point(5.475, 0.795)
+    Point(5.541, 0.752)
+    Point(5.602, 0.702)
+    Point(5.657, 0.647)
+    Point(5.707, 0.586)
+    Point(5.750, 0.520)
+    Point(5.785, 0.450)
+    Point(5.813, 0.377)
+    Point(5.834, 0.301)
+    Point(5.846, 0.223)
+    Point(5.850, 0.145)
+    Point(5.850, -0.905)
+    Point(5.846, -0.983)
+    Point(5.834, -1.061)
+    Point(5.813, -1.137)
+    Point(5.785, -1.210)
+    Point(5.750, -1.280)
+    Point(5.707, -1.346)
+    Point(5.657, -1.407)
+    Point(5.602, -1.462)
+    Point(5.541, -1.512)
+    Point(5.475, -1.555)
+    Point(5.405, -1.590)
+    Point(5.332, -1.618)
+    Point(5.256, -1.639)
+    Point(5.178, -1.651)
+    Point(5.100, -1.655)
+    Point(5.022, -1.651)
+    Point(4.944, -1.639)
+    Point(4.868, -1.618)
+    Point(4.795, -1.590)
+    Point(4.725, -1.555)
+    Point(4.659, -1.512)
+    Point(4.598, -1.462)
+    Point(4.543, -1.407)
+    Point(4.493, -1.346)
+    Point(4.450, -1.280)
+    Point(4.415, -1.210)
+    Point(4.387, -1.137)
+    Point(4.366, -1.061)
+    Point(4.354, -0.983)
+    Point(4.350, -0.905)
+    Point(4.350, 0.145)
+    Point(4.354, 0.223)
+    Point(4.366, 0.301)
+    Point(4.387, 0.377)
+    Point(4.415, 0.450)
+    Point(4.450, 0.520)
+    Point(4.493, 0.586)
+    Point(4.543, 0.647)
+    Point(4.598, 0.702)
+    Point(4.659, 0.752)
+    Point(4.725, 0.795)
+    Point(4.795, 0.830)
+    Point(4.868, 0.858)
+    Point(4.944, 0.879)
+    Point(5.022, 0.891)
+    Point(5.100, 0.895)])
+  layer(SolderMask(Bottom)) = Polygon([
+    Point(5.878, -3.779)
+    Point(5.956, -3.791)
+    Point(6.032, -3.812)
+    Point(6.105, -3.840)
+    Point(6.175, -3.875)
+    Point(6.241, -3.918)
+    Point(6.302, -3.968)
+    Point(6.357, -4.023)
+    Point(6.407, -4.084)
+    Point(6.450, -4.150)
+    Point(6.485, -4.220)
+    Point(6.513, -4.293)
+    Point(6.534, -4.369)
+    Point(6.546, -4.447)
+    Point(6.550, -4.525)
+    Point(6.550, -5.575)
+    Point(6.546, -5.653)
+    Point(6.534, -5.731)
+    Point(6.513, -5.807)
+    Point(6.485, -5.880)
+    Point(6.450, -5.950)
+    Point(6.407, -6.016)
+    Point(6.357, -6.077)
+    Point(6.302, -6.132)
+    Point(6.241, -6.182)
+    Point(6.175, -6.225)
+    Point(6.105, -6.260)
+    Point(6.032, -6.288)
+    Point(5.956, -6.309)
+    Point(5.878, -6.321)
+    Point(5.800, -6.325)
+    Point(5.722, -6.321)
+    Point(5.644, -6.309)
+    Point(5.568, -6.288)
+    Point(5.495, -6.260)
+    Point(5.425, -6.225)
+    Point(5.359, -6.182)
+    Point(5.298, -6.132)
+    Point(5.243, -6.077)
+    Point(5.193, -6.016)
+    Point(5.150, -5.950)
+    Point(5.115, -5.880)
+    Point(5.087, -5.807)
+    Point(5.066, -5.731)
+    Point(5.054, -5.653)
+    Point(5.050, -5.575)
+    Point(5.050, -4.525)
+    Point(5.054, -4.447)
+    Point(5.066, -4.369)
+    Point(5.087, -4.293)
+    Point(5.115, -4.220)
+    Point(5.150, -4.150)
+    Point(5.193, -4.084)
+    Point(5.243, -4.023)
+    Point(5.298, -3.968)
+    Point(5.359, -3.918)
+    Point(5.425, -3.875)
+    Point(5.495, -3.840)
+    Point(5.568, -3.812)
+    Point(5.644, -3.791)
+    Point(5.722, -3.779)
+    Point(5.800, -3.775)])
+
+  model3d = Model3D("../../3d-models/TE_2388749-1_g76A1E4C8.STEP",
+    Vec3D(0.0, 0.0, 0.0),
+    Vec3D(1.000, 1.000, 1.000),
+    Vec3D(270.000, 0.0, 0.0),
+    ["ModelSource" => "0" "ModelType" => "1" "BodyLayerId" => "69" "BodyColor3D" => "8421504" "BodyProjection" => "0" "BodyOverallHeight" => "1.78" "BodyStandoffHeight" => "-2.1" "BodyOpacity3D" => "1.0" "IsEmbed" => "true" "OverrideColor" => "false" "BodyIdentifier" => ""],
+    )
+
+public pcb-symbol _2388749-1 :
+  pin VBUS[0] at Point(-12.700, 12.700) with :
+    direction = Left
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+  pin VBUS[1] at Point(-12.700, 10.160) with :
+    direction = Left
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+  pin TX1.P at Point(-12.700, 7.620) with :
+    direction = Left
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+  pin TX1.N at Point(-12.700, 5.080) with :
+    direction = Left
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+  pin CC1 at Point(-12.700, 2.540) with :
+    direction = Left
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+  pin D0.P at Point(-12.700, 0.0) with :
+    direction = Left
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+  pin D0.N at Point(-12.700, -2.540) with :
+    direction = Left
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+  pin SBU1 at Point(-12.700, -5.080) with :
+    direction = Left
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+  pin TX2.N at Point(-12.700, -7.620) with :
+    direction = Left
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+  pin TX2.P at Point(-12.700, -10.160) with :
+    direction = Left
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+  pin GND[0] at Point(-12.700, -12.700) with :
+    direction = Left
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+  pin GND[1] at Point(-12.700, -15.240) with :
+    direction = Left
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+  pin SHIELD at Point(-12.700, -20.320) with :
+    direction = Left
+    length = 5.080
+    number-size = 1.270    
+    name-size = 1.270
+  pin VBUS[2] at Point(12.700, 12.700) with :
+    direction = Right
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+  pin VBUS[3] at Point(12.700, 10.160) with :
+    direction = Right
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+  pin RX1.P at Point(12.700, 7.620) with :
+    direction = Right
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+  pin RX1.N at Point(12.700, 5.080) with :
+    direction = Right
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+  pin SBU2 at Point(12.700, 2.540) with :
+    direction = Right
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+  pin D1.N at Point(12.700, 0.0) with :
+    direction = Right
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+  pin D1.P at Point(12.700, -2.540) with :
+    direction = Right
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+  pin CC2 at Point(12.700, -5.080) with :
+    direction = Right
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+  pin RX2.N at Point(12.700, -7.620) with :
+    direction = Right
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+  pin RX2.P at Point(12.700, -10.160) with :
+    direction = Right
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+  pin GND[2] at Point(12.700, -12.700) with :
+    direction = Right
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+  pin GND[3] at Point(12.700, -15.240) with :
+    direction = Right
+    length = 5.080
+    number-size = 1.270
+    name-size = 1.270
+
+
+public pcb-component conn-component :
+  description = "USB4 Type-C SMD Connectors ROHS"
+  manufacturer = "TE"
+  mpn = "2388749-1"
+  reference-prefix = "J"
+
+  property(self.rated-temperature) = min-max(-40.0, 105.0)
+
+  port TX1 : diff-pair
+  port TX2 : diff-pair
+
+  port RX1 : diff-pair
+  port RX2 : diff-pair
+
+  port D0 : diff-pair
+  port D1 : diff-pair
+
+  pin-properties :
+    [pin:Ref | pads:Ref ... | side:Dir | bank:Ref | row:Int ]
+
+    [VBUS[0] | A[4] | Right | A-side | 0]
+    [VBUS[1] | A[9] | Right | A-side | 0]
+    [VBUS[2] | B[9] | Right | B-side | 0]
+    [VBUS[3] | B[4] | Right | B-side | 0]
+
+    [D0.P | A[6] | Left | A-side | 1]
+    [D0.N | A[7] | Left | A-side | 1]
+
+    [TX1.P | A[2] | Left | A-side | 1]
+    [TX1.N | A[3] | Left | A-side | 1]
+
+    [RX1.P | B[11] | Left | A-side | 1]
+    [RX1.N | B[10] | Left | A-side | 1]
+
+    [CC1 | A[5] | Left | A-side | 1]
+    [SBU1 | A[8] | Left | A-side | 1]
+
+    [D1.P | B[6] | Left | B-side | 1]
+    [D1.N | B[7] | Left | B-side | 1]
+
+    [TX2.P | B[2] | Left | B-side | 1]
+    [TX2.N | B[3] | Left | B-side | 1]
+
+    [RX2.P | A[11] | Left | B-side | 1]
+    [RX2.N | A[10] | Left | B-side | 1]
+
+    [CC2 | B[5] | Left | B-side | 1]
+    [SBU2 | B[8] | Left | B-side | 1]
+
+    [GND[0] | A[1] | Left | A-side | 2]
+    [GND[1] | A[12] | Left | A-side | 2]
+    [GND[2] | B[12] | Left | B-side | 2]
+    [GND[3] | B[1] | Left | B-side | 2]
+
+    ; Shield
+    [SHIELD | S[1] S[2] S[3] S[4] | Right | A-side | 2]
+
+
+  val box = BoxSymbol(self)
+  set-grid(box, [3, 2], Ref("A-side"))
+  set-grid(box, [3, 2], Ref("B-side"))
+
+  set-alignment(N, self.VBUS)
+  set-alignment(S, self.GND)
+  set-alignment(S, self.SHIELD)
+
+  set-head-margin(0.5, self.TX1.P, self.TX2.P)
+  set-head-margin(0.5, self.RX1.P, self.RX2.P)
+  set-head-margin(0.5, self.CC1, self.CC2)
+
+  assign-symbols(
+    Ref("A-side") => box,
+    Ref("B-side") => box,
+  )
+
+  ; val pkg = USBTypeC-Pkg()
+  ; assign-landpattern $ create-landpattern(pkg)
+
+  diff-pin-model(self.D0, delay = typ(0.0))
+  diff-pin-model(self.D1, delay = typ(0.0))
+
+  diff-pin-model(self.TX1, delay = typ(0.0))
+  diff-pin-model(self.TX2, delay = typ(0.0))
+
+  diff-pin-model(self.RX1, delay = typ(0.0))
+  diff-pin-model(self.RX2, delay = typ(0.0))
+
+
+  assign-landpattern(TE_2388749-1)
+  ; assign-symbol(_2388749-1)
+
+    
+
+  property(self.manufacturer) = "TE Connectivity"
+
+
+public pcb-module module :
+  port conn : usb-c-connector
+  port usbdata: usb-data
+
+  public inst J : conn-component
+
+  net (conn.vbus.V+ J.VBUS[0] J.VBUS[1] J.VBUS[2] J.VBUS[3])
+  net (J.CC1, conn.bus.cc[0])
+  net (J.CC2, conn.bus.cc[1])
+
+  net (J.SBU1 conn.bus.sbu[0])
+  net (J.SBU2 conn.bus.sbu[1])
+
+  require usb_data : dual-pair from J
+  topo-net(conn.bus.data, usb_data.A)
+  topo-net(usb_data.A, usb_data.B)
+
+  set-signal-end(usb-data.data, conn.bus.data)
+
+  supports lane-pair:
+    lane-pair.TX.P => J.TX1.P
+    lane-pair.TX.N => J.TX1.N
+    lane-pair.RX.P => J.RX1.P
+    lane-pair.RX.N => J.RX1.N
+
+  supports lane-pair:
+    lane-pair.TX.P => J.TX2.P
+    lane-pair.TX.N => J.TX2.N
+    lane-pair.RX.P => J.RX2.P
+    lane-pair.RX.N => J.RX2.N
+
+  require lp:lane-pair[2] from self
+
+  for i in 0 to length(lp) do:
+    topo-net(conn.bus.lane[i].TX => lp[i].TX)
+    topo-net(conn.bus.lane[i].RX => lp[i].RX)
+
+
+  ; topo-net(J.TX1, conn.bus.lane[0].TX)
+  ; topo-net(J.RX1, conn.bus.lane[0].RX)
+  ; topo-net(J.TX2, conn.bus.lane[1].TX)
+  ; topo-net(J.RX2, conn.bus.lane[1].RX)
+
+  net (J.GND[0] J.GND[1] J.GND[2] J.GND[3] conn.vbus.V-)
+  net (conn.shield J.SHIELD)
+
+doc: \<DOC>
+USB-C USB 2.0 High-Speed Interface
+
+This is a basic USB2 480mbps capable USB-C interface.
+It doesn't include the SuperSpeed connections, but does
+provide the necessary features to support a simple debug
+interface, like to an FTDI.
+
+Circuit Includes:
+1.  USB-C connector
+2.  Pull-downs for CC1 and CC2
+3.  ESD protection diodes for the USB2 data bus.
+4.  Shield termination
+
+@param R-query Resistor query parameters - default is `ResistorQuery()`.
+@param C-query Capacitor query parameters - default is `CapacitorQuery()`.
+
+@member USB USB2 Differential Signaling Bus
+@member VDD-USB USB Power Rail, typically 5V.
+
+<DOC>
+public defn USBC-HighSpeed-Iface (
+  R-query:ResistorQuery = get-default-resistor-query()
+  ; R-query:ResistorQuery = ResistorQuery(),
+  C-query:CapacitorQuery = CapacitorQuery(),
+  ):
+  pcb-module USBC-HighSpeed-Iface:
+    port USB : usb-data
+    port VDD-USB : power
+
+    public inst USBC : module
+
+    net (VDD-USB, USBC.conn.vbus)
+    net GND (VDD-USB.V-)
+
+    ; Two separate pull down resistors per the USB-C
+    ;  spec Section 4.5.1.2.1
+    ; https://www.usb.org/sites/default/files/USB%20Type-C%20Spec%20R2.0%20-%20August%202019.pdf
+    val pu-R = create-resistor(R-query, resistance = 5.1e3, precision = (1 %))
+    for i in indices(USBC.conn.bus.cc) do:
+      val n = to-string("CC%_-R" % [i])
+      insert-pulldown(USBC.conn.bus.cc[i], GND, elem-type = pu-R, inst-name? = n, make-public = true)
+
+    public inst esd-prot : diodes/ESD224DQAR/device
+    net (esd-prot.GND[1], esd-prot.GND[2], GND)
+
+    ; Construct the topology from the module port, through
+    ;  the ESD protector, and then terminating in the connector device.
+    require esd-pair:dual-pair from esd-prot
+    topo-pair(USB.data => esd-pair.A => esd-pair.B => USBC.conn.bus.data)
+    ; By setting the signal end - then the routing structure application
+    ;   can apply to the entirety of the bus.
+    set-signal-end(USB.data, USBC.conn.bus.data)
+
+    ; Shield Termination
+    inst shield-term : shield-termination(R-query, C-query)
+    net (shield-term.SHIELD, USBC.conn.shield)
+    net (shield-term.GND, GND)
+
+  USBC-HighSpeed-Iface 
+
+
+
+doc: \<DOC>
+USB-C USB 4.0 High-Speed Interface
+
+This is the basic USB2 480mbps capable USB-C interface extended wtih USB4 constraints.
+
+Circuit Includes:
+1.  USB-C connector
+2.  Pull-downs for CC1 and CC2
+3.  ESD protection diodes for the USB2 data bus.
+4.  Shield termination
+
+@param R-query Resistor query parameters - default is `ResistorQuery()`.
+@param C-query Capacitor query parameters - default is `CapacitorQuery()`.
+
+@member USB USB2 Differential Signaling Bus
+@member VDD-USB USB Power Rail, typically 5V.
+
+<DOC>
+public defn USBC-USB4-Iface (
+  R-query:ResistorQuery = get-default-resistor-query(),
+  C-query:CapacitorQuery = get-default-capacitor-query(),
+  tx-side:True|False = true
+):
+  pcb-module USBC-USB4-Iface:
+    ; port USB-C : usb-c(2)
+    port VDD-USB : power
+    port usb_data : usb-data
+    val usb_c = usb-c()
+    
+    public inst USBC : module
+
+    net (VDD-USB, USBC.conn.vbus)
+    net GND (VDD-USB.V-)
+
+    ; According to USB4 System Design Guidelines
+    val bleed-R = create-resistor(R-query, 
+                                case = valid-smd-pkgs("0201"), 
+                                resistance = Interval(200.0e3, 242.0e3)
+                                )
+    
+    val rx-ac-C = create-capacitor(C-query, 
+                                 case = valid-smd-pkgs("0201"), 
+                                 capacitance = Interval(300.0e-9, 363.0e3))
+
+    val tx-ac-C = create-capacitor(C-query,
+                                 case = valid-smd-pkgs("0201"), 
+                                 capacitance = Interval(135.0e-9, 265.0e3))
+    
+
+    ; Process each lane
+    for i in indices(USBC.conn.bus.lane) do:
+      ; RX bleed resistors
+      insert-pulldown(USBC.conn.bus.lane[i].RX.P, GND, 
+                     elem-type = bleed-R,
+                     inst-name? = to-string("RX_P%_-R" % [i]), 
+                     make-public = true)
+      insert-pulldown(USBC.conn.bus.lane[i].RX.N, GND,
+                     elem-type = bleed-R,
+                     inst-name? = to-string("RX_N%_-R" % [i]),
+                     make-public = true)
+
+      ; TX bleed resistors
+      insert-pulldown(USBC.conn.bus.lane[i].TX.P, GND,
+                     elem-type = bleed-R,
+                     inst-name? = to-string("TX_P%_-R" % [i]),
+                     make-public = true)
+      insert-pulldown(USBC.conn.bus.lane[i].TX.N, GND,
+                     elem-type = bleed-R,
+                     inst-name? = to-string("TX_N%_-R" % [i]),
+                     make-public = true)
+
+    ; USB-C CC pull-down resistors
+    val cc-R = create-resistor(R-query, resistance = 5.1e3, precision = (1 %))
+    for i in indices(USBC.conn.bus.cc) do:
+      val n = to-string("CC%_-R" % [i])
+      insert-pulldown(USBC.conn.bus.cc[i], GND,
+                     elem-type = cc-R,
+                     inst-name? = n,
+                     make-public = true)
+
+    ; ; CC/SBU connections to external
+    ; net (USB.cc, USBC.conn.bus.cc)
+    ; net (USB.sbu, USBC.conn.bus.sbu)
+
+
+    ; ESD Protection
+
+    ; val esd = diodes/ESD224DQAR/create-esd-pool(3, GND)
+
+    ; ; USB Data Path
+    ; require usb-c:usb_c from self
+    ; require esd-pair:dual-pair from esd
+    ; topo-pair(usb-c.data => esd-pair.A => esd-pair.B => USBC.conn.bus.data)
+    ; ;          A       =>       B                  => C
+    ; set-signal-end(usb-c.data, USBC.conn.bus.data)
+    ; supports usb-data: 
+    ;   usb-data.data.P => USBC.conn.bus.data
+    ;   usb-data.data.N => USBC.conn.bus.data
+
+    ; for i in 0 to length(USBC.conn.bus.lane) do:
+    ;   inst tx-bcap : dp-coupler(tx-ac-C)
+    ;   inst rx-bcap : dp-coupler(rx-ac-C)
+
+    ;   require tx-esd:dual-pair from esd
+    ;   topo-pair(usb-c.lane[i].TX => tx-bcap => tx-esd => USBC.conn.bus.lane[i].TX)
+    ;   set-signal-end(usb_c.lane[i].TX, USBC.conn.bus.lane[i].TX)
+
+    ;   require rx-esd:dual-pair from esd
+    ;   if tx-side == true:
+    ;     topo-pair(usb-c.lane[i].RX => rx-bcap => rx-esd => USBC.conn.bus.lane[i].RX)
+    ;   else:
+    ;     topo-pair(usb-c.lane[i].RX => rx-esd => USBC.conn.bus.lane[i].RX)
+    ;   set-signal-end(usb-c.lane[i].RX, USBC.conn.bus.lane[i].RX)
+
+
+    ; Shield Termination
+    inst shield-term : shield-termination(R-query, C-query)
+    net (shield-term.SHIELD, USBC.conn.shield)
+    net (shield-term.GND, GND)
+
+    supports usb_c :
+      usb_c.data.P => USBC.conn.bus.data.P
+      usb_c.data.N => USBC.conn.bus.data.N
+      for i in 0 to 2 do :
+        usb_c.cc[i] =>  USBC.conn.bus.cc[i]
+        usb_c.sbu[i] => USBC.conn.bus.sbu[i]
+
+        usb_c.lane[i].RX.P => USBC.conn.bus.lane[i].RX.P
+        usb_c.lane[i].RX.N => USBC.conn.bus.lane[i].RX.N
+        usb_c.lane[i].TX.P => USBC.conn.bus.lane[i].TX.P
+        usb_c.lane[i].TX.N => USBC.conn.bus.lane[i].TX.N
+
+
+  USBC-USB4-Iface
