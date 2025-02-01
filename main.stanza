@@ -312,20 +312,15 @@ pcb-module ASM001-design :
   ;  configuration.
 
 
-  val m2_connector_count = 4
+  ; val m2_connector_count = 4
   inst m2_connectors : ASM001/components/TE_1-2199230-6/module[m2_connector_count]
   
-  for i in 0 to m2_connector_count :
+  ; for i in 0 to m2_connector_count :
     require src-ep : pcie(1) from asm2464pdx
     require dst-ep : pcie(1) from m2_connectors[i]
-
     val y-loc = -36.0 - (to-double(i) * -24.0)
     place(m2_connectors[i].sw) at loc(35.0, y-loc, 90.0) on Bottom
-    
-    net (m2_connectors[i].gnd GND)
-
-
-   
+    net (m2_connectors[i].gnd GND) 
     within [src, dst] = constrain-topology(src-ep, dst-ep, cst):
       ; Here we construct the circuit topology for the link
       ;   Note that we don't need to worry about any of the constraint
