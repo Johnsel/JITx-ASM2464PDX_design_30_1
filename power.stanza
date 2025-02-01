@@ -76,8 +76,8 @@ public pcb-module circuit :
   )
 
   place(DCDC-1v13.IC.SW) at loc(0.0, 0.0) on Top
-  place(DCDC-1v9.IC.SW) at loc(5.0, 0.0) on Top
-  place(DCDC-3v3.IC.SW) at loc(10.0, 0.0) on Top
+  place(DCDC-1v9.IC.SW) at loc(10.0, 0.0) on Top
+  place(DCDC-3v3.IC.SW) at loc(20.0, 0.0) on Top
 
   ; 3.3v LDO 500mA
 

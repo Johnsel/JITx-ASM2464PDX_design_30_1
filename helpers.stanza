@@ -84,7 +84,7 @@ public defn setup-bill-of-materials (qty:Int, vendors:Tuple<String|AuthorizedVen
 ; ====================
 ; Setup the board information using https://github.com/JITx-Inc/jlc-pcb.git
 ; ====================
-public val substrate = ASM001/board/JLC06161H-3313()
+public val substrate = JLC06161H-3313()
 
 ; ============
 ; setup-design

@@ -1,5 +1,5 @@
 #use-added-syntax(jitx)
-defpackage ASM001/common/components:
+defpackage ASM001/components/common:
   import core
   import collections
   import jitx
@@ -66,3 +66,73 @@ public pcb-component pu-res (value:Double):
   ; used for this component are just placeholders.
 
   pin-model(self.p[1] self.p[2]) = PinModel(typ(0.0), typ(0.0))
+
+  
+public pcb-component jumper ():
+  name = "C106228"
+  description = "50mW Thick Film Resistors ±5% 0Ω 0201  Chip Resistor - Surface Mount ROHS"
+  manufacturer = "YAGEO"
+  mpn = "RC0201JR-070RL"
+  emodel = Resistor(0.0, UNKNOWN, 0.05)
+  datasheet = "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_YAGEO-RC0201JR-070RL_C106228.pdf"
+  reference-prefix = "R"
+  pin-properties :
+    [pin:Ref | pads:Ref ... | side:Dir | electrical-type:String | bank:Int]
+    [p[1] | p[1] | Up | "passive" | 0]
+    [p[2] | p[2] | Down | "passive" | 0]
+
+  val symb = ResistorSymbol()
+  assign-symbol(create-symbol(symb))
+
+  val pkg = SMT-Chip(
+    chips["0201"],
+    density-level = DensityLevelB
+  )
+
+  val lp = create-landpattern(pkg)
+  assign-landpattern(lp)
+
+  ; adding a pin model to the pins of this component allow si constraints
+  ; to be propagated through this component correctly. Obviously the values
+  ; used for this component are just placeholders.
+
+  pin-model(self.p[1] self.p[2]) = PinModel(typ(0.0), typ(0.0))
+
+public pcb-bundle header (w:Int):
+  port D : pin[1 through w]
+
+pcb-symbol header-sym (w:Int):
+  name = "Header Symbol"
+  val scale = 2.54
+  for i in 1 through w do:
+    pin p.D[i] at Point(0.0, scale * to-double(i))
+
+
+public pcb-component header (num-leads:Int, num-rows:Int) :
+  port p : header(num-leads)
+
+  pin-properties:
+    [pin:Ref| pads:Ref ...]
+    for i in 1 through num-leads do:
+      [p.D[i] | p[i] ]
+
+  assign-symbol(header-sym(num-leads))
+
+  val pitch = 2.54
+  val num-cols = num-leads / num-rows
+  val body-len = to-double(num-cols) * pitch
+  val body-width = to-double(num-rows) * pitch
+
+  val pkg = Header(
+    num-leads = num-leads,
+    lead-type = TH-Lead(length = typ(2.0), width = typ(0.9)),
+    pad-diam = 1.5,
+    rows = num-rows,
+    pitch = pitch
+    package-body = PackageBody(
+      width = typ(body-width),
+      length = typ(body-len),
+      height = typ(5.0) )
+    )
+  val lp = create-landpattern(pkg)
+  assign-landpattern(lp)

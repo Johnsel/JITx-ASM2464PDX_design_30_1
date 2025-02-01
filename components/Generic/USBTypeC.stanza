@@ -98,29 +98,29 @@ public pcb-component conn-component :
   reversible-dual-pair(self.D0, self.D1)
 
 
-; public pcb-module device :
-;   port conn : usb-c-connector
+public pcb-module device :
+  port conn : usb-c-connector
 
-;   public inst J : conn-component
+  public inst J : conn-component
 
-;   net (conn.vbus.V+ J.VBUS[0] J.VBUS[1] J.VBUS[2] J.VBUS[3])
-;   net (J.CC1, conn.bus.cc[0])
-;   net (J.CC2, conn.bus.cc[1])
+  net (conn.vbus.V+ J.VBUS[0] J.VBUS[1] J.VBUS[2] J.VBUS[3])
+  net (J.CC1, conn.bus.cc[0])
+  net (J.CC2, conn.bus.cc[1])
 
-;   net (J.SBU1 conn.bus.sbu[0])
-;   net (J.SBU2 conn.bus.sbu[1])
+  net (J.SBU1 conn.bus.sbu[0])
+  net (J.SBU2 conn.bus.sbu[1])
 
-;   require usb-data : dual-pair from J
-;   topo-net(conn.bus.data, usb-data.A)
-;   topo-net(usb-data.A, usb-data.B)
+  require usb-data : dual-pair from J
+  topo-net(conn.bus.data, usb-data.A)
+  topo-net(usb-data.A, usb-data.B)
 
-;   topo-net(J.TX1, conn.bus.lane[0].TX)
-;   topo-net(J.RX1, conn.bus.lane[0].RX)
-;   topo-net(J.TX2, conn.bus.lane[1].TX)
-;   topo-net(J.RX2, conn.bus.lane[1].RX)
+  topo-net(J.TX1, conn.bus.lane[0].TX)
+  topo-net(J.RX1, conn.bus.lane[0].RX)
+  topo-net(J.TX2, conn.bus.lane[1].TX)
+  topo-net(J.RX2, conn.bus.lane[1].RX)
 
-;   net (J.GND[0] J.GND[1] J.GND[2] J.GND[3] conn.vbus.V-)
-;   net (conn.shield J.SHIELD)
+  net (J.GND[0] J.GND[1] J.GND[2] J.GND[3] conn.vbus.V-)
+  net (conn.shield J.SHIELD)
 
 
 public pcb-module circuit :

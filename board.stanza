@@ -11,6 +11,115 @@ defpackage ASM001/board:
 
   import jlc-pcb/stackups/materials
 
+
+
+doc: \<DOC>
+The pcb-routing-structure(s) below are just examples of the routing structures that need to be maintained
+in the project code because they are dependant on the stack-up and other factors.
+<DOC>
+public pcb-routing-structure se_50 :
+  name = "50 Ohm single-ended"
+  layer-constraints(Top) :
+    trace-width = 0.15    ; mm
+    clearance = 0.15     ; mm
+    velocity = 0.19e12   ; mm/s
+    insertion-loss = 0.008  ; db/mm @ 1GHz
+    neck-down = NeckDown(
+      trace-width = 0.156
+      clearance = 0.1
+    )
+
+  layer-constraints(Bottom) :
+    trace-width = 0.15    ; mm
+    clearance = 0.15         ; mm
+    velocity = 0.19e12   ; mm/s
+    insertion-loss = 0.008  ; db/mm @ 1GHz
+    neck-down = NeckDown(
+      trace-width = 0.156
+      clearance = 0.1
+    )
+
+
+
+doc: \<DOC>
+The pcb-differential-routing-structure template below is an example of a differential-routing-structure needed
+by different protocols. This pcb-differential-routing-structure will be applied to the differential traces
+in the targeted bus by using the helper function `<bus>-apply-routing-structure()`.
+It should also reference a single ended routing structure for the uncoupled region.
+@param trace-impedance Target impedance. Accepted values are 85, 90, and 100 ohm.
+<DOC>
+public pcb-differential-routing-structure diff (trace-impedance:Toleranced|Double):
+  name = "Differential Impedance - Select Values"
+  val ti = match(trace-impedance):
+    (t:Toleranced): typ(t)
+    (d:Double): d
+  val tw = switch(ti) :
+    85.0  : 0.1400
+    90.0 : 0.1475
+    100.0 : 0.1510
+  ; whatever layers are to be used for routing the differential pairs (defined by the user)
+  layer-constraints(Top) :
+    trace-width  = tw       ; mm
+    pair-spacing = tw / 1.2 ; mm
+    clearance    = 0.150    ; mm
+    velocity = 0.19e12      ; mm/s
+    insertion-loss = 0.008  ; db/mm @ 1GHz
+
+  layer-constraints(LayerIndex(1, Top)) :
+    trace-width  = tw       ; mm
+    pair-spacing = 2.0 * tw ; mm
+    clearance    = 0.300    ; mm
+    velocity = 0.19e12      ; mm/s
+    insertion-loss = 0.008  ; db/mm @ 1GHz
+
+  layer-constraints(LayerIndex(1, Bottom)) :
+    trace-width  = tw       ; mm
+    pair-spacing = 2.0 * tw ; mm
+    clearance    = 0.300    ; mm
+    velocity = 0.19e12      ; mm/s
+    insertion-loss = 0.008  ; db/mm @ 1GHz
+
+  layer-constraints(Bottom) :
+    trace-width  = tw       ; mm
+    pair-spacing = tw / 1.2 ; mm
+    clearance    = 0.150    ; mm
+    velocity = 0.19e12      ; mm/s
+    insertion-loss = 0.008  ; db/mm @ 1GHz
+
+
+  uncoupled-region = se_50
+
+
+doc: \<DOC>
+The pcb-routing-structure(s) below are just examples of the routing structures that need to be maintained
+in the project code because they are dependant on the stack-up and other factors.
+<DOC>
+public pcb-routing-structure se-50 (neckdown:Maybe<NeckDown> = None()) :
+  name = "50 Ohm single-ended"
+  layer-constraints(Top) :
+    trace-width = 0.15    ; mm
+    clearance = 0.15     ; mm
+    velocity = 0.19e12   ; mm/s
+    insertion-loss = 0.008  ; db/mm @ 1GHz
+    neck-down = NeckDown(
+      trace-width = 0.156
+      clearance = 0.1
+    )
+
+
+
+  layer-constraints(Bottom) :
+    trace-width = 0.15    ; mm
+    clearance = 0.15         ; mm
+    velocity = 0.19e12   ; mm/s
+    insertion-loss = 0.008  ; db/mm @ 1GHz
+    neck-down = NeckDown(
+      trace-width = 0.156
+      clearance = 0.1
+    )
+
+
+
 doc: \<DOC>
 Multi-layer (6+) via with extra cost + 3.
 This via definition uses the preferred +0.15mm
@@ -101,43 +210,43 @@ public val stackup-gen = make-layer-stack("JLC06161H-3313", outers, soldermask =
 val ext-velocity = phase-velocity((Er-3314 + 1.0) / 2.0)
 val int-velocity = phase-velocity((Er-2116 + 1.0) / 2.0)
 
-public pcb-routing-structure se-50 (neckdown:Maybe<NeckDown> = None()):
-  name = "50Ω Single-Ended - CPWG - JLC06161H-3313"
+; public pcb-routing-structure se-50 (neckdown:Maybe<NeckDown> = None()):
+;   name = "50Ω Single-Ended - CPWG - JLC06161H-3313"
 
-  ; This expects a ground ref plane on Top + 1 and Bottom - 1
-  val ext-se-50-ustrip = RoutingStructureLayerConstraints(
-    trace-width = 0.1565,
-    clearance = 0.3,
-    velocity = ext-velocity
-    insertion-loss = Dk-3314
-    neck-down = value-or-else(neckdown, {false})
-  )
+;   ; This expects a ground ref plane on Top + 1 and Bottom - 1
+;   val ext-se-50-ustrip = RoutingStructureLayerConstraints(
+;     trace-width = 0.1565,
+;     clearance = 0.3,
+;     velocity = ext-velocity
+;     insertion-loss = Dk-3314
+;     neck-down = value-or-else(neckdown, {false})
+;   )
 
-  ; This expects a ground ref plane on Top+2 and Bottom - 1
-  val int-3313-se-50-stripline = RoutingStructureLayerConstraints(
-    trace-width = 0.1425,
-    clearance = 0.3,
-    velocity = int-velocity
-    insertion-loss = Dk-3314
-    neck-down = value-or-else(neckdown, {false})
-  )
+;   ; This expects a ground ref plane on Top+2 and Bottom - 1
+;   val int-3313-se-50-stripline = RoutingStructureLayerConstraints(
+;     trace-width = 0.1425,
+;     clearance = 0.3,
+;     velocity = int-velocity
+;     insertion-loss = Dk-3314
+;     neck-down = value-or-else(neckdown, {false})
+;   )
 
 
-; This expects a ground ref plane on Top+2 and Top+3
-  val int-2116-se-50-stripline = RoutingStructureLayerConstraints(
-    trace-width = 0.1318,
-    clearance = 0.3,
-    velocity = int-velocity
-    insertion-loss = Dk-2116
-    neck-down = value-or-else(neckdown, {false})
-  )
+; ; This expects a ground ref plane on Top+2 and Top+3
+;   val int-2116-se-50-stripline = RoutingStructureLayerConstraints(
+;     trace-width = 0.1318,
+;     clearance = 0.3,
+;     velocity = int-velocity
+;     insertion-loss = Dk-2116
+;     neck-down = value-or-else(neckdown, {false})
+;   )
 
-  layer-constraints(Top) = ext-se-50-ustrip
-  layer-constraints(Top + 1) = int-3313-se-50-stripline
-  layer-constraints(Top + 2) = int-2116-se-50-stripline
-  layer-constraints(Top + 3) = int-2116-se-50-stripline
-  layer-constraints(Top + 4) = int-3313-se-50-stripline
-  layer-constraints(Bottom) = ext-se-50-ustrip
+;   layer-constraints(Top) = ext-se-50-ustrip
+;   layer-constraints(Top + 1) = int-3313-se-50-stripline
+;   layer-constraints(Top + 2) = int-2116-se-50-stripline
+;   layer-constraints(Top + 3) = int-2116-se-50-stripline
+;   layer-constraints(Top + 4) = int-3313-se-50-stripline
+;   layer-constraints(Bottom) = ext-se-50-ustrip
 
 public pcb-differential-routing-structure diff-100 (
   uncoupled:Maybe<RoutingStructure> = None()
@@ -227,3 +336,62 @@ public defn JLC06161H-3313 (vias:Tuple<Via> = default-vias) -> Substrate :
       100 => diff-100,
     ]
   )
+
+; doc: \<DOC>
+; The pcb-differential-routing-structure template below is an example of a differential-routing-structure needed
+; by different protocols. This pcb-differential-routing-structure will be applied to the differential traces
+; in the targeted bus by using the helper function `<bus>-apply-routing-structure()`.
+; It should also reference a single ended routing structure for the uncoupled region.
+; @param trace-impedance Target impedance. Accepted values are 85, 90, and 100 ohm.
+; <DOC>
+; public pcb-differential-routing-structure diff (trace-impedance:Toleranced|Double):
+;   name = "Differential Impedance - Select Values"
+;   val ti = match(trace-impedance):
+;     (t:Toleranced): typ(t)
+;     (d:Double): d
+;   val tw = switch(ti) :
+;     85.0  : 0.1610
+;     100.0 : 0.1057
+;   layer-constraints(Top) :
+;     trace-width  = tw       ; mm
+;     pair-spacing = tw / 1.2 ; mm
+;     clearance    = 0.150    ; mm
+;     velocity = ext-velocity ; mm/s
+;     insertion-loss = Dk-3314; db/mm @ 1GHz
+
+;   layer-constraints(LayerIndex(1, Top)) :
+;     trace-width  = tw       ; mm
+;     pair-spacing = 2.0 * tw ; mm
+;     clearance    = 0.300    ; mm
+;     velocity = int-velocity ; mm/s
+;     insertion-loss = Dk-3314; db/mm @ 1GHz
+
+;   layer-constraints(LayerIndex(2, Top)) :
+;     trace-width  = tw       ; mm
+;     pair-spacing = 2.0 * tw ; mm
+;     clearance    = 0.300    ; mm
+;     velocity = int-velocity ; mm/s
+;     insertion-loss = Dk-2116; db/mm @ 1GHz
+
+;   layer-constraints(LayerIndex(2, Bottom)) :
+;     trace-width  = tw       ; mm
+;     pair-spacing = 2.0 * tw ; mm
+;     clearance    = 0.300    ; mm
+;     velocity = int-velocity ; mm/s
+;     insertion-loss = Dk-2116; db/mm @ 1GHz        
+
+;   layer-constraints(LayerIndex(1, Bottom)) :
+;     trace-width  = tw       ; mm
+;     pair-spacing = 2.0 * tw ; mm
+;     clearance    = 0.300    ; mm
+;     velocity = int-velocity     ; mm/s
+;     insertion-loss = Dk-3314  ; db/mm @ 1GHz
+
+;   layer-constraints(Bottom) :
+;     trace-width  = tw       ; mm
+;     pair-spacing = tw / 1.2 ; mm
+;     clearance    = 0.150    ; mm
+;     velocity = ext-velocity ; mm/s
+;     insertion-loss = Dk-3314; db/mm @ 1GHz
+
+  ; uncoupled-region = se-50()
