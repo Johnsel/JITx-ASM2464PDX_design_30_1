@@ -277,9 +277,9 @@ pcb-module ASM001-design :
       topo-pair(src.TX => tx-bcap => lane-esd-tx => dst.TX)
     set-signal-end(asm2464pdx_usb-c.lane, usb4_type_c.USB-C.lane)
     
-  inst header : header(2,1)
+  ; inst header : header(2,1)
 
-  make-test-points(usb4_type_c.sw.VBUS[0])
+  ; make-test-points(usb4_type_c.sw.VBUS[0])
     
   ; ; Add Keepout for the USB interface.
   ; val pt-pd-map = port-to-pads(usb4_type_c.sw)
@@ -312,34 +312,90 @@ pcb-module ASM001-design :
   ;  configuration.
 
 
-  ; val m2_connector_count = 4
-  inst m2_connectors : ASM001/components/TE_1-2199230-6/module[m2_connector_count]
   
-  ; for i in 0 to m2_connector_count :
-    require src-ep : pcie(1) from asm2464pdx
-    require dst-ep : pcie(1) from m2_connectors[i]
-    val y-loc = -36.0 - (to-double(i) * -24.0)
-    place(m2_connectors[i].sw) at loc(35.0, y-loc, 90.0) on Bottom
-    net (m2_connectors[i].gnd GND) 
-    within [src, dst] = constrain-topology(src-ep, dst-ep, cst):
-      ; Here we construct the circuit topology for the link
-      ;   Note that we don't need to worry about any of the constraint
-      ;   application, as that is handled by the `PCIe-Constraint` type.
-      ;   You can add other components in the topology as you wish - below
-      ;   is a typical basic implementation.
-      for i in indices(src.data.lane) do:
+    
+    
+  inst m2_connector1 : ASM001/components/TE_1-2199230-6/module
+  ; inst m2_connector2 : ASM001/components/TE_1-2199230-6/module
+  ; inst m2_connector3 : ASM001/components/TE_1-2199230-6/module
+  ; inst m2_connector4 : ASM001/components/TE_1-2199230-6/module
+  
+  require src-ep1 : pcie(1) from asm2464pdx
+  ; require src-ep2 : pcie(1) from asm2464pdx
+  ; require src-ep3 : pcie(1) from asm2464pdx
+  ; require src-ep4 : pcie(1) from asm2464pdx
 
-        inst tx-coupler : dp-coupler(pcie-b-cap)
-        
-        topo-pair(src.data.lane[i].TX => tx-coupler => dst.data.lane[i].TX)
-        ; No Blocking Caps on the Receive side.
-        topo-pair(src.data.lane[i].RX => dst.data.lane[i].RX)
+  require dst-ep1 : pcie(1) from m2_connector1
+  ; require dst-ep2 : pcie(1) from m2_connector1
+  ; require dst-ep3 : pcie(1) from m2_connector1
+  ; require dst-ep4 : pcie(1) from m2_connector1
+  
+  net (m2_connector1.gnd GND) ;m2_connector2.gnd m2_connector3.gnd m2_connector4.gnd GND) 
 
-      topo-net(src.data.refclk => dst.data.refclk)
-      ; The control signals do not demand a topology so
-      ;  we just use a straight net connection.
-      net (src.control, dst.control)
-      
+  within [src1, dst1] = constrain-topology(src-ep1, dst-ep1, cst):
+    inst tx-coupler1 : dp-coupler(pcie-b-cap)
+    
+    topo-pair(src1.data.lane[0].TX => tx-coupler1 => dst1.data.lane[0].TX)
+    ; No Blocking Caps on the Receive side.
+    topo-pair(src1.data.lane[0].RX => dst1.data.lane[0].RX)
+
+    topo-net(src1.data.refclk => dst1.data.refclk)
+    ; The control signals do not demand a topology so
+    ;  we just use a straight net connection.
+    net (src1.control, dst1.control)
+
+  
+  ; within [src2, dst2] = constrain-topology(src-ep2, dst-ep2, cst):
+  ;   inst tx-coupler2 : dp-coupler(pcie-b-cap)
+    
+  ;   topo-pair(src2.data.lane[0].TX => tx-coupler2 => dst2.data.lane[0].TX)
+  ;   ; No Blocking Caps on the Receive side.
+  ;   topo-pair(src2.data.lane[0].RX => dst2.data.lane[0].RX)
+
+  ;   topo-net(src2.data.refclk => dst2.data.refclk)
+  ;   ; The control signals do not demand a topology so
+  ;   ;  we just use a straight net connection.
+  ;   net (src2.control, dst2.control)
+  
+  
+  ; within [src3, dst3] = constrain-topology(src-ep3, dst-ep3, cst):
+  ;   inst tx-coupler3 : dp-coupler(pcie-b-cap)
+    
+  ;   topo-pair(src3.data.lane[0].TX => tx-coupler3 => dst3.data.lane[0].TX)
+  ;   ; No Blocking Caps on the Receive side.
+  ;   topo-pair(src3.data.lane[0].RX => dst3.data.lane[0].RX)
+
+  ;   topo-net(src3.data.refclk => dst3.data.refclk)
+  ;   ; The control signals do not demand a topology so
+  ;   ;  we just use a straight net connection.
+  ;   net (src3.control, dst3.control)
+  
+  
+  ; within [src4, dst4] = constrain-topology(src-ep4, dst-ep4, cst):
+  ;   inst tx-coupler4 : dp-coupler(pcie-b-cap)
+    
+  ;   topo-pair(src4.data.lane[0].TX => tx-coupler4 => dst4.data.lane[0].TX)
+  ;   ; No Blocking Caps on the Receive side.
+  ;   topo-pair(src4.data.lane[0].RX => dst4.data.lane[0].RX)
+
+  ;   topo-net(src4.data.refclk => dst4.data.refclk)
+  ;   ; The control signals do not demand a topology so
+  ;   ;  we just use a straight net connection.
+  ;   net (src4.control, dst4.control)
+  
+  
+  
+
+  val m2_connector_count = 4
+  
+  val y-loc = [-36.0 - (to-double(0) * -24.0),(-36.0 - (to-double(1) * -24.0)),(-36.0 - (to-double(2) * -24.0)),(-36.0 - (to-double(3) * -24.0))]
+  ; for i in 0 to m2_connector_count:
+  ;  y-loc[i] = to-double()
+
+  place(m2_connector1.sw) at loc(35.0, y-loc[0], 90.0) on Bottom      
+  ; place(m2_connector2.sw) at loc(35.0, y-loc[1], 90.0) on Bottom      
+  ; place(m2_connector3.sw) at loc(35.0, y-loc[2], 90.0) on Bottom      
+  ; place(m2_connector4.sw) at loc(35.0, y-loc[3], 90.0) on Bottom      
 
   ; schematic symbols
   symbol(GND) = GND-SYMB
