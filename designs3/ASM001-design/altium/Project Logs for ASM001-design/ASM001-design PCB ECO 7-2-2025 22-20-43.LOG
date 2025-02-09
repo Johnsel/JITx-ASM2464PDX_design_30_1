@@ -1,0 +1,14 @@
+Change Net Name : Old Net Name=NetJ1_A11 New Net Name=asm2464pdx_usb-c_lane1_RX_P
+Change Net Name : Old Net Name=NetJ1_B2 New Net Name=asm2464pdx_usb-c_lane1_TX_P
+Added Differential Pair: Name=asm2464pdx_usb-c_lane1_RX
+Added Differential Pair: Name=asm2464pdx_usb-c_lane1_TX
+Add Differential Pair: Number of nets in differential pair NetJ2_37 is 1 instead of 2
+Add Differential Pair: Number of nets in differential pair NetJ2_41 is 1 instead of 2
+Add Differential Pair: Number of nets in differential pair NetJ2_43 is 1 instead of 2
+Add Differential Pair: Number of nets in differential pair NetJ2_47 is 1 instead of 2
+Add Differential Pair: Number of nets in differential pair NetJ2_53 is 1 instead of 2
+Add Differential Pair: Number of nets in differential pair NetJ2_55 is 1 instead of 2
+Added Rule: Name=Schematic Signal Stimulus
+Added Rule: Name=Schematic Signal Stimulus_1
+Added Rule: Name=Schematic Signal Stimulus_2
+Added Rule: Name=Schematic Signal Stimulus_3

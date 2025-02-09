@@ -1,0 +1,17 @@
+Change Net Name : Old Net Name=NetJ2_41 New Net Name=src-ep1_data_lane0_RX_P
+Change Net Name : Old Net Name=NetJ2_43 New Net Name=X_B_N
+Change Net Name : Old Net Name=NetU4_P1 New Net Name=asm2464pdx_usb-c_lane0_TX_P
+Change Net Name : Old Net Name=NetU4_P2 New Net Name=asm2464pdx_usb-c_lane0_TX_N
+Change Net Name : Old Net Name=NetU4_V1 New Net Name=asm2464pdx_usb-c_lane1_RX_N
+Change Net Name : Old Net Name=NetU4_V2 New Net Name=asm2464pdx_usb-c_lane1_RX_P
+Added Pin To Net: NetName=X_B_P Pin=J2-47
+Added Pin To Net: NetName=X_B_P Pin=J2-49
+Added Net: Name=X_B_P
+Add Differential Pair: Number of nets in differential pair NetJ2_53 is 1 instead of 2
+Add Differential Pair: Number of nets in differential pair NetJ2_55 is 1 instead of 2
+Add Differential Pair: Number of nets in differential pair NetU4_T1 is 1 instead of 2
+Add Differential Pair: Number of nets in differential pair NetU4_T2 is 1 instead of 2
+Add Differential Pair: Number of nets in differential pair NetU4_Y1 is 1 instead of 2
+Add Differential Pair: Number of nets in differential pair NetU4_Y2 is 1 instead of 2
+Add Differential Pair: Number of nets in differential pair src-ep1_data_lane0_RX is 1 instead of 2
+Added Differential Pair: Name=X_B

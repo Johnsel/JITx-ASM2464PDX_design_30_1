@@ -187,12 +187,12 @@ public pcb-component component :
     [URXP[1]    | Y[2]   | Left  | A]
     [URXN[1]    | Y[1]   | Left  | A]
     [VBUS       | G[1]   | Left  | A]
-    [CC[1]      | AA[6]  | Left  | A]
-    [CC[2]      | Y[6]   | Left  | A]
-    [SBU[1]     | K[1]   | Left  | A]
-    [SBU[2]     | J[1]   | Left  | A]
-    [REFCLKN[0] | Y[8]   | Left  | A]
-    [REFCLKP[0] | AA[8]  | Left  | A]
+    [CC[0]      | AA[6]  | Left  | A]
+    [CC[1]      | Y[6]   | Left  | A]
+    [SBU[0]     | K[1]   | Left  | A]
+    [SBU[1]     | J[1]   | Left  | A]
+    [REFCLK[0].N | Y[8]   | Left  | A]
+    [REFCLK[0].P | AA[8]  | Left  | A]
     [PRXN[1]    | W[20]  | Left  | A]
     [PRXP[1]    | W[21]  | Left  | A]
     [PRXN[0]    | N[20]  | Left  | A]
@@ -274,12 +274,12 @@ public pcb-component component :
     [NC[29]     | F[20]  | Left  | B]
     [NC[30]     | G[20]  | Left  | B]
     [NC[31]     | H[20]  | Left  | B]
-    [REFCLKN[3] | Y[7]   | Left  | B]  ; ASM2464PDX
-    [REFCLKP[3] | AA[7]  | Left  | B]  ; ASM2464PDX
-    [REFCLKN[2] | Y[10]  | Left  | B]  ; ASM2464PDX
-    [REFCLKP[2] | AA[10] | Left  | B]  ; ASM2464PDX
-    [REFCLKN[1] | Y[11]  | Left  | B]  ; ASM2464PDX
-    [REFCLKP[1] | AA[11] | Left  | B]  ; ASM2464PDX
+    [REFCLK[3].N | Y[7]   | Left  | B]  ; ASM2464PDX
+    [REFCLK[3].P | AA[7]  | Left  | B]  ; ASM2464PDX
+    [REFCLK[2].N | Y[10]  | Left  | B]  ; ASM2464PDX
+    [REFCLK[2].P | AA[10] | Left  | B]  ; ASM2464PDX
+    [REFCLK[1].N | Y[11]  | Left  | B]  ; ASM2464PDX
+    [REFCLK[1].P | AA[11] | Left  | B]  ; ASM2464PDX
     [PERST#[3]  | D[21]  | Left  | B]  ; ASM2464PDX
     [PERST#[2]  | E[21]  | Left  | B]  ; ASM2464PDX
     [PERST#[1]  | F[21]  | Left  | B]  ; ASM2464PDX
@@ -450,8 +450,14 @@ public pcb-component component :
     [VCCH[0]    | H[6]   | Left  | D]
     [VCCA33     | H[5]   | Left  | D]
 
-
-  val b = BoxSymbol(self)
+  val symbol-params = BoxSymbolParams(
+    ; width = 1.0,
+    ; height = 1.0,
+    ; pin-length = 0.1,
+    ; pin-width = 0.1,
+    pin-pitch = 2.0
+  )
+  val b = BoxSymbol(self, params = symbol-params)
   assign-symbols(Ref(`A) => b, Ref(`B) => b, Ref(`C) => b, Ref(`D) => b)
 
   val pkg = ASM2464PDX_lp()
@@ -460,11 +466,44 @@ public pcb-component component :
   assign-landpattern(lp)
 
   for i in 0 to 4 do :
-    diff-pin-model(self.PRXP[i], self.PRXN[i],       delay = typ(10.0e-15) loss = typ(0.1))
-    diff-pin-model(self.PTXP[i], self.PTXN[i],       delay = typ(10.0e-15) loss = typ(0.1))
-    diff-pin-model(self.REFCLKP[i], self.REFCLKN[i], delay = typ(10.0e-15) loss = typ(0.1))
+    ; diff-pin-model(self.PRXP[i], self.PRXN[i],       delay = typ(10.0e-15) loss = typ(0.1))
+    ; diff-pin-model(self.PTXP[i], self.PTXN[i],       delay = typ(10.0e-15) loss = typ(0.1))
+    diff-pin-model(self.REFCLK[i].P, self.REFCLK[i].N, delay = typ(10.0e-15) loss = typ(0.1))
 
   diff-pin-model(self.UDP self.UDM delay = typ(10.0e-15) loss = typ(0.1))
+
+defn connect_lanes (
+  b:Bundle, 
+  ref_clk:JITXObject, 
+  ctl_lines:[JITXObject, JITXObject, JITXObject], 
+  present:JITXObject|False,
+  --
+  ch-offset:Int = 0
+  ):
+  val [wake, reset, clkreq] = ctl_lines
+  inside pcb-module:
+    supports b:
+      for i in indices(b.data.lane) do :
+        b.data.lane[i].RX.P => self.sw.PRXP[i + ch-offset]
+        b.data.lane[i].RX.N => self.sw.PRXN[i + ch-offset]
+        b.data.lane[i].TX.P => self.sw.PTXP[i + ch-offset]
+        b.data.lane[i].TX.N => self.sw.PTXN[i + ch-offset]
+      b.data.refclk.P => ref_clk.P
+      b.data.refclk.N => ref_clk.N
+
+      if has-PEWAKE#(b):
+        b.control.PEWAKE# => wake
+      if has-PERST#(b):
+        b.control.PERST#  => reset
+      if has-CLKREQ#(b):
+        b.control.CLKREQ# => clkreq
+
+      if has-PRSNT#(b):
+        match(present):
+          (_:False):
+            throw $ ValueError("Missing Present Connection - Passed False")
+          (p:JITXObject):
+            b.control.PRSNT#  => p
 
 public pcb-module module :
   port gnd
@@ -698,9 +737,9 @@ public pcb-module module :
     no-connect(n)
 
   ; for i in indices(sw.GPIO) do :
-  ;   supports gpio :
-  ;     ; gpio[i] => sw.GPIO[i]
-  ;     gpio.p => sw.GPIO[i]
+    ; supports gpio :
+      ; gpio[i] => sw.GPIO[i]
+      ; gpio.p => sw.GPIO[i]
 
   net (i2c_data.sda, sw.I2C_DATA_P)
   net (i2c_data.scl, sw.I2C_CLK_P)
@@ -718,122 +757,120 @@ public pcb-module module :
     usb_c.data.P => sw.UDP
     usb_c.data.N => sw.UDM
     for i in 0 to 2 do :
-      usb_c.cc[i] => sw.CC[i + 1]
-      usb_c.sbu[i] => sw.SBU[i + 1]
+      usb_c.cc[i] => sw.CC[i]
+      usb_c.sbu[i] => sw.SBU[i]
 
       usb_c.lane[i].RX.P => sw.URXP[i]
       usb_c.lane[i].RX.N => sw.URXN[i]
       usb_c.lane[i].TX.P => sw.UTXP[i]
       usb_c.lane[i].TX.N => sw.UTXN[i]
 
-  val bd-4x = pcie(4)
-  supports bd-4x :
-    for i in 0 to 4 do :
-      bd-4x.data.lane[i].RX.P => sw.PRXP[i]
-      bd-4x.data.lane[i].RX.N => sw.PRXN[i]
-      bd-4x.data.lane[i].TX.P => sw.PTXP[i]
-      bd-4x.data.lane[i].TX.N => sw.PTXN[i]
-    bd-4x.data.refclk.P => sw.REFCLKP[0]
-    bd-4x.data.refclk.N => sw.REFCLKN[0]
 
-    bd-4x.control.PEWAKE# => sw.GPIO[22]
-    bd-4x.control.PERST#  => sw.PERST#[0]
-    bd-4x.control.CLKREQ# => sw.GPIO[8]
-
-  val bd-4x-prsnt = pcie(4, PCIe-PRSNT#)
-  supports bd-4x-prsnt :
-    for i in 0 to 4 do :
-      bd-4x-prsnt.data.lane[i].RX.P => sw.PRXP[i]
-      bd-4x-prsnt.data.lane[i].RX.N => sw.PRXN[i]
-      bd-4x-prsnt.data.lane[i].TX.P => sw.PTXP[i]
-      bd-4x-prsnt.data.lane[i].TX.N => sw.PTXN[i]
-    bd-4x-prsnt.data.refclk.P => sw.REFCLKP[0]
-    bd-4x-prsnt.data.refclk.N => sw.REFCLKN[0]
-
-    bd-4x-prsnt.control.PEWAKE# => sw.GPIO[22]
-    bd-4x-prsnt.control.PERST#  => sw.PERST#[0]
-    bd-4x-prsnt.control.PRSNT#  => sw.GPIO[2]
-    bd-4x-prsnt.control.CLKREQ# => sw.GPIO[8]
-
-  ; val ctls-2x = [
-  ;   [sw.GPIO[22], sw.GPIO[2], sw.GPIO[8]],
-  ;   [sw.GPIO[20], sw.GPIO[19], sw.GPIO[14]]
-  ; ]
-  ; val bd-2x = pcie(2)
-  ; for j in 0 to 2 do:
-  ;   supports bd-2x:
-  ;     val i = (2 * j)
-  ;     for i in 0 to 2 do :
-  ;       bd-2x.data.lane[i].RX.P => sw.PRXP[i]
-  ;       bd-2x.data.lane[i].RX.N => sw.PRXN[i]
-  ;       bd-2x.data.lane[i].TX.P => sw.PTXP[i]
-  ;       bd-2x.data.lane[i].TX.N => sw.PTXN[i]
-  ;     bd-2x.data.refclk.P => sw.REFCLKP[i]
-  ;     bd-2x.data.refclk.N => sw.REFCLKN[i]
-
-  ;     val [wake, present, clkreq] = ctls-2x[j]
-
-  ;     bd-2x.control.PEWAKE# => wake
-  ;     bd-2x.control.PERST#  => sw.PERST#[i]
-  ;     bd-2x.control.CLKREQ# => clkreq
-
-  ; val bd-2x-prsnt = pcie(2, PCIe-PRSNT#)
-  ; for j in 0 to 2 do:
-  ;   supports bd-2x-prsnt:
-  ;     val i = (2 * j)
-  ;     for i in 0 to 2 do :
-  ;       bd-2x-prsnt.data.lane[i].RX.P => sw.PRXP[i]
-  ;       bd-2x-prsnt.data.lane[i].RX.N => sw.PRXN[i]
-  ;       bd-2x-prsnt.data.lane[i].TX.P => sw.PTXP[i]
-  ;       bd-2x-prsnt.data.lane[i].TX.N => sw.PTXN[i]
-  ;     bd-2x-prsnt.data.refclk.P => sw.REFCLKP[i]
-  ;     bd-2x-prsnt.data.refclk.N => sw.REFCLKN[i]
-
-  ;     val [wake, present, clkreq] = ctls-2x[j]
-
-  ;     bd-2x-prsnt.control.PEWAKE# => wake
-  ;     bd-2x-prsnt.control.PERST#  => sw.PERST#[j]
-  ;     bd-2x-prsnt.control.PRSNT# => present
-  ;     bd-2x-prsnt.control.CLKREQ# => clkreq
-
-  val bd-1x = pcie(1)
-  val ctls-1x = [
-    [sw.GPIO[22], sw.GPIO[2], sw.GPIO[8]],
-    [sw.GPIO[17], sw.GPIO[19], sw.GPIO[14]],
-    [sw.GPIO[16], sw.GPIO[21], sw.GPIO[23]],
-    [sw.GPIO[15], sw.GPIO[27], sw.GPIO[24]],
-  ]
-  for j in 0 to 4 do:
-    supports bd-1x:
-      bd-1x.data.lane[0].RX.P => sw.PRXP[j]
-      bd-1x.data.lane[0].RX.N => sw.PRXN[j]
-      bd-1x.data.lane[0].TX.P => sw.PTXP[j]
-      bd-1x.data.lane[0].TX.N => sw.PTXN[j]
-      bd-1x.data.refclk.P => sw.REFCLKP[j]
-      bd-1x.data.refclk.N => sw.REFCLKN[j]
-
-      val [wake, present, clkreq] = ctls-1x[j]
-      bd-1x.control.PEWAKE# => wake
-      bd-1x.control.PERST#  => sw.PERST#[j]
-      bd-1x.control.CLKREQ# => clkreq
-
-  val bd-1x-prsnt = pcie(1, PCIe-PRSNT#)
-  for j in 0 to 4 do:
-    supports bd-1x-prsnt:
-      bd-1x-prsnt.data.lane[0].RX.P => sw.PRXP[j]
-      bd-1x-prsnt.data.lane[0].RX.N => sw.PRXN[j]
-      bd-1x-prsnt.data.lane[0].TX.P => sw.PTXP[j]
-      bd-1x-prsnt.data.lane[0].TX.N => sw.PTXN[j]
-      bd-1x-prsnt.data.refclk.P => sw.REFCLKP[j]
-      bd-1x-prsnt.data.refclk.N => sw.REFCLKN[j]
-
-      val [wake, present, clkreq] = ctls-1x[j]
-      bd-1x-prsnt.control.PERST#  => sw.PERST#[j]
-      bd-1x-prsnt.control.PEWAKE# => wake
-      bd-1x-prsnt.control.PRSNT# => present
-      bd-1x-prsnt.control.CLKREQ# => clkreq
-
+  val bd-4x = pcie-std(4)
+  connect_lanes(bd-4x, self.sw.REFCLK[0], [sw.GPIO[22], sw.PERST#[0], sw.GPIO[8]], false)
   
+  val bd-4x-prsnt = pcie-with-hotplug(4)
+  connect_lanes(bd-4x-prsnt, self.sw.REFCLK[0], [sw.GPIO[22], sw.PERST#[0], sw.GPIO[8]], sw.UART_RX)
+
+  ;;;;;;;;;;;;;;;;;;;;;;;
+  ; PCIe 2x
+  ;;;;;;;;;;;;;;;;;;;;;;;
+
+  ; For the PCIe-2X, I'm going to demonstrate
+  ;   how to use a shared port WAKE pin across
+  ;   the different endpoints. This is common situation where
+  ;   if we are not careful, we can run into an unsat
+  ;   condition. The key is to just not include the shared
+  ;   port in the pin assignment solution and backfill it
+  ;   in an external port where the fanout happens.
+
+  ; val pcie-2x-shared-wake = sw.GPIO[22]
+  ; val ctls-2x = [
+  ;   [pcie-2x-shared-wake, sw.PERST#[0], sw.GPIO[8]]
+  ;   [pcie-2x-shared-wake, sw.PERST#[2], sw.GPIO[23]]
+  ; ]
+  ; ; The internal bundle contains reset, and clock request
+  ; ;  but does not include the WAKE 
+  ; val bd-2x-int = pcie(2, PCIe-PERST#, PCIe-CLKREQ#)
+
+  ; for j in 0 to 2 do:
+  ;   val ch-offset = (2 * j)
+  ;   connect_lanes(bd-2x-int, sw.REFCLK[ch-offset], ctls-2x[j], false, ch-offset = ch-offset)
+
+
+  ; val bd-2x-ext = pcie-std(2)
+
+  ; ; The external interface for the PCIe with Shared Wake is different
+  ; ;   from the other interfaces because it has to be implemented as an
+  ; ;   externally facing port instead of a `supports` statement.
+  ; ;   Fortunately, it still takes advantage of pin assignment and hides
+  ; ;   the details of the connection but requires a different connection
+  ; ;   method at the top-level.
+  ; port pcie-2x : bd-2x-ext[2]
+
+  ; for pt in indices(pcie-2x) do:
+  ;   net (pcie-2x[pt].control.PEWAKE#, pcie-2x-shared-wake)
+
+  ;   require pt-int : bd-2x-int from self
+  ;   topo-net(pcie-2x[pt].data => pt-int.data)
+  ;   net (pcie-2x[pt].control.PERST#, pt-int.control.PERST#)
+  ;   net (pcie-2x[pt].control.CLKREQ#, pt-int.control.CLKREQ#)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ; ;;;;;;;;;;;;;;;;;;;;;;;
+  ; ; PCIe 1x
+  ; ;;;;;;;;;;;;;;;;;;;;;;;
+
+  ; ; For the PCIe-1x, I'm going to demonstrate
+  ; ;   how to use a shared port WAKE pin across
+  ; ;   the different endpoints. This is common situation where
+  ; ;   if we are not careful, we can run into an unsat
+  ; ;   condition. The key is to just not include the shared
+  ; ;   port in the pin assignment solution and backfill it
+  ; ;   in an external port where the fanout happens.
 
   ; val pcie-1x-shared-wake = sw.GPIO[22]
   ; val ctls-1x = [
@@ -852,8 +889,8 @@ public pcb-module module :
   ;     bd-1x-int.data.lane[0].RX.N => sw.PRXN[i]
   ;     bd-1x-int.data.lane[0].TX.P => sw.PTXP[i]
   ;     bd-1x-int.data.lane[0].TX.N => sw.PTXN[i]
-  ;     bd-1x-int.data.refclk.P => sw.REFCLKP[i]
-  ;     bd-1x-int.data.refclk.N => sw.REFCLKN[i]
+  ;     bd-1x-int.data.refclk.P => sw.REFCLK[i].P
+  ;     bd-1x-int.data.refclk.N => sw.REFCLK[i].N
 
   ;     val [_, present, clkreq] = ctls-1x[i]
 
@@ -886,8 +923,8 @@ public pcb-module module :
   ;     bd-1x-prsnt.data.lane[0].RX.N => sw.PRXN[i]
   ;     bd-1x-prsnt.data.lane[0].TX.P => sw.PTXP[i]
   ;     bd-1x-prsnt.data.lane[0].TX.N => sw.PTXN[i]
-  ;     bd-1x-prsnt.data.refclk.P => sw.REFCLKP[i]
-  ;     bd-1x-prsnt.data.refclk.N => sw.REFCLKN[i]
+  ;     bd-1x-prsnt.data.refclk.P => sw.REFCLK[i].P
+  ;     bd-1x-prsnt.data.refclk.N => sw.REFCLK[i].N
 
   ;     val [wake, present, clkreq] = ctls-1x[i]
 

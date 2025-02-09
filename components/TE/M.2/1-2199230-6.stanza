@@ -4,6 +4,9 @@ defpackage ASM001/components/TE_1-2199230-6 :
   import collections
   import jitx
   import jitx/commands
+
+  import jsl
+
   import ocdb/utils/box-symbol
   import jsl/bundles/general
 
@@ -229,38 +232,39 @@ public pcb-component component :
   property(self.manufacturer) = "TE Connectivity"
 
   
+
   for i in 0 to 4 do :
     diff-pin-model(self.LANE[i].TX.P, LANE[i].TX.N,       delay = typ(10.0e-15) loss = typ(0.1))
     diff-pin-model(self.LANE[i].RX.P, LANE[i].RX.N,       delay = typ(10.0e-15) loss = typ(0.1))
 
   diff-pin-model(self.REFCLK.P, self.REFCLK.N, delay = typ(10.0e-15) loss = typ(0.1))
 
-; doc: \<DOC>
-; HelLANEr function for creating the necessary PCIe Supports Statements
 
-; The user must pass a bundle type, such as `pcie-std(<N>)` and
-; this will construct a supports statement that will connect
-; the bundle ports to the predefined `self.sw` instance of the 
-; `compponent` connector.
-; <DOC>
-; defn connect_lanes (b:Bundle):
-;   inside pcb-module:
-;     supports b:
-;       for i in indices(b.data.lane) do :
-;         b.data.lane[i].RX.P => self.sw.LANE[i].RX.P
-;         b.data.lane[i].RX.N => self.sw.LANE[i].RX.N
-;         b.data.lane[i].TX.P => self.sw.LANE[i].TX.P
-;         b.data.lane[i].TX.N => self.sw.LANE[i].TX.N
-;       b.data.refclk.P => self.sw.REFCLK.P
-;       b.data.refclk.N => self.sw.REFCLK.N
+doc: \<DOC>
+Helper function for creating the necessary PCIe Supports Statements
 
-;       b.control.PEWAKE# => self.sw.PEWAKE#
-;       b.control.PERST#  => self.sw.PERST#
-;       b.control.CLKREQ# => self.sw.CLKREQ#
+The user must pass a bundle type, such as `pcie-std(<N>)` and
+this will construct a supports statement that will connect
+the bundle ports to the predefined `self.sw` instance of the 
+`compponent` connector.
+<DOC>
+defn connect_lanes (b:Bundle):
+  inside pcb-module:
+    supports b:
+      for i in indices(b.data.lane) do :
+        b.data.lane[i].RX.P => self.sw.LANE[i].RX.P
+        b.data.lane[i].RX.N => self.sw.LANE[i].RX.N
+        b.data.lane[i].TX.P => self.sw.LANE[i].TX.P
+        b.data.lane[i].TX.N => self.sw.LANE[i].TX.N
+      b.data.refclk.P => self.sw.REFCLK.P
+      b.data.refclk.N => self.sw.REFCLK.N
 
-;       if has-PRSNT#(b):
-;         b.control.PRSNT#  => self.sw.PRSNT#
+      b.control.PEWAKE# => self.sw.PEWAKE#
+      b.control.PERST#  => self.sw.PERST#
+      b.control.CLKREQ# => self.sw.CLKREQ#
 
+      if has-PRSNT#(b):
+        b.control.PRSNT#  => self.sw.PRSNT#
 
 doc: \<DOC>
 PCIe Connector Module with Exposed Pin-Assigned PCIe ports
@@ -275,22 +279,6 @@ require pcie-1x:pcie-std(1) from dut
 To access one of the PCIe interface.
 <DOC>
 public pcb-module module :
-
-  public inst sw : component
-
-  ; val bundle-types = [
-  ;   pcie-std(4),
-  ;   pcie-std(2),
-  ;   pcie-std(1),
-  ;   ; pcie-with-hotplug(4),
-  ;   ; pcie-with-hotplug(2),
-  ;   ; pcie-with-hotplug(1),
-  ; ]
-
-  ; for btype in bundle-types do:
-  ;   connect_lanes(btype)
-
-; public pcb-module module :
   port vdd_3v3
   port gnd
   port shield
@@ -299,7 +287,7 @@ public pcb-module module :
   net GND (gnd)
   net SHIELD (shield)
 
-  ; public inst sw : component
+  public inst sw : component
 
   for g in pins(sw.V_3V3) do :
     net (V_3V3 g)
@@ -309,48 +297,15 @@ public pcb-module module :
 
   for g in pins(sw.SHIELD) do :
     net (SHIELD g)
+    
+  val bundle-types = [
+    pcie-std(4),
+    pcie-std(2),
+    pcie-std(1),
+    ; pcie-with-hotplug(4),
+    ; pcie-with-hotplug(2),
+    ; pcie-with-hotplug(1),
+  ]
 
-  
-  val bd-4x = pcie(4)
-  supports bd-4x :
-    for i in 0 to 4 do :
-      bd-4x.data.lane[i].RX.P => sw.LANE[i].RX.P
-      bd-4x.data.lane[i].RX.N => sw.LANE[i].RX.N
-      bd-4x.data.lane[i].TX.P => sw.LANE[i].TX.P
-      bd-4x.data.lane[i].TX.N => sw.LANE[i].TX.N
-    bd-4x.data.refclk.P => sw.REFCLK.P
-    bd-4x.data.refclk.N => sw.REFCLK.N
-
-    bd-4x.control.CLKREQ# => sw.CLKREQ#
-    bd-4x.control.PEWAKE# => sw.PEWAKE#
-    bd-4x.control.PERST#  => sw.PERST#
-
-  val bd-2x = pcie(2)
-  supports bd-2x :
-    for i in 0 to 2 do :
-      bd-2x.data.lane[i].RX.P => sw.LANE[i].RX.P
-      bd-2x.data.lane[i].RX.N => sw.LANE[i].RX.N
-      bd-2x.data.lane[i].TX.P => sw.LANE[i].TX.P
-      bd-2x.data.lane[i].TX.N => sw.LANE[i].TX.N
-
-    bd-2x.data.refclk.P => sw.REFCLK.P
-    bd-2x.data.refclk.N => sw.REFCLK.N
-
-    bd-2x.control.CLKREQ# => sw.CLKREQ#
-    bd-2x.control.PEWAKE# => sw.PEWAKE#
-    bd-2x.control.PERST#  => sw.PERST#
-
-
-  val bd-1x = pcie(1)
-  supports bd-1x :
-    bd-1x.data.lane[0].RX.P => sw.LANE[0].RX.P
-    bd-1x.data.lane[0].RX.N => sw.LANE[0].RX.N
-    bd-1x.data.lane[0].TX.P => sw.LANE[0].TX.P
-    bd-1x.data.lane[0].TX.N => sw.LANE[0].TX.N
-      
-    bd-1x.data.refclk.P => sw.REFCLK.P
-    bd-1x.data.refclk.N => sw.REFCLK.N
-
-    bd-1x.control.CLKREQ# => sw.CLKREQ#
-    bd-1x.control.PEWAKE# => sw.PEWAKE#
-    bd-1x.control.PERST#  => sw.PERST#
+  for btype in bundle-types do:
+    connect_lanes(btype)

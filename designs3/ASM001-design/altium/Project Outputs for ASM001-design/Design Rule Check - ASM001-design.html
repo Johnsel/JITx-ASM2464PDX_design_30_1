@@ -1,0 +1,498 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			font-family : segoe ui;
+			color : black;
+			background-color : #EDE7D9;
+			padding: 0.3em;
+		}
+
+		h1 {
+			font-size: 1.2em;
+		}		
+
+		h2 {
+			font-size: 1.2em;
+		}
+
+		body {
+			font-family : segoe ui;
+		}
+
+		td, th {
+			padding: 0.5em;
+			text-align : left;
+			width: 10em;
+		}
+		th {
+			background-color : #EEEEEE;
+
+		}
+		th.column1, td.column1 {
+			text-align: left;
+			width : auto;
+		}
+		table {
+			width : 100%;
+			font-size: 0.9em;
+		}
+
+		.DRC_summary_header {
+			padding-bottom : 0.1em;
+			border : 0px solid black;
+			width: 100%;
+			align: left;
+		}
+
+		.DRC_summary_header_col1,
+		.DRC_summary_header_col2, 
+		.DRC_summary_header_col3 {
+			color : black;
+			font-size:100%;
+			padding : 0em;
+			padding-top : 0.2em;
+			padding-bottom 0.2em;
+			border : 0px solid black;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.DRC_summary_header_col1 {
+			font-weight: bold;
+			width: 9em;
+		}
+
+		.DRC_summary_header_col2 {
+			width: 0.1em;
+		
+		}
+
+		.DRC_summary_header_col3 {
+			width : auto;
+		}
+
+		.header_holder {
+		    Width = 100%;
+		    border = 0px solid green;
+		    padding = 0;
+		}
+
+
+		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3
+		{
+			left : 0;
+			top : 0;
+			padding: 0em;
+			padding-top : 0.1em;
+			border : 0px solid black;
+			width : 100%;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.front_matter_column1 {
+			width : 8em;
+			font-weight: bold;
+		}
+
+		.front_matter_column2 {
+			width: 0.1em;
+		}
+
+		.front_matter_column3 {
+			width : auto;
+		}
+
+		.total_column1, .total_column {
+			font-weight : bold;
+		}
+		.total_column1 {
+			text-align : left;
+		}
+		.warning, .error {
+			color : red;
+			font-weight : bold;
+		}
+		tr.onmouseout_odd {
+			background-color : #white;
+		}
+		tr.onmouseout_even { 
+			background-color : #FAFAFA;
+		}
+		tr.onmouseover_odd, tr.onmouseover_even { 
+			background-color : #EEEEEE;
+		} 
+		a:link, a:visited, .q a:link,.q a:active,.q {
+			color: #21489e; 
+		}
+		a:link.callback, a:visited.callback { 
+			color: #21489e;
+		}
+		a:link.customize, a:visited.customize {
+			color: #C0C0C0;
+			position: absolute; 
+			right: 10px;
+		}	
+		p.contents_level1 {
+			font-weight : bold;
+			font-size : 110%;
+			margin : 0.5em;
+		}
+		p.contents_level2 {
+			position : relative;
+			left : 20px;
+			margin : 0.5em;
+		}
+	</style><script type="text/javascript">
+		function coordToMils(coord) {
+			var number = coord / 10000;
+			
+			if (number != number.toFixed(3))
+				number = number.toFixed(3);
+
+			return number + 'mil'
+		}
+
+		function coordToMM(coord) {
+			var number = 0.0254 * coord / 10000;
+			
+			if (number != number.toFixed(4))
+				number = number.toFixed(4);
+			
+			return number + 'mm'
+		}
+	
+		function convertCoord(coordNode, units) {
+			for (var i = 0; i < coordNode.childNodes.length; i++) {
+				coordNode.removeChild(coordNode.childNodes[i]);
+			}
+
+			var coord = coordNode.getAttribute('value');
+			if (coord != null) {
+				if (units == 'mm') {
+					textNode = document.createTextNode(coordToMM(coord));
+					coordNode.appendChild(textNode);
+				} else if (units == 'mil') {
+					textNode = document.createTextNode(coordToMils(coord));		
+					coordNode.appendChild(textNode);	
+				}
+			}
+		}
+	
+		function convertUnits(unitNode, units) {
+			for (var i = 0; i < unitNode.childNodes.length; i++) {
+				unitNode.removeChild(unitNode.childNodes[i]);		
+			}
+		
+			textNode = document.createTextNode(units); 
+			unitNode.appendChild(textNode);
+		}
+	
+		function changeUnits(radio_input, units) {
+			if (radio_input.checked) {
+			
+				var elements = document.getElementsByName('coordinate');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertCoord(elements[i], units);
+					}
+				}
+	
+				var elements = document.getElementsByName('units');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertUnits(elements[i], units);
+					}
+				}
+			}
+		}
+	</script><title>Design Rule Verification Report</title>
+</head>
+<body onload=""><img ALT="Altium" src="
+			file://C:\Users\John Simons\OneDrive\Documenten\Altium\Shared\Templates\AD_logo.png
+		"><h1>Design Rule Verification Report</h1>
+<table class="header_holder">
+<td class="column1">
+<table class="front_matter">
+<tr class="front_matter">
+<td class="front_matter_column1">Date:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">7-2-2025</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">21:59:38</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Elapsed Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">00:00:06</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Filename:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3"><a href="file:///G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc" class="file"><acronym title="G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc">G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc</acronym></a></td>
+</tr>
+</table>
+</td>
+<td class="column2">
+<table class="DRC_summary_header">
+<tr>
+<td class="DRC_summary_header_col1">Warnings:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3">0</td></tr>
+<tr>
+<td class="DRC_summary_header_col1">Rule Violations:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3" style="color : red">66</td></tr>
+</table>
+</td>
+</table><a name="ID1T1FBO4MF0F2F0ERMQW20ZXYOM0C14GV0VY4BFODYVOM3UYKK0JB"><h2>Summary</h2></a><table>
+<tr>
+<th class="column1">Warnings</th>
+<th class="column2">Count</th>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">0</td>
+</tr>
+</table><br><table>
+<tr>
+<th class="column1">Rule Violations</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDZFMMTTMXSD2IDMYGKKTW1ROBRNFQOEPD1YB3UZPULQJMOTJRW5YL">Un-Routed Net Constraint ( (All) )</a></td>
+<td class="column2">5</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID43B12OMH0Y3HMDGG24YPBSNRULK4AJ5XST4FSRKAGDJOQSCUFOW">Differential Pairs Uncoupled Length using the Gap Constraints (Min=0.254mm) (Max=0.254mm) (Prefered=0.254mm)  and Width Constraints (Min=0.381mm) (Max=0.381mm) (Prefered=0.381mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDL1P1O3W0VI35EW4Q0OC2SC3UHFAPHM50W3JB04CBL13FLYFX42ZJ">Power Plane Connect Rule(Relief Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDXJ2VR3A2WHKMID4PXYJTYYZBTBUWIULFPB4PJIEMTP41HOCEGPUB">Board Clearance Constraint (Gap=0mm) (All)</a></td>
+<td class="column2">61</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDF1CG2Q3V5ZW1CQH5S1ICITUZXOI4GFHPFATGQCLBS5FY31TY0DXK">Impedance (Minimum=80.00Ohms Maximum=90.00Ohms)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">66</td>
+</tr>
+</table><br><a name="IDZFMMTTMXSD2IDMYGKKTW1ROBRNFQOEPD1YB3UZPULQJMOTJRW5YL"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Un-Routed Net Constraint ( (All) )</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=10.195mil|Location2.X=3926.812mil|Location1.Y=10.195mil|Location2.Y=3926.812mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=10.195mil|Location2.X=3926.812mil|Location1.Y=10.195mil|Location2.Y=3926.812mil|Absolute=True">Un-Routed Net Constraint: Polygon Region (7 hole(s)) L2 Dead Copper</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=10.195mil|Location2.X=3926.812mil|Location1.Y=10.195mil|Location2.Y=3926.812mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=10.195mil|Location2.X=3926.812mil|Location1.Y=10.195mil|Location2.Y=3926.812mil|Absolute=True">Un-Routed Net Constraint: Polygon Region (7 hole(s)) L6 Dead Copper</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=10.195mil|Location2.X=3926.812mil|Location1.Y=10.195mil|Location2.Y=3926.812mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=10.195mil|Location2.X=3926.812mil|Location1.Y=10.195mil|Location2.Y=3926.812mil|Absolute=True">Un-Routed Net Constraint: Polygon Region (7 hole(s)) L8 Dead Copper</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=444.195mil|Location2.X=451.656mil|Location1.Y=2443.449mil|Location2.Y=2446.992mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=444.195mil|Location2.X=451.656mil|Location1.Y=2443.449mil|Location2.Y=2446.992mil|Absolute=True">Un-Routed Net Constraint: Region (0 hole(s)) L0 Dead Copper</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=444.195mil|Location2.X=451.656mil|Location1.Y=2436.362mil|Location2.Y=2439.905mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=444.195mil|Location2.X=451.656mil|Location1.Y=2436.362mil|Location2.Y=2439.905mil|Absolute=True">Un-Routed Net Constraint: Region (0 hole(s)) L0 Dead Copper</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDXJ2VR3A2WHKMID4PXYJTYYZBTBUWIULFPB4PJIEMTP41HOCEGPUB"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Board Clearance Constraint (Gap=0mm) (All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1255.333mil|Location2.X=1262.999mil|Location1.Y=4294.387mil|Location2.Y=4302.053mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1255.333mil|Location2.X=1262.999mil|Location1.Y=4294.387mil|Location2.Y=4302.053mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad C10-1(-18.017mm,59.175mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1255.333mil|Location2.X=1262.999mil|Location1.Y=4326.659mil|Location2.Y=4334.326mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1255.333mil|Location2.X=1262.999mil|Location1.Y=4326.659mil|Location2.Y=4334.326mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad C10-2(-18.017mm,59.995mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1205.01mil|Location2.X=1212.676mil|Location1.Y=4262.502mil|Location2.Y=4270.169mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1205.01mil|Location2.X=1212.676mil|Location1.Y=4262.502mil|Location2.Y=4270.169mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad C11-1(-19.295mm,58.365mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1205.01mil|Location2.X=1212.676mil|Location1.Y=4332.953mil|Location2.Y=4340.619mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1205.01mil|Location2.X=1212.676mil|Location1.Y=4332.953mil|Location2.Y=4340.619mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad C11-2(-19.295mm,60.154mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1247.094mil|Location2.X=1254.76mil|Location1.Y=4370.688mil|Location2.Y=4378.355mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1247.094mil|Location2.X=1254.76mil|Location1.Y=4370.688mil|Location2.Y=4378.355mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad C12-1(-18.226mm,61.113mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1194.422mil|Location2.X=1202.089mil|Location1.Y=4370.688mil|Location2.Y=4378.355mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1194.422mil|Location2.X=1202.089mil|Location1.Y=4370.688mil|Location2.Y=4378.355mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad C12-2(-19.564mm,61.113mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2270.724mil|Location2.X=2278.39mil|Location1.Y=4616.858mil|Location2.Y=4624.524mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2270.724mil|Location2.X=2278.39mil|Location1.Y=4616.858mil|Location2.Y=4624.524mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad C17-1(7.774mm,67.366mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2270.724mil|Location2.X=2278.39mil|Location1.Y=4584.585mil|Location2.Y=4592.252mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2270.724mil|Location2.X=2278.39mil|Location1.Y=4584.585mil|Location2.Y=4592.252mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad C17-2(7.774mm,66.546mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2340.523mil|Location2.X=2348.19mil|Location1.Y=4660.887mil|Location2.Y=4668.553mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2340.523mil|Location2.X=2348.19mil|Location1.Y=4660.887mil|Location2.Y=4668.553mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad C18-1(9.547mm,68.484mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2270.073mil|Location2.X=2277.74mil|Location1.Y=4660.887mil|Location2.Y=4668.553mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2270.073mil|Location2.X=2277.74mil|Location1.Y=4660.887mil|Location2.Y=4668.553mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad C18-2(7.757mm,68.484mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2321.046mil|Location2.X=2328.713mil|Location1.Y=4614.262mil|Location2.Y=4621.929mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2321.046mil|Location2.X=2328.713mil|Location1.Y=4614.262mil|Location2.Y=4621.929mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad C19-1(9.052mm,67.3mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2321.046mil|Location2.X=2328.713mil|Location1.Y=4561.59mil|Location2.Y=4569.257mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2321.046mil|Location2.X=2328.713mil|Location1.Y=4561.59mil|Location2.Y=4569.257mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad C19-2(9.052mm,65.962mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=304.111mil|Location2.X=311.777mil|Location1.Y=3991.24mil|Location2.Y=3998.906mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=304.111mil|Location2.X=311.777mil|Location1.Y=3991.24mil|Location2.Y=3998.906mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad C3-1(-42.178mm,51.475mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=304.111mil|Location2.X=311.777mil|Location1.Y=3958.967mil|Location2.Y=3966.634mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=304.111mil|Location2.X=311.777mil|Location1.Y=3958.967mil|Location2.Y=3966.634mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad C3-2(-42.178mm,50.655mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=304.761mil|Location2.X=312.428mil|Location1.Y=4035.269mil|Location2.Y=4042.936mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=304.761mil|Location2.X=312.428mil|Location1.Y=4035.269mil|Location2.Y=4042.936mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad C4-1(-42.162mm,52.593mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=234.311mil|Location2.X=241.977mil|Location1.Y=4035.269mil|Location2.Y=4042.936mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=234.311mil|Location2.X=241.977mil|Location1.Y=4035.269mil|Location2.Y=4042.936mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad C4-2(-43.951mm,52.593mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=253.788mil|Location2.X=261.454mil|Location1.Y=3988.644mil|Location2.Y=3996.311mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=253.788mil|Location2.X=261.454mil|Location1.Y=3988.644mil|Location2.Y=3996.311mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad C5-1(-43.456mm,51.409mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=253.788mil|Location2.X=261.454mil|Location1.Y=3938.63mil|Location2.Y=3946.297mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=253.788mil|Location2.X=261.454mil|Location1.Y=3938.63mil|Location2.Y=3946.297mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad C5-2(-43.456mm,50.071mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1346.495mil|Location2.X=1354.162mil|Location1.Y=4742.388mil|Location2.Y=4750.054mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1346.495mil|Location2.X=1354.162mil|Location1.Y=4742.388mil|Location2.Y=4750.054mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad L2-a(-15.702mm,70.554mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1346.495mil|Location2.X=1354.162mil|Location1.Y=4650.546mil|Location2.Y=4658.212mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1346.495mil|Location2.X=1354.162mil|Location1.Y=4650.546mil|Location2.Y=4658.212mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad L2-c(-15.702mm,68.221mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1916.402mil|Location2.X=1924.068mil|Location1.Y=4463.638mil|Location2.Y=4471.305mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1916.402mil|Location2.X=1924.068mil|Location1.Y=4463.638mil|Location2.Y=4471.305mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad L3-a(-1.226mm,63.474mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1916.402mil|Location2.X=1924.068mil|Location1.Y=4555.48mil|Location2.Y=4563.146mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1916.402mil|Location2.X=1924.068mil|Location1.Y=4555.48mil|Location2.Y=4563.146mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad L3-c(-1.226mm,65.807mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=347.806mil|Location2.X=355.473mil|Location1.Y=4529.044mil|Location2.Y=4536.711mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=347.806mil|Location2.X=355.473mil|Location1.Y=4529.044mil|Location2.Y=4536.711mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad R2-1(-41.068mm,65.135mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=315.534mil|Location2.X=323.2mil|Location1.Y=4529.044mil|Location2.Y=4536.711mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=315.534mil|Location2.X=323.2mil|Location1.Y=4529.044mil|Location2.Y=4536.711mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad R2-2(-41.888mm,65.135mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=259.097mil|Location2.X=266.764mil|Location1.Y=4529.044mil|Location2.Y=4536.711mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=259.097mil|Location2.X=266.764mil|Location1.Y=4529.044mil|Location2.Y=4536.711mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad R3-1(-43.322mm,65.135mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=226.825mil|Location2.X=234.491mil|Location1.Y=4529.044mil|Location2.Y=4536.711mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=226.825mil|Location2.X=234.491mil|Location1.Y=4529.044mil|Location2.Y=4536.711mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad R3-2(-44.141mm,65.135mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=963.567mil|Location2.X=971.234mil|Location1.Y=4868.076mil|Location2.Y=4875.742mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=963.567mil|Location2.X=971.234mil|Location1.Y=4868.076mil|Location2.Y=4875.742mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad R4-1(-25.428mm,73.746mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=963.567mil|Location2.X=971.234mil|Location1.Y=4900.348mil|Location2.Y=4908.015mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=963.567mil|Location2.X=971.234mil|Location1.Y=4900.348mil|Location2.Y=4908.015mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad R4-2(-25.428mm,74.566mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1417.584mil|Location2.X=1425.251mil|Location1.Y=4314.523mil|Location2.Y=4322.19mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1417.584mil|Location2.X=1425.251mil|Location1.Y=4314.523mil|Location2.Y=4322.19mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad R5-1(-13.896mm,59.686mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1449.857mil|Location2.X=1457.523mil|Location1.Y=4314.523mil|Location2.Y=4322.19mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1449.857mil|Location2.X=1457.523mil|Location1.Y=4314.523mil|Location2.Y=4322.19mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad R5-2(-13.076mm,59.686mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1506.293mil|Location2.X=1513.959mil|Location1.Y=4314.523mil|Location2.Y=4322.19mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1506.293mil|Location2.X=1513.959mil|Location1.Y=4314.523mil|Location2.Y=4322.19mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad R6-1(-11.643mm,59.686mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1538.565mil|Location2.X=1546.232mil|Location1.Y=4314.523mil|Location2.Y=4322.19mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1538.565mil|Location2.X=1546.232mil|Location1.Y=4314.523mil|Location2.Y=4322.19mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad R6-2(-10.823mm,59.686mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2779.565mil|Location2.X=2787.231mil|Location1.Y=4604.721mil|Location2.Y=4612.388mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2779.565mil|Location2.X=2787.231mil|Location1.Y=4604.721mil|Location2.Y=4612.388mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad R8-1(20.698mm,67.057mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2832.236mil|Location2.X=2839.903mil|Location1.Y=4604.721mil|Location2.Y=4612.388mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2832.236mil|Location2.X=2839.903mil|Location1.Y=4604.721mil|Location2.Y=4612.388mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad R8-2(22.036mm,67.057mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2852.883mil|Location2.X=2860.549mil|Location1.Y=4604.721mil|Location2.Y=4612.388mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2852.883mil|Location2.X=2860.549mil|Location1.Y=4604.721mil|Location2.Y=4612.388mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad R9-1(22.561mm,67.057mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2885.155mil|Location2.X=2892.822mil|Location1.Y=4604.721mil|Location2.Y=4612.388mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2885.155mil|Location2.X=2892.822mil|Location1.Y=4604.721mil|Location2.Y=4612.388mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Pad R9-2(23.38mm,67.057mm) on L0 </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1277.676mil|Location2.X=1285.343mil|Location1.Y=4777.293mil|Location2.Y=4784.96mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1277.676mil|Location2.X=1285.343mil|Location1.Y=4777.293mil|Location2.Y=4784.96mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Region (0 hole(s)) Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1985.22mil|Location2.X=1992.887mil|Location1.Y=4428.732mil|Location2.Y=4436.399mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1985.22mil|Location2.X=1992.887mil|Location1.Y=4428.732mil|Location2.Y=4436.399mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Region (0 hole(s)) Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1220.788mil|Location2.X=1228.455mil|Location1.Y=4322.703mil|Location2.Y=4330.369mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1220.788mil|Location2.X=1228.455mil|Location1.Y=4322.703mil|Location2.Y=4330.369mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Text "C10" (-18.767mm,59.585mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1156.686mil|Location2.X=1164.353mil|Location1.Y=4308.951mil|Location2.Y=4316.617mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1156.686mil|Location2.X=1164.353mil|Location1.Y=4308.951mil|Location2.Y=4316.617mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Text "C11" (-20.395mm,59.26mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1208.614mil|Location2.X=1216.281mil|Location1.Y=4329.254mil|Location2.Y=4336.921mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1208.614mil|Location2.X=1216.281mil|Location1.Y=4329.254mil|Location2.Y=4336.921mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Text "C12" (-18.895mm,60.188mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2305.268mil|Location2.X=2312.935mil|Location1.Y=4588.527mil|Location2.Y=4596.194mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2305.268mil|Location2.X=2312.935mil|Location1.Y=4588.527mil|Location2.Y=4596.194mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Text "C17" (8.524mm,66.956mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2293.097mil|Location2.X=2300.763mil|Location1.Y=4612.563mil|Location2.Y=4620.229mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2293.097mil|Location2.X=2300.763mil|Location1.Y=4612.563mil|Location2.Y=4620.229mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Text "C18" (8.652mm,67.384mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2362.481mil|Location2.X=2370.147mil|Location1.Y=4575.724mil|Location2.Y=4583.391mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2362.481mil|Location2.X=2370.147mil|Location1.Y=4575.724mil|Location2.Y=4583.391mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Text "C19" (9.977mm,66.631mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=338.655mil|Location2.X=346.322mil|Location1.Y=3966.809mil|Location2.Y=3974.476mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=338.655mil|Location2.X=346.322mil|Location1.Y=3966.809mil|Location2.Y=3974.476mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Text "C3" (-41.428mm,51.065mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=261.264mil|Location2.X=268.93mil|Location1.Y=3986.945mil|Location2.Y=3994.611mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=261.264mil|Location2.X=268.93mil|Location1.Y=3986.945mil|Location2.Y=3994.611mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Text "C4" (-43.056mm,51.493mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=295.222mil|Location2.X=302.889mil|Location1.Y=3953.978mil|Location2.Y=3961.645mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=295.222mil|Location2.X=302.889mil|Location1.Y=3953.978mil|Location2.Y=3961.645mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Text "C5" (-42.531mm,50.74mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3160.088mil|Location2.X=3167.754mil|Location1.Y=-19.985mil|Location2.Y=-12.319mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3160.088mil|Location2.X=3167.754mil|Location1.Y=-19.985mil|Location2.Y=-12.319mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Text "J2" (29.094mm,-49.043mm) on Bottom Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1297.259mil|Location2.X=1304.926mil|Location1.Y=4789.557mil|Location2.Y=4797.223mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1297.259mil|Location2.X=1304.926mil|Location1.Y=4789.557mil|Location2.Y=4797.223mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Text "L2" (-17.247mm,71.538mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1965.552mil|Location2.X=1973.219mil|Location1.Y=4416.615mil|Location2.Y=4424.282mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1965.552mil|Location2.X=1973.219mil|Location1.Y=4416.615mil|Location2.Y=4424.282mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Text "L3" (0.319mm,62.49mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=323.629mil|Location2.X=331.296mil|Location1.Y=4494.478mil|Location2.Y=4502.145mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=323.629mil|Location2.X=331.296mil|Location1.Y=4494.478mil|Location2.Y=4502.145mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Text "R2" (-41.478mm,64.385mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=234.87mil|Location2.X=242.537mil|Location1.Y=4494.565mil|Location2.Y=4502.232mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=234.87mil|Location2.X=242.537mil|Location1.Y=4494.565mil|Location2.Y=4502.232mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Text "R3" (-43.731mm,64.385mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=929.022mil|Location2.X=936.689mil|Location1.Y=4892.281mil|Location2.Y=4899.948mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=929.022mil|Location2.X=936.689mil|Location1.Y=4892.281mil|Location2.Y=4899.948mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Text "R4" (-26.178mm,74.156mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1441.848mil|Location2.X=1449.514mil|Location1.Y=4348.98mil|Location2.Y=4356.647mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1441.848mil|Location2.X=1449.514mil|Location1.Y=4348.98mil|Location2.Y=4356.647mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Text "R5" (-13.486mm,60.436mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1530.52mil|Location2.X=1538.187mil|Location1.Y=4349.002mil|Location2.Y=4356.669mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1530.52mil|Location2.X=1538.187mil|Location1.Y=4349.002mil|Location2.Y=4356.669mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Text "R6" (-11.233mm,60.436mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2813.999mil|Location2.X=2821.665mil|Location1.Y=4646.09mil|Location2.Y=4653.757mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2813.999mil|Location2.X=2821.665mil|Location1.Y=4646.09mil|Location2.Y=4653.757mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Text "R8" (21.367mm,67.982mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2877.117mil|Location2.X=2884.784mil|Location1.Y=4639.201mil|Location2.Y=4646.867mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2877.117mil|Location2.X=2884.784mil|Location1.Y=4639.201mil|Location2.Y=4646.867mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Text "R9" (22.97mm,67.807mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1982.209mil|Location2.X=1989.875mil|Location1.Y=4509.559mil|Location2.Y=4517.226mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1982.209mil|Location2.X=1989.875mil|Location1.Y=4509.559mil|Location2.Y=4517.226mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Track (0.445mm,63.164mm)(0.445mm,66.117mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1412.302mil|Location2.X=1419.969mil|Location1.Y=4696.467mil|Location2.Y=4704.133mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1412.302mil|Location2.X=1419.969mil|Location1.Y=4696.467mil|Location2.Y=4704.133mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Track (-14.03mm,67.911mm)(-14.03mm,70.864mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1280.688mil|Location2.X=1288.355mil|Location1.Y=4696.467mil|Location2.Y=4704.133mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1280.688mil|Location2.X=1288.355mil|Location1.Y=4696.467mil|Location2.Y=4704.133mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Track (-17.373mm,67.911mm)(-17.373mm,70.864mm) on Top Overlay </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1850.595mil|Location2.X=1858.261mil|Location1.Y=4509.559mil|Location2.Y=4517.226mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1850.595mil|Location2.X=1858.261mil|Location1.Y=4509.559mil|Location2.Y=4517.226mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Board Edge And Track (-2.898mm,63.164mm)(-2.898mm,66.117mm) on Top Overlay </acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br></body>
+</html>

@@ -16,14 +16,14 @@ public pcb-component conn-component :
 
   property(self.rated-temperature) = min-max(-40.0, 105.0)
 
-  port TX1 : diff-pair
-  port TX2 : diff-pair
+  port TX : diff-pair[2]
+  ; port TX[1] : diff-pair
 
-  port RX1 : diff-pair
-  port RX2 : diff-pair
+  port RX : diff-pair[2]
+  ; port RX[1] : diff-pair
 
-  port D0 : diff-pair
-  port D1 : diff-pair
+  port D : diff-pair[2]
+  ; port D[1] : diff-pair
 
   pin-properties :
     [pin:Ref | pads:Ref ... | side:Dir | bank:Ref | row:Int ]
@@ -33,29 +33,29 @@ public pcb-component conn-component :
     [VBUS[3] | B[4] | Right | B-side | 0]
     [VBUS[2] | B[9] | Right | B-side | 0]
 
-    [D0.P | A[6] | Left | A-side | 1]
-    [D0.N | A[7] | Left | A-side | 1]
+    [D[0].P | A[6] | Left | A-side | 1]
+    [D[0].N | A[7] | Left | A-side | 1]
 
-    [TX1.P | A[2] | Left | A-side | 1]
-    [TX1.N | A[3] | Left | A-side | 1]
+    [TX[0].P | A[2] | Left | A-side | 1]
+    [TX[0].N | A[3] | Left | A-side | 1]
 
-    [RX1.P | B[11] | Left | A-side | 1]
-    [RX1.N | B[10] | Left | A-side | 1]
+    [RX[0].P | B[11] | Left | A-side | 1]
+    [RX[0].N | B[10] | Left | A-side | 1]
 
-    [CC1 | A[5] | Left | A-side | 1]
-    [SBU1 | A[8] | Left | A-side | 1]
+    [CC[0] | A[5] | Left | A-side | 1]
+    [SBU[0] | A[8] | Left | A-side | 1]
 
-    [D1.P | B[6] | Left | B-side | 1]
-    [D1.N | B[7] | Left | B-side | 1]
+    [D[1].P | B[6] | Left | B-side | 1]
+    [D[1].N | B[7] | Left | B-side | 1]
 
-    [TX2.P | B[2] | Left | B-side | 1]
-    [TX2.N | B[3] | Left | B-side | 1]
+    [TX[1].P | B[2] | Left | B-side | 1]
+    [TX[1].N | B[3] | Left | B-side | 1]
 
-    [RX2.P | A[11] | Left | B-side | 1]
-    [RX2.N | A[10] | Left | B-side | 1]
+    [RX[1].P | A[11] | Left | B-side | 1]
+    [RX[1].N | A[10] | Left | B-side | 1]
 
-    [CC2 | B[5] | Left | B-side | 1]
-    [SBU2 | B[8] | Left | B-side | 1]
+    [CC[1] | B[5] | Left | B-side | 1]
+    [SBU[1] | B[8] | Left | B-side | 1]
 
     [GND[0] | A[1] | Left | A-side | 2]
     [GND[1] | A[12] | Left | A-side | 2]
@@ -65,8 +65,14 @@ public pcb-component conn-component :
     ; Shield
     [SHIELD | M[1] M[2] M[3] M[4] | Right | A-side | 2]
 
-
-  val box = BoxSymbol(self)
+  val symbol-params = BoxSymbolParams(
+    ; width = 1.0,
+    ; height = 1.0,
+    ; pin-length = 0.1,
+    ; pin-width = 0.1,
+    pin-pitch = 2.0
+  )
+  val box = BoxSymbol(self, params = symbol-params)
   set-grid(box, [3, 2], Ref("A-side"))
   set-grid(box, [3, 2], Ref("B-side"))
 
@@ -74,9 +80,9 @@ public pcb-component conn-component :
   set-alignment(S, self.GND)
   set-alignment(S, self.SHIELD)
 
-  set-head-margin(0.5, self.TX1.P, self.TX2.P)
-  set-head-margin(0.5, self.RX1.P, self.RX2.P)
-  set-head-margin(0.5, self.CC1, self.CC2)
+  set-head-margin(0.5, self.TX[0].P, self.TX[1].P)
+  set-head-margin(0.5, self.RX[0].P, self.RX[1].P)
+  set-head-margin(0.5, self.CC[0], self.CC[1])
 
   assign-symbols(
     Ref("A-side") => box,
@@ -86,16 +92,16 @@ public pcb-component conn-component :
   val pkg = USBTypeC-Pkg()
   assign-landpattern $ create-landpattern(pkg)
 
-  diff-pin-model(self.D0, delay = typ(0.0))
-  diff-pin-model(self.D1, delay = typ(0.0))
+  diff-pin-model(self.D[0], delay = typ(0.0))
+  diff-pin-model(self.D[1], delay = typ(0.0))
 
-  diff-pin-model(self.TX1, delay = typ(0.0))
-  diff-pin-model(self.TX2, delay = typ(0.0))
+  diff-pin-model(self.TX[0], delay = typ(0.0))
+  diff-pin-model(self.TX[1], delay = typ(0.0))
 
-  diff-pin-model(self.RX1, delay = typ(0.0))
-  diff-pin-model(self.RX2, delay = typ(0.0))
+  diff-pin-model(self.RX[0], delay = typ(0.0))
+  diff-pin-model(self.RX[1], delay = typ(0.0))
 
-  reversible-dual-pair(self.D0, self.D1)
+  reversible-dual-pair(self.D[0], self.D[1])
 
 
 public pcb-module device :
@@ -104,57 +110,235 @@ public pcb-module device :
   public inst J : conn-component
 
   net (conn.vbus.V+ J.VBUS[0] J.VBUS[1] J.VBUS[2] J.VBUS[3])
-  net (J.CC1, conn.bus.cc[0])
-  net (J.CC2, conn.bus.cc[1])
 
-  net (J.SBU1 conn.bus.sbu[0])
-  net (J.SBU2 conn.bus.sbu[1])
+  topo-net(J.SBU[0] => conn.bus.sbu[0])
+  topo-net(J.SBU[1] => conn.bus.sbu[1])
+  
+  topo-net(J.CC[0] => conn.bus.cc[0])
+  topo-net(J.CC[1] => conn.bus.cc[1])
 
   require usb-data : dual-pair from J
   topo-net(conn.bus.data, usb-data.A)
   topo-net(usb-data.A, usb-data.B)
 
-  topo-net(J.TX1, conn.bus.lane[0].TX)
-  topo-net(J.RX1, conn.bus.lane[0].RX)
-  topo-net(J.TX2, conn.bus.lane[1].TX)
-  topo-net(J.RX2, conn.bus.lane[1].RX)
+  topo-net(J.TX[0], conn.bus.lane[0].TX)
+  topo-net(J.RX[0], conn.bus.lane[0].RX)
+  topo-net(J.TX[1], conn.bus.lane[1].TX)
+  topo-net(J.RX[1], conn.bus.lane[1].RX)
 
   net (J.GND[0] J.GND[1] J.GND[2] J.GND[3] conn.vbus.V-)
   net (conn.shield J.SHIELD)
 
+doc: \<DOC>
+USB-C USB 2.0 High-Speed Interface
 
-public pcb-module circuit :
-  port GND
-  port VBUS
-  port SHIELD
-  port USB-C : usb-c(2)
+This is a basic USB2 480mbps capable USB-C interface.
+It doesn't include the SuperSpeed connections, but does
+provide the necessary features to support a simple debug
+interface, like to an FTDI.
 
-  public inst sw : ASM001/components/USB/USBTypeC/conn-component
+Circuit Includes:
+1.  USB-C connector
+2.  Pull-downs for CC1 and CC2
+3.  ESD protection diodes for the USB2 data bus.
+4.  Shield termination
 
-  for g in pins(sw.GND) do :
-    net (GND g)
+@param R-query Resistor query parameters for customizing resistor selection - default is `get-default-resistor-query()`.
+@param C-query Capacitor query parameters for customizing capacitor selection - default is `get-default-capacitor-query()`.
+
+@member USB USB2 Differential Signaling Bus
+@member VDD-USB USB Power Rail, typically 5V.
+
+<DOC>
+public defn USBC-HighSpeed-Iface (
+  R-query:ResistorQuery = get-default-resistor-query(),
+  C-query:CapacitorQuery = get-default-capacitor-query(),
+  ):
+  pcb-module USBC-HighSpeed-Iface:
+    port USB : usb-data
+    port VDD-USB : power
+
+    public inst USBC : device
+
+    net (VDD-USB, USBC.conn.vbus)
+    net GND (VDD-USB.V-)
+
+    ; Two separate pull down resistors per the USB-C
+    ;  spec Section 4.5.1.2.1
+    ; https://www.usb.org/sites/default/files/USB%20Type-C%20Spec%20R2.0%20-%20August%202019.pdf
+    val pu-R = create-resistor(R-query, resistance = 5.1e3, precision = (1 %))
+    for i in indices(USBC.conn.bus.cc) do:
+      val n = to-string("CC%_-R" % [i])
+      insert-pulldown(USBC.conn.bus.cc[i], GND, elem-type = pu-R, inst-name? = n, make-public = true)
+
+    public inst esd-prot : diodes/ESD224DQAR/device
+    net (esd-prot.GND[1], esd-prot.GND[2], GND)
+
+    ; Construct the topology from the module port, through
+    ;  the ESD protector, and then terminating in the connector device.
+    require esd-pair:dual-pair from esd-prot
+    topo-pair(USB.data => esd-pair.A => esd-pair.B => USBC.conn.bus.data)
+    ; By setting the signal end - then the routing structure application
+    ;   can apply to the entirety of the bus.
+    set-signal-end(USB.data, USBC.conn.bus.data)
+
+    ; Shield Termination
+    inst shield-term : shield-termination(R-query, C-query)
+    net (shield-term.SHIELD, USBC.conn.shield)
+    net (shield-term.GND, GND)
+
+  USBC-HighSpeed-Iface
+
+
+doc: \<DOC>
+USB-C USB 4 SuperSpeed Interface
+
+This is a basic USB4 20 Gbit capable USB-C interface.
+
+Circuit Includes:
+1.  USB-C connector
+3.  ESD protection diodes for the USB2 data bus.
+3.  ESD protection diodes for the SuperSpeed lanes.
+4.  Shield termination
+
+@param R-query Resistor query parameters for customizing resistor selection - default is `get-default-resistor-query()`.
+@param C-query Capacitor query parameters for customizing capacitor selection - default is `get-default-capacitor-query()`.
+
+@member USB USB2 Differential Signaling Bus
+@member VDD-USB USB Power Rail, typically 5V.
+
+<DOC>
+public defn USBC-USB4-Iface (
+  lanes:Int = 2,
+  R-query:ResistorQuery = get-default-resistor-query(),
+  C-query:CapacitorQuery = get-default-capacitor-query(),
+  ):
+  pcb-module USBC-USB4-Iface:
+    port USB : usb-c(2)
+    port VDD-USB : power
+
+    public inst USBC : device
+
+    net (VDD-USB, USBC.conn.vbus)
+    net GND (VDD-USB.V-)
+
+    ; According to USB4 System Design Guidelines
+    val bleed-R = create-resistor(R-query, 
+                                case = valid-smd-pkgs("0201"), 
+                                resistance = Interval(200.0e3, 242.0e3) ; 220k ohm
+                                )
+    
+    val rx-ac-C = create-capacitor(C-query, 
+                                  case = valid-smd-pkgs("0201"), 
+                                  capacitance = Interval(300.0e-9, 363.0e3)) ; 0.33uf
+
+    val tx-ac-C = create-capacitor(C-query,
+                                  case = valid-smd-pkgs("0201"), 
+                                  capacitance = Interval(135.0e-9, 265.0e3)) ; 0.22uf
+
   
-  for g in pins(sw.VBUS) do :
-    net (VBUS g)
+    ; USB-C CC pull-down resistors
+    val cc-R = create-capacitor(C-query, capacitance = 2.2E-9, precision = (10 %), rated-voltage = 50.0, case = valid-smd-pkgs("0201")) ; 220 pf / 50V
+    for i in indices(USBC.conn.bus.cc) do:
+      val n = to-string("CC%_-R" % [i])
+      insert-pulldown(USBC.conn.bus.cc[i], GND, elem-type = cc-R, inst-name? = n, make-public = true)
 
-  net (sw.CC1 USB-C.cc[0])
-  net (sw.CC2 USB-C.cc[1])
+    
+    inst tx-bcap : dp-coupler(tx-ac-C)[lanes]
+    inst rx-bcap : dp-coupler(rx-ac-C)[lanes]
 
-  net (sw.SBU1 USB-C.sbu[0] )
-  net (sw.SBU2 USB-C.sbu[1] )
+    val lane-esd-cap = ASM001/components/Infineon/ESD132-B1-W0201-E6327/component
 
-  net (sw.D0.P sw.D1.P USB-C.data.P)
-  net (sw.D0.N sw.D1.N USB-C.data.N)
-  net (sw.TX1.P USB-C.lane[0].TX.P)
-  net (sw.TX1.N USB-C.lane[0].TX.N)
-  net (sw.RX1.P USB-C.lane[0].RX.P)
-  net (sw.RX1.N USB-C.lane[0].RX.N)
-  net (sw.TX2.P USB-C.lane[1].TX.P)
-  net (sw.TX2.N USB-C.lane[1].TX.N)
-  net (sw.RX2.P USB-C.lane[1].RX.P)
-  net (sw.RX2.N USB-C.lane[1].RX.N)
+    inst lane-esd-tx : dp-coupler(lane-esd-cap, pre-pose = loc(0.0, 0.0, 90.0))[lanes]
+    inst lane-esd-rx : dp-coupler(lane-esd-cap, pre-pose = loc(0.0, 0.0, 90.0))[lanes]
+    
+    for i in 0 to lanes do:
 
-  net (sw.SHIELD SHIELD)
+      topo-net(USB.cc[i] => USBC.conn.bus.cc[i])
+      topo-net(USB.sbu[i] => USBC.conn.bus.sbu[i])
+
+      ; RX bleed resistors
+      insert-pulldown(USBC.conn.bus.lane[i].RX.P, GND, 
+                      elem-type = bleed-R,
+                      inst-name? = to-string("RX_P%_-R" % [i]), 
+                      make-public = true)
+      insert-pulldown(USBC.conn.bus.lane[i].RX.N, GND, 
+                      elem-type = bleed-R,
+                      inst-name? = to-string("RX_N%_-R" % [i]), 
+                      make-public = true)
+
+      ; TX bleed resistors
+      insert-pulldown(USBC.conn.bus.lane[i].TX.P, GND, 
+                      elem-type = bleed-R,
+                      inst-name? = to-string("TX_P%_-R" % [i]), 
+                      make-public = true)
+      insert-pulldown(USBC.conn.bus.lane[i].TX.N, GND, 
+                      elem-type = bleed-R,
+                      inst-name? = to-string("TX_N%_-R" % [i]), 
+                      make-public = true)
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;ESD Protection;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      topo-pair(USB.lane[i].TX => lane-esd-tx[i] => tx-bcap[i] => USBC.conn.bus.lane[i].TX)
+      ; topo-pair(lane-esd-tx[i] => tx-bcap[i])  ;
+      ; topo-pair(tx-bcap[i] => USBC.conn.bus.lane[i].TX)  ;
+
+      ; set-signal-end(USB.lane[i].TX, USBC.conn.bus.lane[i].TX) 
+
+      topo-pair(USB.lane[i].RX => lane-esd-rx[i] => rx-bcap[i] => USBC.conn.bus.lane[i].RX) ;
+      ; set-signal-end(USB.lane[i].RX, USBC.conn.bus.lane[i].RX)
+
+    public inst esd-prot : diodes/ESD224DQAR/device
+    net (esd-prot.GND[1], esd-prot.GND[2], GND)
+
+    ; Construct the topology from the module port, through
+    ;  the ESD protector, and then terminating in the connector device.
+    require esd-pair:dual-pair from esd-prot
+    topo-pair(USB.data => esd-pair.A => esd-pair.B => USBC.conn.bus.data)
+    ; By setting the signal end - then the routing structure application
+    ;   can apply to the entirety of the bus.
+    set-signal-end(USB.data, USBC.conn.bus.data)
+
+    ; Shield Termination
+    inst shield-term : shield-termination(R-query, C-query)
+    net (shield-term.SHIELD, USBC.conn.shield)
+    net (shield-term.GND, GND)
+
+  USBC-USB4-Iface
+
+
+
+
+; public pcb-module circuit :
+;   port GND
+;   port VBUS
+;   port SHIELD
+;   port USB-C : usb-c(2)
+
+;   public inst sw : ASM001/components/USB/USBTypeC/conn-component
+
+;   for g in pins(sw.GND) do :
+;     net (GND g)
+  
+;   for g in pins(sw.VBUS) do :
+;     net (VBUS g)
+
+;   net (sw.CC1 USB-C.cc[0])
+;   net (sw.CC2 USB-C.cc[1])
+
+;   net (sw.SBU1 USB-C.sbu[0])
+;   net (sw.SBU2 USB-C.sbu[1])
+
+;   net (sw.D0.P sw.D1.P USB-C.data.P)
+;   net (sw.D0.N sw.D1.N USB-C.data.N)
+;   net (sw.TX1.P USB-C.lane[0].TX.P)
+;   net (sw.TX1.N USB-C.lane[0].TX.N)
+;   net (sw.RX1.P USB-C.lane[0].RX.P)
+;   net (sw.RX1.N USB-C.lane[0].RX.N)
+;   net (sw.TX2.P USB-C.lane[1].TX.P)
+;   net (sw.TX2.N USB-C.lane[1].TX.N)
+;   net (sw.RX2.P USB-C.lane[1].RX.P)
+;   net (sw.RX2.N USB-C.lane[1].RX.N)
+
+;   net (sw.SHIELD SHIELD)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; LandPattern Generator

@@ -1,0 +1,72 @@
+Remove Pin from Net: Failed to remove Pin
+Remove Pin from Net: Failed to remove Pin
+Added Pin To Net: NetName=NetJ1_M4 Pin=C1-1
+Added Pin To Net: NetName=X_B_P Pin=C35-2
+Added Pin To Net: NetName=X_B_N Pin=C36-2
+Added Pin To Net: NetName=asm2464pdx_usb-c_lane0_TX_P Pin=J1-A2
+Added Pin To Net: NetName=asm2464pdx_usb-c_lane0_TX_N Pin=J1-A3
+Added Pin To Net: NetName=NetC2_1 Pin=J1-A5
+Added Pin To Net: NetName=asm2464pdx_usb-c_lane1_RX_P Pin=J1-B2
+Added Pin To Net: NetName=asm2464pdx_usb-c_lane1_RX_N Pin=J1-B3
+Added Pin To Net: NetName=NetC6_1 Pin=J1-B5
+Added Pin To Net: NetName=asm2464pdx_usb-c_lane0_RX_N Pin=R7-1
+Added Pin To Net: NetName=asm2464pdx_usb-c_lane0_RX_P Pin=R17-1
+Added Pin To Net: NetName=asm2464pdx_usb-c_lane0_TX_P Pin=R27-1
+Added Pin To Net: NetName=NetJ1_M4 Pin=R28-1
+Added Pin To Net: NetName=asm2464pdx_usb-c_lane0_TX_N Pin=R29-1
+Added Pin To Net: NetName=asm2464pdx_usb-c_lane1_RX_P Pin=R32-1
+Added Pin To Net: NetName=asm2464pdx_usb-c_lane1_RX_N Pin=R33-1
+Added Pin To Net: NetName=NetJ2_54 Pin=U4-A6
+Added Pin To Net: NetName=NetJ2_52 Pin=U4-A15
+Added Pin To Net: NetName=NetR13_1 Pin=U4-AA3
+Added Pin To Net: NetName=NetC23_1 Pin=U4-AA4
+Added Pin To Net: NetName=NetC2_1 Pin=U4-AA6
+Added Pin To Net: NetName=NetJ2_55 Pin=U4-AA7
+Added Pin To Net: NetName=NetC36_1 Pin=U4-AA15
+Added Pin To Net: NetName=NetR11_1 Pin=U4-B21
+Added Pin To Net: NetName=NetJ2_50 Pin=U4-D21
+Added Pin To Net: NetName=NetC22_1 Pin=U4-H1
+Added Pin To Net: NetName=NetR10_2 Pin=U4-H5
+Added Pin To Net: NetName=NetR14_1 Pin=U4-H21
+Added Pin To Net: NetName=NetJ1_B8 Pin=U4-J1
+Added Pin To Net: NetName=NetJ1_A8 Pin=U4-K1
+Added Pin To Net: NetName=asm2464pdx_usb-c_data_P Pin=U4-M1
+Added Pin To Net: NetName=asm2464pdx_usb-c_data_N Pin=U4-M2
+Added Pin To Net: NetName=asm2464pdx_usb-c_lane0_RX_P Pin=U4-P1
+Added Pin To Net: NetName=asm2464pdx_usb-c_lane0_RX_N Pin=U4-P2
+Added Pin To Net: NetName=asm2464pdx_usb-c_lane0_TX_P Pin=U4-T1
+Added Pin To Net: NetName=asm2464pdx_usb-c_lane0_TX_N Pin=U4-T2
+Added Pin To Net: NetName=NetC23_2 Pin=U4-Y4
+Added Pin To Net: NetName=NetC6_1 Pin=U4-Y6
+Added Pin To Net: NetName=NetJ2_53 Pin=U4-Y7
+Added Pin To Net: NetName=src-ep1_data_lane0_RX_P Pin=U4-Y13
+Added Pin To Net: NetName=NetC35_1 Pin=U4-Y15
+Added Pin To Net: NetName=NetU4_A2 Pin=U5-1
+Added Pin To Net: NetName=NetU4_A3 Pin=U5-2
+Added Pin To Net: NetName=NetR15_1 Pin=U5-3
+Added Pin To Net: NetName=NetU4_A4 Pin=U5-5
+Added Pin To Net: NetName=NetU4_A5 Pin=U5-6
+Added Pin To Net: NetName=NetR16_1 Pin=U5-7
+Added Pin To Net: NetName=asm2464pdx_usb-c_data_P Pin=U8-4
+Added Pin To Net: NetName=asm2464pdx_usb-c_data_N Pin=U8-5
+Added Pin To Net: NetName=asm2464pdx_usb-c_data_N Pin=U8-6
+Added Pin To Net: NetName=asm2464pdx_usb-c_data_P Pin=U8-7
+Change Net Name : Old Net Name=NetJ1_M4 New Net Name=NetC1_1
+Add Net: Net with name "asm2464pdx_usb-c_lane1_RX_N" already exists
+Add Net: Net with name "asm2464pdx_usb-c_lane1_RX_P" already exists
+Change Class Name : Old Net Name=asm2464pdx New Net Name=ASM001-design-3
+Change Class Name : Old Net Name=m2_connector1 New Net Name=ASM001-design-5
+Change Class Name : Old Net Name=power-circuit
+logo
+usb4_type_c
+version-label New Net Name=ASM001-design-2
+Change Class Name : Old Net Name=Sheet 4 New Net Name=ASM001-design-4
+Change Class Name : Old Net Name=tx-coupler1
+esd-pair
+W25Q32JVSSIQ
+usb4_type_c.USBC New Net Name=ASM001-design-1
+Add Differential Pair: Number of nets in differential pair NetJ2_53 is 1 instead of 2
+Add Differential Pair: Number of nets in differential pair NetJ2_55 is 1 instead of 2
+Add Differential Pair: Number of nets in differential pair src-ep1_data_lane0_RX is 1 instead of 2
+Added Rule: Name=Schematic Signal Stimulus_1
+Added Rule: Name=Schematic Signal Stimulus_3

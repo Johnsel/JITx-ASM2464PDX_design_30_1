@@ -1,0 +1,90 @@
+Protel Design System Design Rule Check
+PCB File : G:\Projects\JITx\JITx-ASM2464PDX_design_29_1\designs\ASM001-design\altium\ASM001-design.PcbDoc
+Date     : 7-2-2025
+Time     : 21:59:38
+
+Processing Rule : Un-Routed Net Constraint ( (All) )
+   Violation between Un-Routed Net Constraint: Polygon Region (7 hole(s)) L2 Dead Copper
+   Violation between Un-Routed Net Constraint: Polygon Region (7 hole(s)) L6 Dead Copper
+   Violation between Un-Routed Net Constraint: Polygon Region (7 hole(s)) L8 Dead Copper
+   Violation between Un-Routed Net Constraint: Region (0 hole(s)) L0 Dead Copper
+   Violation between Un-Routed Net Constraint: Region (0 hole(s)) L0 Dead Copper
+Rule Violations :5
+
+Processing Rule : Differential Pairs Uncoupled Length using the Gap Constraints (Min=0.254mm) (Max=0.254mm) (Prefered=0.254mm)  and Width Constraints (Min=0.381mm) (Max=0.381mm) (Prefered=0.381mm) (All)
+Rule Violations :0
+
+Processing Rule : Power Plane Connect Rule(Relief Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (All)
+Rule Violations :0
+
+Processing Rule : Board Clearance Constraint (Gap=0mm) (All)
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad C10-1(-18.017mm,59.175mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad C10-2(-18.017mm,59.995mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad C11-1(-19.295mm,58.365mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad C11-2(-19.295mm,60.154mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad C12-1(-18.226mm,61.113mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad C12-2(-19.564mm,61.113mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad C17-1(7.774mm,67.366mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad C17-2(7.774mm,66.546mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad C18-1(9.547mm,68.484mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad C18-2(7.757mm,68.484mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad C19-1(9.052mm,67.3mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad C19-2(9.052mm,65.962mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad C3-1(-42.178mm,51.475mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad C3-2(-42.178mm,50.655mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad C4-1(-42.162mm,52.593mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad C4-2(-43.951mm,52.593mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad C5-1(-43.456mm,51.409mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad C5-2(-43.456mm,50.071mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad L2-a(-15.702mm,70.554mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad L2-c(-15.702mm,68.221mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad L3-a(-1.226mm,63.474mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad L3-c(-1.226mm,65.807mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad R2-1(-41.068mm,65.135mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad R2-2(-41.888mm,65.135mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad R3-1(-43.322mm,65.135mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad R3-2(-44.141mm,65.135mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad R4-1(-25.428mm,73.746mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad R4-2(-25.428mm,74.566mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad R5-1(-13.896mm,59.686mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad R5-2(-13.076mm,59.686mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad R6-1(-11.643mm,59.686mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad R6-2(-10.823mm,59.686mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad R8-1(20.698mm,67.057mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad R8-2(22.036mm,67.057mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad R9-1(22.561mm,67.057mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Pad R9-2(23.38mm,67.057mm) on L0 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Region (0 hole(s)) Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Region (0 hole(s)) Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Text "C10" (-18.767mm,59.585mm) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Text "C11" (-20.395mm,59.26mm) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Text "C12" (-18.895mm,60.188mm) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Text "C17" (8.524mm,66.956mm) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Text "C18" (8.652mm,67.384mm) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Text "C19" (9.977mm,66.631mm) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Text "C3" (-41.428mm,51.065mm) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Text "C4" (-43.056mm,51.493mm) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Text "C5" (-42.531mm,50.74mm) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Text "J2" (29.094mm,-49.043mm) on Bottom Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Text "L2" (-17.247mm,71.538mm) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Text "L3" (0.319mm,62.49mm) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Text "R2" (-41.478mm,64.385mm) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Text "R3" (-43.731mm,64.385mm) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Text "R4" (-26.178mm,74.156mm) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Text "R5" (-13.486mm,60.436mm) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Text "R6" (-11.233mm,60.436mm) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Text "R8" (21.367mm,67.982mm) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Text "R9" (22.97mm,67.807mm) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Track (0.445mm,63.164mm)(0.445mm,66.117mm) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Track (-14.03mm,67.911mm)(-14.03mm,70.864mm) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Track (-17.373mm,67.911mm)(-17.373mm,70.864mm) on Top Overlay 
+   Violation between Board Outline Clearance(Outline Edge): (Collision < 0.254mm) Between Board Edge And Track (-2.898mm,63.164mm)(-2.898mm,66.117mm) on Top Overlay 
+Rule Violations :61
+
+Processing Rule : Impedance (Minimum=80.00Ohms Maximum=90.00Ohms)
+Rule Violations :0
+
+
+Violations Detected : 66
+Waived Violations : 0
+Time Elapsed        : 00:00:06
