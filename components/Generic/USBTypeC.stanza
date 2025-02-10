@@ -197,14 +197,17 @@ This is a basic USB4 20 Gbit capable USB-C interface.
 
 Circuit Includes:
 1.  USB-C connector
+2.  Pull-downs for CC1 and CC2
 3.  ESD protection diodes for the USB2 data bus.
-3.  ESD protection diodes for the SuperSpeed lanes.
-4.  Shield termination
+4.  ESD protection diodes for the SS data bus.
+5.  Lane protection capacitors and bleed resistors.
+6.  Shield termination
 
+@param lanes Amount of high speed lanes - default is `2`
 @param R-query Resistor query parameters for customizing resistor selection - default is `get-default-resistor-query()`.
 @param C-query Capacitor query parameters for customizing capacitor selection - default is `get-default-capacitor-query()`.
 
-@member USB USB2 Differential Signaling Bus
+@member USB USB-C Signaling Bus
 @member VDD-USB USB Power Rail, typically 5V.
 
 <DOC>
@@ -236,56 +239,48 @@ public defn USBC-USB4-Iface (
                                   case = valid-smd-pkgs("0201"), 
                                   capacitance = Interval(135.0e-9, 265.0e3)) ; 0.22uf
 
+    ; USB4 ESD Protection component definition
+    val lane-esd-cap = create-part(mpn = "ESD132-B1-W0201 E6327", manufacturer = "Infineon")
+
   
     ; USB-C CC pull-down resistors
     val cc-R = create-capacitor(C-query, capacitance = 2.2E-9, precision = (10 %), rated-voltage = 50.0, case = valid-smd-pkgs("0201")) ; 220 pf / 50V
     for i in indices(USBC.conn.bus.cc) do:
       val n = to-string("CC%_-R" % [i])
-      insert-pulldown(USBC.conn.bus.cc[i], GND, elem-type = cc-R, inst-name? = n, make-public = true)
+      val cc_pd-R = insert-pulldown(USBC.conn.bus.cc[i], GND, elem-type = cc-R, inst-name? = n, make-public = true)
+      topo-net(USBC.conn.bus.cc[i] => cc_pd-R.p[1])
 
-    
+    ; each lane has a bleed resistor, blocking cap and ESD protection
     inst tx-bcap : dp-coupler(tx-ac-C)[lanes]
     inst rx-bcap : dp-coupler(rx-ac-C)[lanes]
-
-    val lane-esd-cap = ASM001/components/Infineon/ESD132-B1-W0201-E6327/component
 
     inst lane-esd-tx : dp-coupler(lane-esd-cap, pre-pose = loc(0.0, 0.0, 90.0))[lanes]
     inst lane-esd-rx : dp-coupler(lane-esd-cap, pre-pose = loc(0.0, 0.0, 90.0))[lanes]
     
     for i in 0 to lanes do:
-
+      ; side channel signals
       topo-net(USB.cc[i] => USBC.conn.bus.cc[i])
       topo-net(USB.sbu[i] => USBC.conn.bus.sbu[i])
 
-      ; RX bleed resistors
-      insert-pulldown(USBC.conn.bus.lane[i].RX.P, GND, 
-                      elem-type = bleed-R,
-                      inst-name? = to-string("RX_P%_-R" % [i]), 
-                      make-public = true)
-      insert-pulldown(USBC.conn.bus.lane[i].RX.N, GND, 
-                      elem-type = bleed-R,
-                      inst-name? = to-string("RX_N%_-R" % [i]), 
-                      make-public = true)
-
       ; TX bleed resistors
-      insert-pulldown(USBC.conn.bus.lane[i].TX.P, GND, 
-                      elem-type = bleed-R,
-                      inst-name? = to-string("TX_P%_-R" % [i]), 
-                      make-public = true)
-      insert-pulldown(USBC.conn.bus.lane[i].TX.N, GND, 
-                      elem-type = bleed-R,
-                      inst-name? = to-string("TX_N%_-R" % [i]), 
-                      make-public = true)
-    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;ESD Protection;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      topo-pair(USB.lane[i].TX => lane-esd-tx[i] => tx-bcap[i] => USBC.conn.bus.lane[i].TX)
-      ; topo-pair(lane-esd-tx[i] => tx-bcap[i])  ;
-      ; topo-pair(tx-bcap[i] => USBC.conn.bus.lane[i].TX)  ;
+      inst shunt-TX : symmetric-shunt(bleed-R)
+      topo-pair(USBC.conn.bus.lane[i].TX => shunt-TX.A)
+      topo-pair(shunt-TX.B => tx-bcap[i] => lane-esd-tx[i] => USB.lane[i].TX)
 
-      ; set-signal-end(USB.lane[i].TX, USBC.conn.bus.lane[i].TX) 
+      net (shunt-TX.COMMON, GND)
 
-      topo-pair(USB.lane[i].RX => lane-esd-rx[i] => rx-bcap[i] => USBC.conn.bus.lane[i].RX) ;
-      ; set-signal-end(USB.lane[i].RX, USBC.conn.bus.lane[i].RX)
+      ; RX bleed resistors
+      inst shunt-RX : symmetric-shunt(bleed-R)
+      topo-pair(USBC.conn.bus.lane[i].RX => shunt-RX.A)
+      topo-pair(shunt-RX.B => rx-bcap[i] => lane-esd-rx[i] => USB.lane[i].RX)
 
+      net (shunt-RX.COMMON, GND)
+
+      ; Set the signal end for the routing application
+      set-signal-end(USB.lane[i].TX, USBC.conn.bus.lane[i].TX) 
+      set-signal-end(USB.lane[i].RX, USBC.conn.bus.lane[i].RX)
+
+    ; USB2 ESD Protection
     public inst esd-prot : diodes/ESD224DQAR/device
     net (esd-prot.GND[1], esd-prot.GND[2], GND)
 

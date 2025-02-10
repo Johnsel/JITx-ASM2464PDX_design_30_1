@@ -21,50 +21,14 @@ defpackage ASM001/main :
   import ocdb/utils/generic-components
   import ocdb/utils/generator-utils
 
-
-  ; import ASM001/board
   import ASM001/helpers
   import ASM001/components/common
   import ASM001/module/power
 
   import debug/test-points
 
-  ; import jsl/examples/protocols/common/example-board
-  ; import jsl/examples/protocols/common/example-components
-
 ; Define the shape/size of the board
 val board-shape = RoundedRectangle(100.0, 100.0, 2.0)
-
-; pcb-module communications-core :
-;   inst zener : create-part(mpn = "MMSZ4689T1G", manufacturer = "ON Semiconductor")
-;   public inst usb-if : connectors/components/USB/USBTypeC/USBC-USB4-Iface()
-
-;   net (zener.A usb-if.VDD-USB.V-)
-;   net (zener.K usb-if.VDD-USB.V+)
-
-;   inst ctl : controller
-;   inst pwr-mng : ASM001/module/power/circuit
-
-;   net (pwr-mng.VDD-3v3 ctl.rail-3v3)
-;   net usb-data (ctl.USB usb-if.USB)
-;   net (ctl.VDD-USB usb-if.VDD-USB pwr-mng.VDD-USB)
-
-;   net VBUS (ctl.VDD-USB.V+)
-;   public net P3V3 (ctl.rail-3v3.V+)
-;   public net GND (ctl.rail-3v3.V-)
-
-;   net VBUS (power-circuit.vbus.V+ asm2464pdx.vbus)
-;   net VCCH (power-circuit.rail-3v3.V+ asm2464pdx.vcch); asm2464pdx.VCCA33)
-;   net VCCL (power-circuit.rail-1v9.V+ asm2464pdx.vccl)
-;   net VDD (power-circuit.rail-1v13.V+ asm2464pdx.vdd)
-;   net GND (gnd power-circuit.vbus.V- power-circuit.rail-3v3.V- power-circuit.rail-1v9.V- power-circuit.rail-1v13.V- asm2464pdx.gnd)
-
-; ; schematic symbols
-;   symbol(GND) = GND-SYMB
-;   symbol(VBUS) = PWR-SYMB
-;   symbol(VCCH) = PWR-SYMB
-;   symbol(VCCL) = PWR-SYMB
-;   symbol(VDD) = PWR-SYMB
 
 ; Module to run as a design
 pcb-module ASM001-design :
@@ -80,27 +44,26 @@ pcb-module ASM001-design :
   val R-query = get-default-resistor-query()
   val C-query = get-default-capacitor-query()
 
-  inst power-circuit : ASM001/module/power/power-management
+  inst power-management : ASM001/module/power/power-management
   inst asm2464pdx : ASM001/components/Asmedia/ASM2464PDX/module
   inst usb4_type_c : ASM001/components/USB/USBTypeC/USBC-USB4-Iface()
-  ; require usb4_conn : usb-c-connector from usb4_type_c
-  ; require usb4_data : usb-c(2) from usb4_type_c
+  inst W25Q32JVSSIQ : ASM001/components/Winbond/W25Q32JVSSIQ/module
 
-  net (usb4_type_c.VDD-USB  power-circuit.VDD-USB)
+  net (usb4_type_c.VDD-USB  power-management.VDD-USB)
 
-  ;;;;; main power circuits
-  place(power-circuit) at loc(-30.0, 35.0) on Top
-
-  place(asm2464pdx) at loc(0.0, 0.0, 0.0) on Top
+  place(power-management) at loc(-30.0, 35.0) on Top
   place(asm2464pdx.sw) at loc(0.0, 0.0, 0.0) on Top
+  place(usb4_type_c.USBC.J) at loc(-45.0, 15.0, 270.0) on Top
+  place(W25Q32JVSSIQ.sw) at loc(1.5, 10.0, 270.0) on Top
 
+  ; main power circuits
+  net VBUS (power-management.VDD-USB.V+ asm2464pdx.vbus)
+  net VCCH (power-management.VDD-3v3.V+ asm2464pdx.vcch); asm2464pdx.VCCA33)
+  net VCCL (power-management.VDD-1v9.V+ asm2464pdx.vccl)
+  net VDD (power-management.VDD-1v13.V+ asm2464pdx.vdd)
+  net GND (power-management.VDD-USB.V- power-management.VDD-3v3.V- power-management.VDD-1v9.V- power-management.VDD-1v13.V- asm2464pdx.gnd)
 
-  net VBUS (power-circuit.VDD-USB.V+ asm2464pdx.vbus)
-  net VCCH (power-circuit.VDD-3v3.V+ asm2464pdx.vcch); asm2464pdx.VCCA33)
-  net VCCL (power-circuit.VDD-1v9.V+ asm2464pdx.vccl)
-  net VDD (power-circuit.VDD-1v13.V+ asm2464pdx.vdd)
-  net GND (power-circuit.VDD-USB.V- power-circuit.VDD-3v3.V- power-circuit.VDD-1v9.V- power-circuit.VDD-1v13.V- asm2464pdx.gnd)
-
+  ; TODO: add a RC filter instead of a direct connection
   inst vcca33-jumper : jumper()
   net VCCH_VCCA33 (VCCH vcca33-jumper.p[1]) ; internally hook up both 3.3v busses
   net VCCA33 (vcca33-jumper.p[2] asm2464pdx.vcca33) ; internally hook up both 3.3v busses
@@ -110,14 +73,10 @@ pcb-module ASM001-design :
     copper-pour(LayerIndex(3, Top), isolate = 0.127, rank = 1) =  board-shape
     copper-pour(LayerIndex(4, Top), isolate = 0.127, rank = 1) =  board-shape
   
-
-  ; topo-net(usb4_conn.vbus.V- => GND => power-circuit.VDD-USB.V-)
-
+  ; topo-net(usb4_conn.vbus.V- => GND => power-management.VDD-USB.V-)
   ; topo-net(usb4_type_c.USB, usb4_data)
 
-  place(usb4_type_c.USBC.J) at loc(-45.0, 15.0, 270.0) on Top
 
-  inst W25Q32JVSSIQ : ASM001/components/Winbond/W25Q32JVSSIQ/module
 
   net (VCCH W25Q32JVSSIQ.VDD)
   net (GND W25Q32JVSSIQ.GND)
@@ -140,15 +99,13 @@ pcb-module ASM001-design :
                                 capacitance = 1.0e-6,
                                 rated-voltage = 50.0) ; 1uF, 50V
 
-
   ; ASM2464PDX config straps
-
   insert-pullup(asm2464pdx.sw.UART_TX, asm2464pdx.vcch,
                     elem-type = r_4k7,
                     inst-name? = to-string("uart_tx-R"),
                     make-public = true)
 
-  ;; RST# RC pull-up
+  ; RST# RC pull-up
   insert-pullup(asm2464pdx.rst#, asm2464pdx.vcch,
                     elem-type = r_100K,
                     inst-name? = to-string("r_100K"),
@@ -158,13 +115,14 @@ pcb-module ASM001-design :
                     elem-type = c_1uF50V,
                     inst-name? = to-string("c_1uF50V"),
                     make-public = true)
-
+  
+  ; Precision R for UREXT
   insert-pulldown(asm2464pdx.urext, GND,
                     elem-type = r_12k1,
                     inst-name? = to-string("UREXT-R"),
                     make-public = true)
-
   
+  ; TEST_EN pull-down
   insert-pulldown(asm2464pdx.test_en, GND,
                     elem-type = r_4k7,
                     inst-name? = to-string("TEST_EN-R"),
@@ -192,8 +150,9 @@ pcb-module ASM001-design :
   net (asm2464pdx.xi crystal_25mhz.p[1] crystal_c.p[1])
   net (asm2464pdx.xo crystal_25mhz.p[3] crystal_c.p[2])
 
-
-  require asm2464pdx_usb-c : usb-c(2) from asm2464pdx
+  ; USB4 Type-C connector
+  val usb4-lanes = 2
+  require asm2464pdx_usb-c : usb-c(usb4-lanes) from asm2464pdx
 
   net (usb4_type_c.VDD-USB.V+ asm2464pdx.vbus)
   net (usb4_type_c.VDD-USB.V- asm2464pdx.gnd)
@@ -204,89 +163,15 @@ pcb-module ASM001-design :
   net sbu0 (usb4_type_c.USB.sbu[0], asm2464pdx_usb-c.sbu[0])
   net sbu1 (usb4_type_c.USB.sbu[1], asm2464pdx_usb-c.sbu[1])
 
-  ; inst esd-pair : dp-coupler(
-  ;     ASM001/components/Infineon/ESD132-B1-W0201-E6327/component,
-  ;     pre-pose = loc(0.0, 0.0, 90.0)
-  ;  )
-
-  ; topo-pair(asm2464pdx_usb-c.data => esd-pair.A => esd-pair.B => usb4_type_c.USB.data)
-  ; topo-net(asm2464pdx_usb-c, usb4_type_c.USB)
-
-;   ; By setting the signal end - then the routing structure application
-;   ; can apply to the entirety of the bus.
-;   set-signal-end(asm2464pdx_usb-c, usb4_type_c.USB)
-
-;  ; According to USB4 System Design Guidelines
-;   val bleed-R = create-resistor(R-query, 
-;                               case = valid-smd-pkgs("0201"), 
-;                               resistance = Interval(200.0e3, 242.0e3) ; 220k ohm
-;                               )
-  
-;   val rx-ac-C = create-capacitor(C-query, 
-;                                 case = valid-smd-pkgs("0201"), 
-;                                 capacitance = Interval(300.0e-9, 363.0e3)) ; 0.33uf
-
-;   val tx-ac-C = create-capacitor(C-query,
-;                                 case = valid-smd-pkgs("0201"), 
-;                                 capacitance = Interval(135.0e-9, 265.0e3)) ; 0.22uf
-
-
-;   ; ; USB-C CC pull-down resistors
-;   ; val cc-R = create-capacitor(C-query, capacitance = 2.2E-9, precision = (10 %), rated-voltage = 50.0) ; 220 pf / 50V
-;   ; for i in indices(asm2464pdx_usb-c.cc) do:
-;   ;   val n = to-string("CC%_-R" % [i])
-;   ;   insert-pulldown(asm2464pdx_usb-c.cc[i], GND,
-;   ;                 elem-type = cc-R,
-;   ;                 inst-name? = n,
-;   ;                 make-public = true)
-
-  for i in 0 to 2  do:
-    ; inst tx-bcap : dp-coupler(tx-ac-C)
-    ; inst rx-bcap : dp-coupler(rx-ac-C)
-    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;ESD
-    
-    
-    ; require tx-esd:dual-pair from esd-lanes
+  for i in 0 to usb4-lanes  do:
     topo-pair(asm2464pdx_usb-c.lane[i].TX => usb4_type_c.USB.lane[i].TX) 
     set-signal-end(asm2464pdx_usb-c.lane[i].TX, usb4_type_c.USB.lane[i].TX)
 
-    ; require rx-esd:dual-pair from esd-lanes
     topo-pair(asm2464pdx_usb-c.lane[i].RX => usb4_type_c.USB.lane[i].RX) 
     set-signal-end(asm2464pdx_usb-c.lane[i].RX, usb4_type_c.USB.lane[i].RX)
 
     topo-net(asm2464pdx_usb-c.cc[i] => usb4_type_c.USB.cc[i]) 
     topo-net(asm2464pdx_usb-c.sbu[i] => usb4_type_c.USB.sbu[i]) 
-
-
-  ; val ti-2 = to-int(typ(usb-get-trace-impedance(USB2)))
-  ; val usb2-route-struct = diff-routing-struct(substrate, ti-2, neckdown = DifferentialNeckDown(clearance = 0.1))
-  ; val usb2-constraints = USB-Constraint(proto = USB2, route-struct = usb2-route-struct)
-  ; constrain-topology(asm2464pdx_usb-c.data => usb4_type_c.USB.data, usb2-constraints)
-
-  ; val b-cap = block-cap(100.0e-9)
-  
-
-  ; val ti-4 = to-int(typ(usb-get-trace-impedance(USB4)))
-  ; val usb4-route-struct = diff-routing-struct(substrate, ti-4, neckdown = DifferentialNeckDown(clearance = 0.1))
-  ; val usb4-constraints = USB-Constraint(proto = USB4, route-struct = usb4-route-struct)
-  ; val lane-constraint = LaneConstraint(usb4-constraints)
-  
-  ; for i in indices(asm2464pdx_usb-c.lane) do :
-  ;   within [src, dst] = constrain-topology(asm2464pdx_usb-c.lane[i] => usb4_type_c.USB.lane[i], lane-constraint):
-  ;     ; Here we construct the differential pair topology for the lane.
-  ;     ; The Lane consists of two diff-pairs - TX and RX
-  ;     ; inst rx-bcap : dp-coupler(b-cap)
-  ;     ; inst lane-esd-rx : dp-coupler(lane-esd-cap, pre-pose = loc(0.0, 0.0, 90.0))
-  ;     topo-pair(src.RX => dst.RX)
-
-  ;     ; The TX channel needs a blocking capacitor which we add with
-  ;     ;  the help of the `topo-pair` utility. This is like `topo-net`
-  ;     ;  but handles extracting the `dual-pair` require from the
-  ;     ;  `tx-bcap` for us.
-  ;     inst tx-bcap : dp-coupler(b-cap)
-  ;     ; inst lane-esd-tx : dp-coupler(lane-esd-cap, pre-pose = loc(0.0, 0.0, 90.0))
-  ;     topo-pair(src.TX => tx-bcap => dst.TX)
-      ; set-signal-end(asm2464pdx_usb-c.lane[i], usb4_type_c.USB.lane[i])
     
   ; inst header : header(2,1)
 
@@ -310,7 +195,7 @@ pcb-module ASM001-design :
   ;   name = "USBC-Keepout"
   ;   )
 
-
+  ; PCIe 4x M.2
   val version = PCIE-V4
   val trace-imped = to-int(typ(pcie-get-trace-impedance(version)))
   val imped-value = diff-routing-struct(substrate, trace-imped);, neckdown = DifferentialNeckDown(clearance = 0.1))
@@ -341,9 +226,9 @@ pcb-module ASM001-design :
         inst tx-coupler : dp-coupler(pcie-b-cap)
         topo-pair(src.data.lane[i].TX => tx-coupler => dst.data.lane[i].TX)
         ; ; No Blocking Caps on the Receive side.
-        topo-net(src.data.lane[i].RX => dst.data.lane[i].RX)
+        topo-pair(src.data.lane[i].RX => dst.data.lane[i].RX)
 
-      topo-net(src.data.refclk => dst.data.refclk)
+      topo-pair(src.data.refclk => dst.data.refclk)
       ; The control signals do not demand a topology so
       ;  we just use a straight net connection.
       net (src.control, dst.control)
@@ -352,6 +237,7 @@ pcb-module ASM001-design :
 
   val y-loc = [-36.0 - (to-double(0) * -24.0),(-36.0 - (to-double(1) * -24.0)),(-36.0 - (to-double(2) * -24.0)),(-36.0 - (to-double(3) * -24.0))]
 
+  place(m2_connector.sw) at loc(35.0, y-loc[0], 90.0) on Bottom      
   ; place(m2_connector[0].sw) at loc(35.0, y-loc[0], 90.0) on Bottom      
   ; place(m2_connector[1].sw) at loc(35.0, y-loc[1], 90.0) on Bottom      
   ; place(m2_connector[2].sw) at loc(35.0, y-loc[2], 90.0) on Bottom      
