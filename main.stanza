@@ -40,7 +40,7 @@ pcb-module ASM001-design :
   ; setup logo
   inst logo : ocdb/artwork/jitx-logo/logo(10.0)
   place(logo) at loc(10.0, -5.0, 0.0) on Bottom
-  
+   
   val R-query = get-default-resistor-query()
   val C-query = get-default-capacitor-query()
 
@@ -213,7 +213,7 @@ pcb-module ASM001-design :
 
   ; Construct a typical connector setup
   ;  for a 4x 1 lane configuration. This means a
-  ;  straight through `tx => bcap => tx` and `rx => rx`
+  ;  straight through `tx => bcap => tx` and `rx;;[po;] => rx`
   ;  configuration.
   val num_m2 = 1
   inst m2_connector : ASM001/components/TE_1-2199230-6/module;[num_m2]

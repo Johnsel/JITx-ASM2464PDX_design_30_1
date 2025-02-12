@@ -465,15 +465,15 @@ public pcb-component component :
 
   assign-landpattern(lp)
 
-  for i in 0 to 2 do :
+  for i in 0 to 3 do :
     diff-pin-model(self.PRXP[i], self.PRXN[i], delay = typ(10.0e-15) loss = typ(0.1))
     diff-pin-model(self.PTXP[i], self.PTXN[i], delay = typ(10.0e-15) loss = typ(0.1))
+    ; diff-pin-model(self.REFCLK[i].P, self.REFCLK[i].N, delay = typ(10.0e-15) loss = typ(0.1))
 
 
-  for i in 0 to 4 do :
+  for i in 0 to 1 do :
     diff-pin-model(self.URXP[i], self.URXN[i], delay = typ(10.0e-15) loss = typ(0.1))
     diff-pin-model(self.UTXP[i], self.UTXN[i], delay = typ(10.0e-15) loss = typ(0.1))
-    ; diff-pin-model(self.REFCLK[i].P, self.REFCLK[i].N, delay = typ(10.0e-15) loss = typ(0.1))
 
   diff-pin-model(self.UD.P self.UD.N delay = typ(10.0e-15) loss = typ(0.1))
 

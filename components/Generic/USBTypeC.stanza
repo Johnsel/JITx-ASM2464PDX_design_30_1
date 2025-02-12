@@ -262,20 +262,17 @@ public defn USBC-USB4-Iface (
 
     for i in 0 to lanes do:
       ; side channel signals
-      net(USB.cc[i] => USBC.conn.bus.cc[i])
-      net(USB.sbu[i] => USBC.conn.bus.sbu[i])
+      topo-net(USB.cc[i] => USBC.conn.bus.cc[i])
+      topo-net(USB.sbu[i] => USBC.conn.bus.sbu[i])
 
       ; TX bleed resistors
-      topo-pair(USBC.conn.bus.lane[i].TX => lane-esd-tx[i] => shunt-TX[i].A)
-      topo-pair(shunt-TX[i].B => tx-bcap[i] =>  USB.lane[i].TX)
+      topo-pair(USBC.conn.bus.lane[i].TX => lane-esd-tx[i] => shunt-TX[i].A => shunt-TX[i].B => tx-bcap[i] =>  USB.lane[i].TX)
       net (shunt-TX[i].COMMON, GND)
 
       ; RX bleed resistors
-      topo-pair(USBC.conn.bus.lane[i].RX => lane-esd-rx[i] => shunt-RX[i].A)
-      topo-pair(shunt-RX[i].B => rx-bcap[i] => USB.lane[i].RX)
       ; topo-pair(USBC.conn.bus.lane[i].RX => lane-esd-rx[i] => shunt-RX[i].A => shunt-RX[i].B => rx-bcap[i] => USB.lane[i].RX)
-      topo-pair(USBC.conn.bus.lane[i].RX => lane-esd-rx[i] => shunt-RX[i].A)
-      topo-pair(shunt-RX[i].B => rx-bcap[i] => USB.lane[i].RX)
+      ; topo-pair(USBC.conn.bus.lane[i].RX => lane-esd-rx[i] => shunt-RX[i].A => shunt-RX[i].B => rx-bcap[i] => USB.lane[i].RX)
+      topo-pair(USBC.conn.bus.lane[i].RX => lane-esd-rx[i] => shunt-RX[i].A => shunt-RX[i].B => rx-bcap[i] => USB.lane[i].RX)
       net (shunt-RX[i].COMMON, GND)
 
       ; Set the signal end for the routing application
