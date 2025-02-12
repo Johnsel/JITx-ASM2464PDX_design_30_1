@@ -163,16 +163,24 @@ pcb-module ASM001-design :
   net sbu0 (usb4_type_c.USB.sbu[0], asm2464pdx_usb-c.sbu[0])
   net sbu1 (usb4_type_c.USB.sbu[1], asm2464pdx_usb-c.sbu[1])
 
-  for i in 0 to usb4-lanes  do:
-    topo-pair(asm2464pdx_usb-c.lane[i].TX => usb4_type_c.USB.lane[i].TX) 
-    set-signal-end(asm2464pdx_usb-c.lane[i].TX, usb4_type_c.USB.lane[i].TX)
+  val usb-version = USB4
+  val usb-trace-imped = to-int(typ(usb-get-trace-impedance(usb-version)))
+  val usb-route-struct = diff-routing-struct(substrate, 100);, neckdown = DifferentialNeckDown(clearance = 0.05))
+  val usb-cst = USB-Constraint(proto = usb-version, route-struct = usb-route-struct)
 
-    topo-pair(asm2464pdx_usb-c.lane[i].RX => usb4_type_c.USB.lane[i].RX) 
-    set-signal-end(asm2464pdx_usb-c.lane[i].RX, usb4_type_c.USB.lane[i].RX)
+
+  for i in 0 to usb4-lanes  do:
+    topo-pair(usb4_type_c.USB.lane[i].TX => asm2464pdx_usb-c.lane[i].TX) 
+    set-signal-end(usb4_type_c.USB.lane[i].TX, asm2464pdx_usb-c.lane[i].TX)
+    ; constrain-topology(usb4_type_c.USB.lane[i].TX, asm2464pdx_usb-c.lane[i].TX, usb-cst)
+
+    topo-pair(usb4_type_c.USB.lane[i].RX => asm2464pdx_usb-c.lane[i].RX) 
+    set-signal-end(usb4_type_c.USB.lane[i].RX, asm2464pdx_usb-c.lane[i].RX)
+    ; constrain-topology(usb4_type_c.USB.lane[i].RX, asm2464pdx_usb-c.lane[i].RX, usb-cst)
 
     topo-net(asm2464pdx_usb-c.cc[i] => usb4_type_c.USB.cc[i]) 
     topo-net(asm2464pdx_usb-c.sbu[i] => usb4_type_c.USB.sbu[i]) 
-    
+      
   ; inst header : header(2,1)
 
   ; make-test-points(usb4_type_c.sw.VBUS[0])

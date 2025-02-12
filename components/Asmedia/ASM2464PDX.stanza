@@ -176,8 +176,8 @@ public pcb-component component :
 
   pin-properties :
     [pin:Ref    | pads:Ref ... | side:Dir | bank:Ref]
-    [UDP        | M[1]   | Left  | A]
-    [UDM        | M[2]   | Left  | A]
+    [UD.P        | M[1]   | Left  | A]
+    [UD.N        | M[2]   | Left  | A]
     [UTXP[0]    | T[1]   | Left  | A]
     [UTXN[0]    | T[2]   | Left  | A]
     [UTXP[1]    | V[2]   | Left  | A]
@@ -465,12 +465,17 @@ public pcb-component component :
 
   assign-landpattern(lp)
 
-  for i in 0 to 4 do :
-    ; diff-pin-model(self.PRXP[i], self.PRXN[i],       delay = typ(10.0e-15) loss = typ(0.1))
-    ; diff-pin-model(self.PTXP[i], self.PTXN[i],       delay = typ(10.0e-15) loss = typ(0.1))
-    diff-pin-model(self.REFCLK[i].P, self.REFCLK[i].N, delay = typ(10.0e-15) loss = typ(0.1))
+  for i in 0 to 2 do :
+    diff-pin-model(self.PRXP[i], self.PRXN[i], delay = typ(10.0e-15) loss = typ(0.1))
+    diff-pin-model(self.PTXP[i], self.PTXN[i], delay = typ(10.0e-15) loss = typ(0.1))
 
-  diff-pin-model(self.UDP self.UDM delay = typ(10.0e-15) loss = typ(0.1))
+
+  for i in 0 to 4 do :
+    diff-pin-model(self.URXP[i], self.URXN[i], delay = typ(10.0e-15) loss = typ(0.1))
+    diff-pin-model(self.UTXP[i], self.UTXN[i], delay = typ(10.0e-15) loss = typ(0.1))
+    ; diff-pin-model(self.REFCLK[i].P, self.REFCLK[i].N, delay = typ(10.0e-15) loss = typ(0.1))
+
+  diff-pin-model(self.UD.P self.UD.N delay = typ(10.0e-15) loss = typ(0.1))
 
 defn connect_lanes (
   b:Bundle, 
@@ -754,8 +759,8 @@ public pcb-module module :
 
   val usb_c = usb-c(2)
   supports usb_c :
-    usb_c.data.P => sw.UDP
-    usb_c.data.N => sw.UDM
+    usb_c.data.P => sw.UD.P
+    usb_c.data.N => sw.UD.N
     for i in 0 to 2 do :
       usb_c.cc[i] => sw.CC[i]
       usb_c.sbu[i] => sw.SBU[i]
