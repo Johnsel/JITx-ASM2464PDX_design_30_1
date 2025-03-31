@@ -247,7 +247,10 @@ pcb-module ASM001-design :
       ; The control signals do not demand a topology so
       ;  we just use a straight net connection.
       net (src.control, dst.control)
-      ; net (GND m2_connector[i].gnd)
+
+      net GND (GND m2_connector.gnd)
+
+      net V_3V3 (VCCH m2_connector.vdd_3v3)
 
 
   val y-loc = [-36.0 - (to-double(0) * -24.0),(-36.0 - (to-double(1) * -24.0)),(-36.0 - (to-double(2) * -24.0)),(-36.0 - (to-double(3) * -24.0))]
