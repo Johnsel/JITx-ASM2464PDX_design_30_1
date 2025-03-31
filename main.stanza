@@ -37,7 +37,7 @@ pcb-module ASM001-design :
   inst version-label  : ocdb/artwork/board-text/version-silkscreen(to-string("ASM2464PDX 4x M.2 board | Version 0.2 %_" % [get-time-string("%Y-%m-%d")])) ; make a version label text on silkscreen
   place(version-label) at loc(0.0, height(board-shape) / 2.0 - 5.0) on Bottom ; place the version label text at specified location
 
-  ; setup logo
+  ; setup logor
   inst logo : ocdb/artwork/jitx-logo/logo(10.0)
   place(logo) at loc(10.0, -5.0, 0.0) on Bottom
    
@@ -165,19 +165,19 @@ pcb-module ASM001-design :
 
   val usb-version = USB4
   val usb-trace-imped = to-int(typ(usb-get-trace-impedance(usb-version)))
-  val usb-route-struct = diff-routing-struct(substrate, 100);, neckdown = DifferentialNeckDown(clearance = 0.05))
+  val usb-route-struct = diff-routing-struct(substrate, 85);, neckdown = DifferentialNeckDown(clearance = 0.05))
   val usb-cst = USB-Constraint(proto = usb-version, route-struct = usb-route-struct)
-
 
   for i in 0 to usb4-lanes  do:
     topo-pair(usb4_type_c.USB.lane[i].TX => asm2464pdx_usb-c.lane[i].TX) 
     set-signal-end(usb4_type_c.USB.lane[i].TX, asm2464pdx_usb-c.lane[i].TX)
-    ; constrain-topology(usb4_type_c.USB.lane[i].TX, asm2464pdx_usb-c.lane[i].TX, usb-cst)
+    constrain-topology(usb4_type_c.USB.lane[i].TX, asm2464pdx_usb-c.lane[i].TX, usb-cst)
 
     topo-pair(usb4_type_c.USB.lane[i].RX => asm2464pdx_usb-c.lane[i].RX) 
     set-signal-end(usb4_type_c.USB.lane[i].RX, asm2464pdx_usb-c.lane[i].RX)
-    ; constrain-topology(usb4_type_c.USB.lane[i].RX, asm2464pdx_usb-c.lane[i].RX, usb-cst)
+    constrain-topology(usb4_type_c.USB.lane[i].RX, asm2464pdx_usb-c.lane[i].RX, usb-cst)
 
+  for i in 0 to 2 do:
     topo-net(asm2464pdx_usb-c.cc[i] => usb4_type_c.USB.cc[i]) 
     topo-net(asm2464pdx_usb-c.sbu[i] => usb4_type_c.USB.sbu[i]) 
       

@@ -3,7 +3,7 @@ version = "0.5.0"
 [dependencies]
 JITX3 = { path = "{SLM_ROOT}/JITX3" }
 jsl = { git = "johnsel/jsl", version = "0.10.5" }
-jlc-pcb = { git = "Johnsel/jlc-pcb", version = "0.4.3" }
+jlc-pcb = { git = "Johnsel/jlc-pcb", version = "0.4.5" }
 connectors = { git = "JITx-Inc/connectors", version = "0.4.1" }
 diodes = { git = "JITx-Inc/diodes", version = "0.2.0" }
 FTDI = { git = "JITx-Inc/FTDI", version = "0.3.3" }

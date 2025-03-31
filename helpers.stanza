@@ -92,7 +92,11 @@ public defn setup-bill-of-materials (qty:Int, vendors:Tuple<String|AuthorizedVen
 ; ====================
 ; Setup the board information using https://github.com/Johnsel/jlc-pcb.git
 ; ====================
-public val substrate = jlc-pcb/stackups/JLC06161H-3313/JLC06161H-3313()
+public val jlc-vias = [
+  jlc-pcb/stackups/vias/std-via-preferred
+  jlc-pcb/stackups/vias/multi-vip-cost+3-preferred
+]
+public val substrate = jlc-pcb/stackups/JLC06161H-7628/JLC06161H-7628(jlc-vias)
 
 ; ============
 ; setup-design
