@@ -26,6 +26,7 @@ defpackage ASM001/main :
   import ASM001/module/power
 
   import debug/test-points
+  import connectors/components/M2-2280-ADAPTER
 
 ; Define the shape/size of the board
 val board-shape = RoundedRectangle(100.0, 100.0, 2.0)
@@ -220,9 +221,10 @@ pcb-module ASM001-design :
 
   for i in 0 to num_m2 do:
     ; val src-ep = asm2464pdx.pcie-1x[i]
-    require src-ep : pcie-std(4) from asm2464pdx
+    require src-ep : pcie(4) from asm2464pdx
     ; require src-ep : pcie-std(1) from asm2464pdx
-    require dst-ep : pcie-std(4) from m2_connector;[i]
+    require dst-ep : pcie(4) from m2_connector;[i]
+
 
     within [src, dst] = constrain-topology(src-ep, dst-ep, cst):
       ; Here we construct the circuit topology for the link
@@ -245,7 +247,7 @@ pcb-module ASM001-design :
 
   val y-loc = [-36.0 - (to-double(0) * -24.0),(-36.0 - (to-double(1) * -24.0)),(-36.0 - (to-double(2) * -24.0)),(-36.0 - (to-double(3) * -24.0))]
 
-  place(m2_connector.sw) at loc(35.0, y-loc[0], 90.0) on Bottom      
+  ; place(m2_connector.sw) at loc(35.0, y-loc[0], 90.0) on Bottom      
   ; place(m2_connector[0].sw) at loc(35.0, y-loc[0], 90.0) on Bottom      
   ; place(m2_connector[1].sw) at loc(35.0, y-loc[1], 90.0) on Bottom      
   ; place(m2_connector[2].sw) at loc(35.0, y-loc[2], 90.0) on Bottom      

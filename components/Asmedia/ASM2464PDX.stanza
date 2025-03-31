@@ -496,19 +496,11 @@ defn connect_lanes (
       b.data.refclk.P => ref_clk.P
       b.data.refclk.N => ref_clk.N
 
-      if has-PEWAKE#(b):
-        b.control.PEWAKE# => wake
-      if has-PERST#(b):
-        b.control.PERST#  => reset
-      if has-CLKREQ#(b):
-        b.control.CLKREQ# => clkreq
+      b.control.PEWAKE# => wake
+      b.control.PERST#  => reset
+      b.control.CLKREQ# => clkreq
 
-      if has-PRSNT#(b):
-        match(present):
-          (_:False):
-            throw $ ValueError("Missing Present Connection - Passed False")
-          (p:JITXObject):
-            b.control.PRSNT#  => p
+      ; b.control.PRSNT#  => present
 
 public pcb-module module :
   port gnd
@@ -771,11 +763,8 @@ public pcb-module module :
       usb_c.lane[i].TX.N => sw.UTXN[i]
 
 
-  val bd-4x = pcie-std(4)
+  val bd-4x = pcie(4)
   connect_lanes(bd-4x, self.sw.REFCLK[0], [sw.GPIO[22], sw.PERST#[0], sw.GPIO[8]], false)
-  
-  val bd-4x-prsnt = pcie-with-hotplug(4)
-  connect_lanes(bd-4x-prsnt, self.sw.REFCLK[0], [sw.GPIO[22], sw.PERST#[0], sw.GPIO[8]], sw.UART_RX)
 
   ;;;;;;;;;;;;;;;;;;;;;;;
   ; PCIe 2x

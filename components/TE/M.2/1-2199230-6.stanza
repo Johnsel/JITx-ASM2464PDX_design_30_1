@@ -263,8 +263,7 @@ defn connect_lanes (b:Bundle):
       b.control.PERST#  => self.sw.PERST#
       b.control.CLKREQ# => self.sw.CLKREQ#
 
-      if has-PRSNT#(b):
-        b.control.PRSNT#  => self.sw.PRSNT#
+      ; b.control.PRSNT#  => self.sw.PRSNT#
 
 doc: \<DOC>
 PCIe Connector Module with Exposed Pin-Assigned PCIe ports
@@ -299,9 +298,9 @@ public pcb-module module :
     net (SHIELD g)
     
   val bundle-types = [
-    pcie-std(4),
-    pcie-std(2),
-    pcie-std(1),
+    pcie(4),
+    pcie(2),
+    pcie(1),
     ; pcie-with-hotplug(4),
     ; pcie-with-hotplug(2),
     ; pcie-with-hotplug(1),
