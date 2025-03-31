@@ -166,8 +166,13 @@ pcb-module ASM001-design :
 
   val usb-version = USB4
   val usb-trace-imped = to-int(typ(usb-get-trace-impedance(usb-version)))
-  val usb-route-struct = diff-routing-struct(substrate, 85);, neckdown = DifferentialNeckDown(clearance = 0.05))
+  val usb-route-struct = diff-routing-struct(substrate, usb-trace-imped);, neckdown = DifferentialNeckDown(clearance = 0.05))
   val usb-cst = USB-Constraint(proto = usb-version, route-struct = usb-route-struct)
+
+  val ti-2 = usb-get-trace-impedance(USB2)
+  val usb2-constraints = USB-Constraint(proto = USB2, route-struct = diff-routing-struct(substrate, usb-trace-imped))
+  topo-pair(usb4_type_c.USB.data => asm2464pdx_usb-c.data) 
+  constrain-topology(usb4_type_c.USB.data => asm2464pdx_usb-c.data, usb2-constraints)
 
   for i in 0 to usb4-lanes  do:
     topo-pair(usb4_type_c.USB.lane[i].TX => asm2464pdx_usb-c.lane[i].TX) 
