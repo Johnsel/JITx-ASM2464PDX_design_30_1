@@ -628,9 +628,9 @@ public pcb-module module :
   ; ; 3 x 10uF/6.3V
   ; ; 11 x 2.2uF/6.3V
 
-  ; val vcch_10uF6V3_count = 3
-  ; inst vcch_10uF6V3 : create-part(mpn = "GRM155R61A106ME11D")[vcch_10uF6V3_count]
-  ; schematic-group(vcch_10uF6V3) = bypass-cap-VCCL
+  val vcch_10uF6V3_count = 3
+  inst vcch_10uF6V3 : create-part(mpn = "GRM155R61A106ME11D")[vcch_10uF6V3_count]
+  schematic-group(vcch_10uF6V3) = bypass-cap-VCCL
   
   ; var vcch_10uF6V3_loc = Array<Pose>(vcch_10uF6V3_count)
   
@@ -638,14 +638,14 @@ public pcb-module module :
   ; vcch_10uF6V3_loc[1] = loc(2.254, 3.231, 0.0)
   ; vcch_10uF6V3_loc[2] = loc(-0.531, 3.422, 90.0)
   
-  ; for i in 0 to (vcch_10uF6V3_count) do:
-  ;   net vcch-10uF6V3 (vcch vcch_10uF6V3[i].p[1])
-  ;   net vcch-GND (gnd vcch_10uF6V3[i].p[2])
+  for i in 0 to (vcch_10uF6V3_count) do:
+    net vcch-10uF6V3 (vcch vcch_10uF6V3[i].p[1])
+    net vcch-GND (gnd vcch_10uF6V3[i].p[2])
   ;   place(vcch_10uF6V3[i]) at vcch_10uF6V3_loc[i] on Bottom
 
-  ; val vcch_2u2F6V3_count = 11
-  ; inst vcch_2u2F6V3 : create-part(mpn = "GRM033R60J225ME47D")[vcch_2u2F6V3_count]
-  ; schematic-group(vcch_2u2F6V3) = bypass-cap-VCCH
+  val vcch_2u2F6V3_count = 11
+  inst vcch_2u2F6V3 : create-part(mpn = "GRM033R60J225ME47D")[vcch_2u2F6V3_count]
+  schematic-group(vcch_2u2F6V3) = bypass-cap-VCCH
   
   ; var vcch_2u2F6V3_loc = Array<Pose>(vcch_2u2F6V3_count)
   
@@ -661,9 +661,9 @@ public pcb-module module :
   ; vcch_2u2F6V3_loc[9] = loc(2.587, 0.694, 90.0)
   ; vcch_2u2F6V3_loc[10] = loc(-1.057, -1.057, 270.0)
   
-  ; for i in 0 to (vcch_2u2F6V3_count) do:
-  ;   net vcch-2u2F6V3 (vcch vcch_2u2F6V3[i].p[1])
-  ;   net vcch-gnd (gnd vcch_2u2F6V3[i].p[2])
+  for i in 0 to (vcch_2u2F6V3_count) do:
+    net vcch-2u2F6V3 (vcch vcch_2u2F6V3[i].p[1])
+    net vcch-gnd (gnd vcch_2u2F6V3[i].p[2])
   ;   place(vcch_2u2F6V3[i]) at vcch_2u2F6V3_loc[i] on Bottom
 
   for v in pins(sw.VCCH) do :
@@ -680,9 +680,9 @@ public pcb-module module :
 
   ; ; 3 x 10uF/6.3V
   ; ; 11 x 2.2uF/6.3V
-  ; val vccl_10uF6V3_count = 3
-  ; inst vccl_10uF6V3 : create-part(mpn = "GRM155R61A106ME11D")[vccl_10uF6V3_count]
-  ; schematic-group(vccl_10uF6V3) = bypass-cap-VCCL
+  val vccl_10uF6V3_count = 3
+  inst vccl_10uF6V3 : create-part(mpn = "GRM155R61A106ME11D")[vccl_10uF6V3_count]
+  schematic-group(vccl_10uF6V3) = bypass-cap-VCCL
   
   ; var vccl_10uF6V3_loc = Array<Pose>(vccl_10uF6V3_count)
   
@@ -690,14 +690,14 @@ public pcb-module module :
   ; vccl_10uF6V3_loc[1] = loc(-2.60, -0.5, 270.0)
   ; vccl_10uF6V3_loc[2] = loc(1.60, -2.52, 0.0)
   
-  ; for i in 0 to vccl_10uF6V3_count do:
-  ;   net vccl-10uF6V3 (vccl vccl_10uF6V3[i].p[1])
-  ;   net vccl-gnd (gnd vccl_10uF6V3[i].p[2])
+  for i in 0 to vccl_10uF6V3_count do:
+    net vccl-10uF6V3 (vccl vccl_10uF6V3[i].p[1])
+    net vccl-gnd (gnd vccl_10uF6V3[i].p[2])
   ;   place(vccl_10uF6V3[i]) at vccl_10uF6V3_loc[i] on Bottom
 
-  ; val vccl_2u2F6V3_count = 11
-  ; inst vccl_2u2F6V3 : create-part(mpn = "GRM033R60J225ME47D")[vccl_2u2F6V3_count]
-  ; schematic-group(vccl_2u2F6V3) = bypass-cap-VCCL
+  val vccl_2u2F6V3_count = 11
+  inst vccl_2u2F6V3 : create-part(mpn = "GRM033R60J225ME47D")[vccl_2u2F6V3_count]
+  schematic-group(vccl_2u2F6V3) = bypass-cap-VCCL
   
   ; var vccl_2u2F6V3_loc = Array<Pose>(vccl_2u2F6V3_count)
   ; vccl_2u2F6V3_loc[0] = loc(-2.30, 0.0, 270.0)
@@ -712,9 +712,9 @@ public pcb-module module :
   ; vccl_2u2F6V3_loc[9] = loc(1.60, -0.95, 270.0)
   ; vccl_2u2F6V3_loc[10] = loc(1.60, -0.2, 270.0)
 
-  ; for i in 0 to (vccl_2u2F6V3_count) do:
-  ;   net vccl-2u2F6V3 (vccl vccl_2u2F6V3[i].p[1])
-  ;   net vccl-gnd (gnd vccl_2u2F6V3[i].p[2])
+  for i in 0 to (vccl_2u2F6V3_count) do:
+    net vccl-2u2F6V3 (vccl vccl_2u2F6V3[i].p[1])
+    net vccl-gnd (gnd vccl_2u2F6V3[i].p[2])
   ;   place(vccl_2u2F6V3[i]) at vccl_2u2F6V3_loc[i] on Bottom
 
   for v in pins(sw.VCCL) do :

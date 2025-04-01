@@ -187,7 +187,7 @@ pcb-module ASM001-design :
     topo-net(asm2464pdx_usb-c.cc[i] => usb4_type_c.USB.cc[i]) 
     topo-net(asm2464pdx_usb-c.sbu[i] => usb4_type_c.USB.sbu[i]) 
       
-  ; inst header : header(2,1)
+  ; inst header : header(2,1)rrr
 
   ; make-test-points(usb4_type_c.sw.VBUS[0])
     
