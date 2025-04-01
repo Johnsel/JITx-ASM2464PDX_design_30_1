@@ -1,0 +1,16 @@
+(kicad_wks
+	(version 20231118)
+	(generator "jitx")
+	(setup
+		(textsize 1.5 1.5)
+		(linewidth 0.15)
+		(textlinewidth 0.15)
+		(left_margin 10)
+		(right_margin 10)
+		(top_margin 10)
+		(bottom_margin 10)
+	)
+        (rect (name tempplate-outer-rect) (start 0.0 0.0) (end 539.0 412.0))
+      (rect (name template-inner-rect) (start 2.0 2.0) (end 537.0 410.0))
+      (rect (name entry) (start 2.0 2.0) (end 110.0 34.0))
+)

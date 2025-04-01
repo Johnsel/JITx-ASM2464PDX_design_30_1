@@ -164,24 +164,29 @@ pcb-module ASM001-design :
   net sbu0 (usb4_type_c.USB.sbu[0], asm2464pdx_usb-c.sbu[0])
   net sbu1 (usb4_type_c.USB.sbu[1], asm2464pdx_usb-c.sbu[1])
 
-  val usb-version = USB4
-  val usb-trace-imped = to-int(typ(usb-get-trace-impedance(usb-version)))
-  val usb-route-struct = diff-routing-struct(substrate, usb-trace-imped);, neckdown = DifferentialNeckDown(clearance = 0.05))
-  val usb-cst = USB-Constraint(proto = usb-version, route-struct = usb-route-struct)
+  val usb2-version = USB4
+  val usb2-trace-imped = to-int(typ(usb-get-trace-impedance(usb2-version)))
+  val usb2-route-struct = diff-routing-struct(substrate, usb2-trace-imped, neckdown = DifferentialNeckDown(clearance = 0.05))
+  val usb2-cst = USB-Constraint(proto = usb2-version, route-struct = usb2-route-struct)
+  within [src, dst] = constrain-topology(usb4_type_c.USB.data, asm2464pdx_usb-c.data, usb2-cst):
+    topo-pair(usb4_type_c.USB.data => asm2464pdx_usb-c.data) 
+    ; set-signal-end(usb4_type_c.USB.data, asm2464pdx_usb-c.data)
 
-  val ti-2 = usb-get-trace-impedance(USB2)
-  val usb2-constraints = USB-Constraint(proto = USB2, route-struct = diff-routing-struct(substrate, usb-trace-imped))
-  topo-pair(usb4_type_c.USB.data => asm2464pdx_usb-c.data) 
-  constrain-topology(usb4_type_c.USB.data => asm2464pdx_usb-c.data, usb2-constraints)
+  val usb4-version = USB4
+  val usb4-trace-imped = to-int(typ(usb-get-trace-impedance(usb4-version)))
+  val usb4-route-struct = diff-routing-struct(substrate, usb4-trace-imped, neckdown = DifferentialNeckDown(clearance = 0.05))
+  val usb4-cst = USB-Constraint(proto = usb4-version, route-struct = usb4-route-struct)
+  val usb4-lane-constraint = LaneConstraint(usb4-cst)
 
   for i in 0 to usb4-lanes  do:
-    topo-pair(usb4_type_c.USB.lane[i].TX => asm2464pdx_usb-c.lane[i].TX) 
-    set-signal-end(usb4_type_c.USB.lane[i].TX, asm2464pdx_usb-c.lane[i].TX)
-    constrain-topology(usb4_type_c.USB.lane[i].TX, asm2464pdx_usb-c.lane[i].TX, usb-cst)
+    within [src, dst] = constrain-topology(usb4_type_c.USB.lane[i], asm2464pdx_usb-c.lane[i], usb4-lane-constraint):
+      topo-pair(usb4_type_c.USB.lane[i].TX => asm2464pdx_usb-c.lane[i].TX) 
+      ; set-signal-end(usb4_type_c.USB.lane[i].TX, asm2464pdx_usb-c.lane[i].TX)
+      ; constrain-topology(usb4_type_c.USB.lane[i].TX, asm2464pdx_usb-c.lane[i].TX, usb-cst)
 
-    topo-pair(usb4_type_c.USB.lane[i].RX => asm2464pdx_usb-c.lane[i].RX) 
-    set-signal-end(usb4_type_c.USB.lane[i].RX, asm2464pdx_usb-c.lane[i].RX)
-    constrain-topology(usb4_type_c.USB.lane[i].RX, asm2464pdx_usb-c.lane[i].RX, usb-cst)
+      topo-pair(usb4_type_c.USB.lane[i].RX => asm2464pdx_usb-c.lane[i].RX) 
+      ; set-signal-end(usb4_type_c.USB.lane[i].RX, asm2464pdx_usb-c.lane[i].RX)
+      ; constrain-topology(usb4_type_c.USB.lane[i].RX, asm2464pdx_usb-c.lane[i].RX, usb-cst)
 
   for i in 0 to 2 do:
     topo-net(asm2464pdx_usb-c.cc[i] => usb4_type_c.USB.cc[i]) 
@@ -210,10 +215,11 @@ pcb-module ASM001-design :
   ;   )
 
   ; PCIe 4x M.2
-  val version = PCIE-V4
-  val trace-imped = to-int(typ(pcie-get-trace-impedance(version)))
-  val imped-value = diff-routing-struct(substrate, trace-imped);, neckdown = DifferentialNeckDown(clearance = 0.1))
-  val cst = PCIe-Constraint(version, imped-value)
+  val pcie-version = PCIE-V4
+  val pcie-trace-imped = to-int(typ(pcie-get-trace-impedance(pcie-version)))
+  val pcie-imped-value = diff-routing-struct(substrate, pcie-trace-imped, neckdown = DifferentialNeckDown(clearance = 0.1))
+  val pcie-cst = PCIe-Constraint(version, pcie-imped-value)
+  val pcie-lane-constraint = LaneConstraint(pcie-cst)
 
   val pcie-b-cap = block-cap(220.0e-9)
 
@@ -231,7 +237,7 @@ pcb-module ASM001-design :
     require dst-ep : pcie(4) from m2_connector;[i]
 
 
-    within [src, dst] = constrain-topology(src-ep, dst-ep, cst):
+    within [src, dst] = constrain-topology(src-ep, dst-ep, pcie-lane-constraint):
       ; Here we construct the circuit topology for the link
       ;   Note that we don't need to worry about any of the constraint
       ;   application, as that is handled by the `PCIe-Constraint` type.
@@ -286,5 +292,5 @@ view-schematic()
 view-board()
 
 view-design-explorer()
-; export-design()
+export-design()
 
