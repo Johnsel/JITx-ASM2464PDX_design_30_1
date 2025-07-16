@@ -494,7 +494,7 @@ public pcb-module module :
 
   val C-query = get-default-capacitor-query()
 
-  ; val c_2u2F6V3 = CapacitorQuery( 
+  ; val c_22uF6V3 = CapacitorQuery( 
   ;                             case = ["0201", "0402", "0805"],
   ;                             capacitance = 22.0e-6,
   ;                             rated-voltage = 6.3) ; 2200nF, 6.3V
@@ -517,6 +517,7 @@ public pcb-module module :
   public inst sw : ASM001/components/Asmedia/ASM2464PDX/component
 
 
+  net (VCCH sw.RST#)
 
   for g in pins(sw.GND) do :
     net GND (gnd g)
